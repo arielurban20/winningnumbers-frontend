@@ -5,12 +5,14 @@ import { getDrawResult } from "@/lib/api/draws"
 import { groupGamesByFamily, sortGameFamiliesForDesktopLayout } from "@/lib/utils/groupGames"
 import { GroupedGameCard } from "@/components/cards"
 import { StateDrawingScheduleTable } from "@/components/tables"
+import { StateGameJumpNav } from "@/components/states"
 import { JsonLd } from "@/components/seo"
 import { SEOTextBlock, Breadcrumbs, Container } from "@/components/layout"
 import { EmptyState } from "@/components/feedback"
 import { generateStateMetadata, getCanonicalUrl } from "@/lib/seo/metadata"
 import { generateBreadcrumbSchema, generateItemListSchema } from "@/lib/seo/jsonLd"
 import { getStateName } from "@/lib/utils/buildLotteryLinks"
+import { toFamilyAnchorId } from "@/lib/utils/familyAnchors"
 import { MapPin, Gamepad2, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { DrawResult } from "@/types/api"
@@ -74,6 +76,21 @@ export default async function StatePage({ params }: StatePageProps) {
   const gameFamilies = groupGamesByFamily(visibleGames, drawResults, stateSlug, state.name)
   // Desktop-only display sort: smaller/shorter cards first, tall multi-session cards later.
   const desktopSortedGameFamilies = sortGameFamiliesForDesktopLayout(gameFamilies)
+  const displayGameFamilies = desktopSortedGameFamilies
+
+  const jumpNavFamilies = displayGameFamilies.map((family) => ({
+    familySlug: family.familySlug,
+    familyName: family.familyName,
+    stateSlug: family.state_slug || stateSlug,
+    logo_url: family.logo_url,
+    logo: family.logo,
+    icon_url: family.icon_url,
+    hasCurrentResult: family.sessions.some((session) => {
+      const draw = session.latestDraw
+      if (!draw) return false
+      return draw.draw_status_color === "green" || draw.draw_status === "current"
+    }),
+  }))
   
   // Get properly formatted state name
   const stateName = getStateName(state)
@@ -135,7 +152,7 @@ export default async function StatePage({ params }: StatePageProps) {
 
       <Container className="py-8 sm:py-12">
         {/* Games Grid */}
-        {gameFamilies.length === 0 ? (
+        {displayGameFamilies.length === 0 ? (
           <EmptyState
             type="no-data"
             title="No Games Available"
@@ -143,6 +160,8 @@ export default async function StatePage({ params }: StatePageProps) {
           />
         ) : (
           <section className="mb-12 sm:mb-16">
+            <StateGameJumpNav stateName={stateName} gameFamilies={jumpNavFamilies} />
+
             <div className="mb-4 sm:mb-8">
               <h2 className="text-xl sm:text-2xl font-bold tracking-tight">
                 {stateName} Lottery Games
@@ -151,21 +170,13 @@ export default async function StatePage({ params }: StatePageProps) {
                 Click a game to view detailed results and history
               </p>
             </div>
-            <div className="grid gap-3 sm:gap-6 md:hidden">
-              {gameFamilies.map((family) => (
+            <div className="grid gap-3 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {displayGameFamilies.map((family) => (
                 <GroupedGameCard
                   key={family.familySlug}
                   family={family}
                   href={`/states/${stateSlug}/${family.familySlug}`}
-                />
-              ))}
-            </div>
-            <div className="hidden gap-3 sm:gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
-              {desktopSortedGameFamilies.map((family) => (
-                <GroupedGameCard
-                  key={family.familySlug}
-                  family={family}
-                  href={`/states/${stateSlug}/${family.familySlug}`}
+                  id={toFamilyAnchorId(family.familySlug)}
                 />
               ))}
             </div>
@@ -173,11 +184,11 @@ export default async function StatePage({ params }: StatePageProps) {
         )}
 
         {/* Quick Links - Compact chips on mobile */}
-        {gameFamilies.length > 0 && (
+        {displayGameFamilies.length > 0 && (
           <section className="mb-12 sm:mb-16 rounded-xl sm:rounded-2xl bg-muted/50 p-4 sm:p-6">
             <h2 className="mb-3 sm:mb-4 text-sm sm:text-lg font-semibold">Quick Links</h2>
             <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              {gameFamilies.slice(0, 12).map((family) => (
+              {displayGameFamilies.slice(0, 12).map((family) => (
                 <Button
                   key={family.familySlug}
                   asChild
@@ -228,12 +239,12 @@ export default async function StatePage({ params }: StatePageProps) {
         </section>
 
         {/* Drawing Schedule Table */}
-        {gameFamilies.length > 0 && (
+        {displayGameFamilies.length > 0 && (
           <section className="mb-12 sm:mb-16">
             <StateDrawingScheduleTable
               stateName={stateName}
               stateSlug={stateSlug}
-              gameFamilies={gameFamilies}
+              gameFamilies={displayGameFamilies}
             />
           </section>
         )}

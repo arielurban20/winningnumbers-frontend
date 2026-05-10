@@ -12,6 +12,7 @@ import type { GameFamily } from "@/types/api"
 interface GroupedGameCardProps {
   family: GameFamily
   href?: string
+  id?: string
 }
 
 /**
@@ -19,13 +20,16 @@ interface GroupedGameCardProps {
  * Each session block links to its individual session page
  * Mobile-optimized with compact layout
  */
-export function GroupedGameCard({ family, href }: GroupedGameCardProps) {
+export function GroupedGameCard({ family, href, id }: GroupedGameCardProps) {
   const sessionsWithDraws = family.sessions.filter((s) => s.latestDraw)
   const stateSlug = family.state_slug || ""
   const familySlug = family.familySlug
 
   return (
-    <Card className="group h-full overflow-hidden border-border/50 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5">
+    <Card
+      id={id}
+      className="group h-full scroll-mt-24 overflow-hidden border-border/50 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/5 sm:scroll-mt-28"
+    >
       {/* Card Header with gradient - Compact on mobile */}
       <CardHeader className="relative p-3 pb-2 sm:p-6 sm:pb-4">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
