@@ -1,0 +1,53 @@
+WinningNumbers Logo Audit
+generated_at=2026-05-10T17:26:45.841Z
+api_base=https://winningnumbers.us/api
+logo_base_url=https://winningnumbers.us/assets/logos
+
+total_states=47
+total_state_games=496
+total_national_virtual_games=9
+total_games_checked=505
+games_with_logo=486
+games_missing_logo=19
+fallback_logo_count=19
+unused_logo_files_count=17
+duplicate_logo_files_count=70
+mapped_logo_path_missing_files_count=0
+
+Missing by state:
+- pr: 7
+- ri: 2
+- xx: 2
+- co: 1
+- ms: 1
+- mo: 1
+- ne: 1
+- nm: 1
+- nc: 1
+- tx: 1
+- wa: 1
+
+Missing by family:
+- numbers-game: 2
+- colorado-lotto: 1
+- mississippi-match-5: 1
+- mo-millions: 1
+- myday: 1
+- road-runner-cash: 1
+- cash-pop-primetime-pop: 1
+- loteria-tradicional: 1
+- pega-2-dia: 1
+- pega-2-noche: 1
+- pega-3-dia: 1
+- pega-3-noche: 1
+- pega-4-dia: 1
+- pega-4-noche: 1
+- lotto-texas: 1
+- daily-keno: 1
+- lucky-for-life: 1
+- cash4life: 1
+
+summary_json=C:\Users\ariel\OneDrive\Desktop\New folder\winningnumbers-frontend\logs\logo_audit_summary.json
+missing_csv=C:\Users\ariel\OneDrive\Desktop\New folder\winningnumbers-frontend\logs\logo_audit_missing.csv
+unused_files_csv=C:\Users\ariel\OneDrive\Desktop\New folder\winningnumbers-frontend\logs\logo_audit_unused_files.csv
+duplicates_csv=C:\Users\ariel\OneDrive\Desktop\New folder\winningnumbers-frontend\logs\logo_audit_duplicates.csv

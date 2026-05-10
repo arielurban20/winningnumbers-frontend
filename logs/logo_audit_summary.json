@@ -1,0 +1,204 @@
+{
+  "generated_at": "2026-05-10T17:26:45.841Z",
+  "api_base": "https://winningnumbers.us/api",
+  "logo_base_url": "https://winningnumbers.us/assets/logos",
+  "total_states": 47,
+  "total_state_games": 496,
+  "total_national_virtual_games": 9,
+  "total_games_checked": 505,
+  "games_with_logo": 486,
+  "games_missing_logo": 19,
+  "fallback_logo_count": 19,
+  "unused_logo_files_count": 17,
+  "duplicate_logo_files_count": 70,
+  "local_logo_registry_key_count": 487,
+  "mapped_logo_path_missing_files_count": 0,
+  "missing_by_state": {
+    "pr": 7,
+    "ri": 2,
+    "xx": 2,
+    "co": 1,
+    "ms": 1,
+    "mo": 1,
+    "ne": 1,
+    "nm": 1,
+    "nc": 1,
+    "tx": 1,
+    "wa": 1
+  },
+  "missing_by_game_family": {
+    "numbers-game": 2,
+    "colorado-lotto": 1,
+    "mississippi-match-5": 1,
+    "mo-millions": 1,
+    "myday": 1,
+    "road-runner-cash": 1,
+    "cash-pop-primetime-pop": 1,
+    "loteria-tradicional": 1,
+    "pega-2-dia": 1,
+    "pega-2-noche": 1,
+    "pega-3-dia": 1,
+    "pega-3-noche": 1,
+    "pega-4-dia": 1,
+    "pega-4-noche": 1,
+    "lotto-texas": 1,
+    "daily-keno": 1,
+    "lucky-for-life": 1,
+    "cash4life": 1
+  },
+  "mapped_logo_path_missing_files": [],
+  "top_missing_examples": [
+    {
+      "state_slug": "co",
+      "game_slug": "colorado-lotto-co",
+      "game_name": "Colorado Lotto+",
+      "family_slug": "colorado-lotto",
+      "expected_logo_key": "co-colorado-lotto",
+      "suggested_filename": "co-colorado-lotto.svg"
+    },
+    {
+      "state_slug": "ms",
+      "game_slug": "mississippi-match-5-ms",
+      "game_name": "Mississippi Match 5",
+      "family_slug": "mississippi-match-5",
+      "expected_logo_key": "ms-mississippi-match-5",
+      "suggested_filename": "ms-mississippi-match-5.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "mo-millions-mo",
+      "game_name": "MO Millions",
+      "family_slug": "mo-millions",
+      "expected_logo_key": "mo-mo-millions",
+      "suggested_filename": "mo-mo-millions.svg"
+    },
+    {
+      "state_slug": "ne",
+      "game_slug": "myday-ne",
+      "game_name": "MyDaY",
+      "family_slug": "myday",
+      "expected_logo_key": "ne-myday",
+      "suggested_filename": "ne-myday.svg"
+    },
+    {
+      "state_slug": "nm",
+      "game_slug": "road-runner-cash-nm",
+      "game_name": "Road Runner Cash",
+      "family_slug": "road-runner-cash",
+      "expected_logo_key": "nm-road-runner-cash",
+      "suggested_filename": "nm-road-runner-cash.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "cash-pop-primetime-pop-nc",
+      "game_name": "Cash Pop Primetime Pop",
+      "family_slug": "cash-pop-primetime-pop",
+      "expected_logo_key": "nc-cash-pop-primetime-pop",
+      "suggested_filename": "nc-cash-pop-primetime-pop.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "loteria-tradicional-pr",
+      "game_name": "Lotería Tradicional",
+      "family_slug": "loteria-tradicional",
+      "expected_logo_key": "pr-loteria-tradicional",
+      "suggested_filename": "pr-loteria-tradicional.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-2-dia-pr",
+      "game_name": "Pega 2 Dia",
+      "family_slug": "pega-2-dia",
+      "expected_logo_key": "pr-pega-2-dia",
+      "suggested_filename": "pr-pega-2-dia.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-2-noche-pr",
+      "game_name": "Pega 2 Noche",
+      "family_slug": "pega-2-noche",
+      "expected_logo_key": "pr-pega-2-noche",
+      "suggested_filename": "pr-pega-2-noche.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-3-dia-pr",
+      "game_name": "Pega 3 Dia",
+      "family_slug": "pega-3-dia",
+      "expected_logo_key": "pr-pega-3-dia",
+      "suggested_filename": "pr-pega-3-dia.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-3-noche-pr",
+      "game_name": "Pega 3 Noche",
+      "family_slug": "pega-3-noche",
+      "expected_logo_key": "pr-pega-3-noche",
+      "suggested_filename": "pr-pega-3-noche.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-4-dia-pr",
+      "game_name": "Pega 4 Dia",
+      "family_slug": "pega-4-dia",
+      "expected_logo_key": "pr-pega-4-dia",
+      "suggested_filename": "pr-pega-4-dia.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-4-noche-pr",
+      "game_name": "Pega 4 Noche",
+      "family_slug": "pega-4-noche",
+      "expected_logo_key": "pr-pega-4-noche",
+      "suggested_filename": "pr-pega-4-noche.svg"
+    },
+    {
+      "state_slug": "ri",
+      "game_slug": "numbers-game-evening-ri",
+      "game_name": "Numbers Game Evening",
+      "family_slug": "numbers-game",
+      "expected_logo_key": "ri-numbers-game",
+      "suggested_filename": "ri-numbers-game.svg"
+    },
+    {
+      "state_slug": "ri",
+      "game_slug": "numbers-game-midday-ri",
+      "game_name": "Numbers Game Midday",
+      "family_slug": "numbers-game",
+      "expected_logo_key": "ri-numbers-game",
+      "suggested_filename": "ri-numbers-game.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "lotto-texas-tx",
+      "game_name": "Lotto Texas",
+      "family_slug": "lotto-texas",
+      "expected_logo_key": "tx-lotto-texas",
+      "suggested_filename": "tx-lotto-texas.svg"
+    },
+    {
+      "state_slug": "wa",
+      "game_slug": "daily-keno-wa",
+      "game_name": "Daily Keno",
+      "family_slug": "daily-keno",
+      "expected_logo_key": "wa-daily-keno",
+      "suggested_filename": "wa-daily-keno.svg"
+    },
+    {
+      "state_slug": "xx",
+      "game_slug": "lucky-for-life",
+      "game_name": "lucky-for-life",
+      "family_slug": "lucky-for-life",
+      "expected_logo_key": "xx-lucky-for-life",
+      "suggested_filename": "xx-lucky-for-life.svg"
+    },
+    {
+      "state_slug": "xx",
+      "game_slug": "cash4life",
+      "game_name": "cash4life",
+      "family_slug": "cash4life",
+      "expected_logo_key": "xx-cash4life",
+      "suggested_filename": "xx-cash4life.svg"
+    }
+  ]
+}
