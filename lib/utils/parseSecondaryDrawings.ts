@@ -161,6 +161,10 @@ function isSecondaryDrawingLabel(label: string | undefined | null): boolean {
   return SECONDARY_DRAWING_LABELS.some((pattern) => normalized.includes(pattern))
 }
 
+function resolveExtraLabel(item: ExtraItem): string {
+  return String(item.name || item.label || "").trim()
+}
+
 /**
  * Parse a value that might contain multiple numbers
  * Returns array of number strings, or null if not parseable as multiple numbers
@@ -240,6 +244,7 @@ export function parseSecondaryDrawings(extraItems: ExtraItem[] | undefined): Par
 
   for (const item of extraItems) {
     const lowerType = (item.type ?? "").toLowerCase()
+    const resolvedLabel = resolveExtraLabel(item)
 
     // Structured secondary drawing payload (official providers)
     // Example: { type:"secondary_drawing", main_numbers:[...], main_items:[...], in_place_bonus:{...} }
@@ -250,7 +255,7 @@ export function parseSecondaryDrawings(extraItems: ExtraItem[] | undefined): Par
 
       if (numbers && numbers.length >= 2) {
         pushSecondary({
-          label: item.label || "Secondary Drawing",
+          label: resolvedLabel || "Secondary Drawing",
           numbers,
           colorHex: item.color_hex,
           mainItems: item.main_items,
@@ -262,13 +267,13 @@ export function parseSecondaryDrawings(extraItems: ExtraItem[] | undefined): Par
     }
 
     // Check if this looks like a secondary drawing
-    if (isSecondaryDrawingLabel(item.label)) {
+    if (isSecondaryDrawingLabel(resolvedLabel)) {
       const numbers = parseMultipleNumbers(item.value)
 
       if (numbers && numbers.length >= 2) {
         // This is a secondary drawing with multiple numbers
         pushSecondary({
-          label: item.label,
+          label: resolvedLabel || "Secondary Drawing",
           numbers,
           colorHex: item.color_hex,
           mainItems: item.main_items,

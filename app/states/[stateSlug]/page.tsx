@@ -44,10 +44,21 @@ export default async function StatePage({ params }: StatePageProps) {
     notFound()
   }
 
+  // Variants marked display_in_parent_only are rendered inside parent cards,
+  // not as standalone game cards in the state grid.
+  const visibleGames = games.filter((game) => {
+    const displayInParentOnly = (game as { display_in_parent_only?: boolean | string }).display_in_parent_only
+    if (displayInParentOnly === true) return false
+    if (typeof displayInParentOnly === "string") {
+      return displayInParentOnly.toLowerCase() !== "true"
+    }
+    return true
+  })
+
   // Fetch latest draws for all games
   const drawResults = new Map<string, DrawResult>()
   
-  const drawPromises = games.slice(0, 20).map(async (game) => {
+  const drawPromises = visibleGames.slice(0, 20).map(async (game) => {
     try {
       const draw = await getDrawResult(game.slug, stateSlug)
       if (draw) {
@@ -60,7 +71,7 @@ export default async function StatePage({ params }: StatePageProps) {
   await Promise.all(drawPromises)
 
   // Group games by family - pass stateSlug for proper URL building
-  const gameFamilies = groupGamesByFamily(games, drawResults, stateSlug, state.name)
+  const gameFamilies = groupGamesByFamily(visibleGames, drawResults, stateSlug, state.name)
   
   // Get properly formatted state name
   const stateName = getStateName(state)

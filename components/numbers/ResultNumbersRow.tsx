@@ -53,6 +53,12 @@ export function ResultNumbersRow({
   className,
   gameSlug,
 }: ResultNumbersRowProps) {
+  const normalizedGameSlug = (gameSlug || "").toLowerCase()
+  const isPegaGame =
+    normalizedGameSlug.startsWith("pega-2-") ||
+    normalizedGameSlug.startsWith("pega-3-") ||
+    normalizedGameSlug.startsWith("pega-4-")
+
   const isPokerLottoGame = isPokerLotto(gameSlug, extraItems)
   const isTwoByTwoGame = isTwoByTwo(gameSlug, extraItems)
 
@@ -123,7 +129,14 @@ export function ResultNumbersRow({
 
   const apiRealBonusItems = bonusItems
     .filter((b) => !MULTIPLIER_BALL_GUARD.some((m) => (b.label ?? "").toLowerCase().includes(m)))
-    .filter((b) => !(hasInPlaceSignals && (isBullsEyeLabel(b.label) || isPegaLabel(b.label))))
+    .filter((b) => {
+      const isInPlaceLabel = isBullsEyeLabel(b.label) || isPegaLabel(b.label)
+      if (!hasInPlaceSignals || !isInPlaceLabel) return true
+      // Puerto Rico Pega now comes with explicit bonus_items from API and
+      // must always render as a separate bonus ball.
+      if (isPegaGame && isPegaLabel(b.label)) return true
+      return false
+    })
 
   const apiBadgeExtras: ExtraItem[] = bonusItems
     .filter((b) => MULTIPLIER_BALL_GUARD.some((m) => (b.label ?? "").toLowerCase().includes(m)))

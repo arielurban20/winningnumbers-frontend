@@ -34,6 +34,12 @@ export interface Game {
   price?: number
   odds?: string
   description?: string
+  /** When true, this variant should be rendered inside its parent game card only. */
+  display_in_parent_only?: boolean
+  /** Parent slug used for grouped variants (e.g. Hoosier Lotto +PLUS under Hoosier Lotto). */
+  parent_game_slug?: string
+  /** Variant semantic type (e.g. secondary_draw). */
+  variant_type?: string
 }
 
 export interface BonusItem {
@@ -80,6 +86,8 @@ export interface MainItem {
 
 export interface ExtraItem {
   label: string
+  /** Optional alternative label key sent by backend payloads. */
+  name?: string
   value: string | number | (string | number)[]
   color_hex?: string | null
   color_class?: string | null
