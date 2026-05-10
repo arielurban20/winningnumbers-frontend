@@ -46,6 +46,8 @@ const SESSION_WORDS = [
   "Late",
 ]
 
+const TIME_SUFFIX_DISPLAY_PATTERN = /^(\d{1,2})(?::|-)?(\d{2})?\s*([ap]m)$/i
+
 // Slug suffixes that indicate session variants.
 // These are stripped ONLY from the end of slug-core to build the family key.
 const SESSION_SLUG_SUFFIXES = [
@@ -178,6 +180,7 @@ const SESSION_SORT_ORDER = [
 ]
 
 const TIME_PATTERN = /\s+(\d{1,2}:\d{2}\s*[ap]m)$/i
+const HOUR_ONLY_TIME_PATTERN = /\s+(\d{1,2}\s*[ap]m)$/i
 
 const SESSION_PATTERN = new RegExp(
   `\\s+(${SESSION_WORDS.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})$`,
@@ -216,9 +219,15 @@ function canonicalizeSessionDisplay(value: string): string {
   const clean = value.trim().replace(/\s+/g, " ")
   if (!clean) return clean
 
-  const timeMatch = clean.match(/^(\d{1,2}):(\d{2})\s*([ap]m)$/i)
+  const timeMatch = clean.match(TIME_SUFFIX_DISPLAY_PATTERN)
   if (timeMatch) {
-    return `${timeMatch[1]}:${timeMatch[2]} ${timeMatch[3].toUpperCase()}`
+    const hour = String(parseInt(timeMatch[1], 10))
+    const minute = timeMatch[2]
+    const meridiem = timeMatch[3].toLowerCase()
+    if (minute) {
+      return `${hour}:${minute}${meridiem}`
+    }
+    return `${hour}${meridiem}`
   }
 
   const token = normalizeSessionToken(clean)
@@ -232,11 +241,61 @@ function stripStateSuffix(gameSlug: string): string {
   return normalize(gameSlug).replace(/-[a-z]{2}$/i, "")
 }
 
+function extractTimeSuffixFromSlugCore(slugCore: string): {
+  familySlug: string
+  sessionSlug: string
+} | null {
+  const tokens = slugCore.split("-").filter(Boolean)
+  if (tokens.length < 2) return null
+
+  const lastToken = tokens[tokens.length - 1].toLowerCase()
+
+  // Hour-only time suffix: 1pm, 10pm, 12am, etc.
+  const hourOnly = lastToken.match(/^(\d{1,2})(am|pm)$/)
+  if (hourOnly) {
+    const hour = parseInt(hourOnly[1], 10)
+    if (hour >= 1 && hour <= 12) {
+      const familySlug = tokens.slice(0, -1).join("-")
+      if (familySlug) {
+        return {
+          familySlug,
+          sessionSlug: lastToken,
+        }
+      }
+    }
+  }
+
+  // Minute form split in slug tokens: 1-50pm, 7-30pm, etc.
+  const minuteWithMeridiem = lastToken.match(/^([0-5]\d)(am|pm)$/)
+  if (minuteWithMeridiem && tokens.length >= 3) {
+    const hourToken = tokens[tokens.length - 2]
+    if (/^\d{1,2}$/.test(hourToken)) {
+      const hour = parseInt(hourToken, 10)
+      if (hour >= 1 && hour <= 12) {
+        const familySlug = tokens.slice(0, -2).join("-")
+        if (familySlug) {
+          return {
+            familySlug,
+            sessionSlug: `${hour}-${minuteWithMeridiem[1]}${minuteWithMeridiem[2]}`,
+          }
+        }
+      }
+    }
+  }
+
+  return null
+}
+
 function splitFamilyAndSessionFromSlug(gameSlug: string): {
   familySlug: string
   sessionSlug: string | null
 } {
   const slugCore = stripStateSuffix(gameSlug)
+
+  const parsedTime = extractTimeSuffixFromSlugCore(slugCore)
+  if (parsedTime) {
+    return parsedTime
+  }
 
   for (const suffix of SESSION_SLUG_SUFFIXES_SORTED) {
     if (slugCore === suffix) continue
@@ -272,6 +331,14 @@ export function parseGameName(gameName: string): ParsedGameName {
     return {
       familyName: gameName.slice(0, timeMatch.index).trim(),
       session: canonicalizeSessionDisplay(timeMatch[1]),
+    }
+  }
+
+  const hourOnlyTimeMatch = gameName.match(HOUR_ONLY_TIME_PATTERN)
+  if (hourOnlyTimeMatch) {
+    return {
+      familyName: gameName.slice(0, hourOnlyTimeMatch.index).trim(),
+      session: canonicalizeSessionDisplay(hourOnlyTimeMatch[1]),
     }
   }
 
@@ -355,10 +422,10 @@ export function getFamilyNameForGame(game: Pick<Game, "name" | "slug">): string 
 }
 
 function parseTimeToMinutes(timeValue: string): number | null {
-  const match = timeValue.toLowerCase().match(/(\d{1,2}):(\d{2})\s*(am|pm)/)
+  const match = timeValue.toLowerCase().match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/)
   if (!match) return null
   let hours = parseInt(match[1], 10)
-  const minutes = parseInt(match[2], 10)
+  const minutes = match[2] ? parseInt(match[2], 10) : 0
   const isPM = match[3] === "pm"
   if (isPM && hours !== 12) hours += 12
   if (!isPM && hours === 12) hours = 0

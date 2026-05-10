@@ -92,6 +92,33 @@ export function getGameFamilySlug(gameSlug: string): string {
 
   let familySlug = gameSlug.toLowerCase().replace(/-[a-z]{2}$/i, "")
 
+  // Dynamic time suffixes:
+  // - pick-4-1pm-or
+  // - pick-4-10pm-or
+  // - dc-3-1-50pm-dc
+  const tokens = familySlug.split("-").filter(Boolean)
+  if (tokens.length >= 2) {
+    const lastToken = tokens[tokens.length - 1]
+    const hourOnly = lastToken.match(/^(\d{1,2})(am|pm)$/i)
+    if (hourOnly) {
+      const hour = parseInt(hourOnly[1], 10)
+      if (hour >= 1 && hour <= 12) {
+        return tokens.slice(0, -1).join("-")
+      }
+    }
+
+    const minuteWithMeridiem = lastToken.match(/^([0-5]\d)(am|pm)$/i)
+    if (minuteWithMeridiem && tokens.length >= 3) {
+      const hourToken = tokens[tokens.length - 2]
+      if (/^\d{1,2}$/.test(hourToken)) {
+        const hour = parseInt(hourToken, 10)
+        if (hour >= 1 && hour <= 12) {
+          return tokens.slice(0, -2).join("-")
+        }
+      }
+    }
+  }
+
   for (const suffix of sessionSuffixes) {
     const marker = `-${suffix}`
     if (familySlug.endsWith(marker)) {

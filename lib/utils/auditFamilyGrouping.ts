@@ -9,6 +9,7 @@
 
 import type { Game, GameFamily } from "@/types/api"
 import { parseGameName, generateFamilySlug, groupGamesByFamily } from "./groupGames"
+import { getGameFamilySlug } from "./slug"
 
 export interface SplitFamilyReport {
   stateSlug: string
@@ -154,6 +155,37 @@ export function auditStateGrouping(
       issues.push(report)
     }
   }
+
+  // Issue 4: detect raw slug variants that should collapse into one visible card.
+  const expectedBaseToGames = new Map<string, Game[]>()
+  for (const game of games) {
+    const expectedBase = getGameFamilySlug(game.slug)
+    const bucket = expectedBaseToGames.get(expectedBase) || []
+    bucket.push(game)
+    expectedBaseToGames.set(expectedBase, bucket)
+  }
+
+  for (const [expectedBase, rawGames] of expectedBaseToGames) {
+    if (rawGames.length <= 1) continue
+
+    const matchingFamilies = families.filter((family) => {
+      const familyBase = getGameFamilySlug(family.familySlug)
+      return familyBase === expectedBase
+    })
+
+    if (matchingFamilies.length > 1) {
+      issues.push({
+        stateSlug,
+        stateName,
+        familyName: expectedBase,
+        familySlug: expectedBase,
+        detectedVariants: rawGames.map((g) => g.slug),
+        sessionCount: rawGames.length,
+        isProperlyGrouped: false,
+        issue: `Expected one visible family card for "${expectedBase}" but found ${matchingFamilies.length}`,
+      })
+    }
+  }
   
   return {
     stateSlug,
@@ -237,4 +269,34 @@ export function summarizeStateFamilies(games: Game[], stateSlug: string, stateNa
       sessions: family.sessions.map((session) => session.sessionName),
     })),
   }
+}
+
+/**
+ * Detect duplicate visible family cards after grouping.
+ * Returns entries where multiple cards still map to the same expected base key.
+ */
+export function findDuplicateVisibleFamilyCards(
+  games: Game[],
+  stateSlug: string,
+  stateName: string
+) {
+  const families = groupGamesByFamily(games, undefined, stateSlug, stateName)
+  const byBase = new Map<string, { familySlug: string; familyName: string }[]>()
+
+  for (const family of families) {
+    const base = getGameFamilySlug(family.familySlug)
+    const bucket = byBase.get(base) || []
+    bucket.push({ familySlug: family.familySlug, familyName: family.familyName })
+    byBase.set(base, bucket)
+  }
+
+  return Array.from(byBase.entries())
+    .filter(([, entries]) => entries.length > 1)
+    .map(([base, entries]) => ({
+      stateSlug,
+      stateName,
+      base,
+      cardCount: entries.length,
+      cards: entries,
+    }))
 }
