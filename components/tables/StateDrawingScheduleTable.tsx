@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import { Calendar, Clock } from "lucide-react"
 import { buildSessionUrl, buildFamilyUrl } from "@/lib/utils/buildLotteryLinks"
+import { getDrawingScheduleForSession } from "@/lib/data/drawingSchedules"
 import { cn } from "@/lib/utils"
 import type { GameFamily } from "@/types/api"
 
@@ -40,6 +41,18 @@ interface ScheduleRow {
     sat: string | null
   }
   timezone: string | null
+}
+
+function emptySchedule(): ScheduleRow["schedule"] {
+  return {
+    sun: null,
+    mon: null,
+    tue: null,
+    wed: null,
+    thu: null,
+    fri: null,
+    sat: null,
+  }
 }
 
 /**
@@ -123,22 +136,43 @@ function buildScheduleRows(gameFamilies: GameFamily[], stateSlug: string): Sched
   for (const family of gameFamilies) {
     for (const session of family.sessions) {
       const draw = session.latestDraw
+      const officialSchedule = getDrawingScheduleForSession({
+        stateSlug,
+        familyName: family.familyName,
+        familySlug: family.familySlug,
+        sessionName: session.sessionName,
+        gameName: session.game?.name || family.familyName,
+        gameSlug: session.game?.slug || session.sessionSlug,
+      })
       const nextDrawText = draw?.next_draw_text || draw?.next_draw_at_local || null
-      const timezone = parseTimezone(nextDrawText) || draw?.next_draw_timezone || null
-      const drawTime = parseDrawTime(nextDrawText)
-      
-      // Infer which days this game draws
-      const drawingDays = inferDrawingDays(family.familyName, session.sessionName)
-      
-      // Build schedule object
-      const schedule = {
-        sun: drawingDays.includes("sun") ? drawTime : null,
-        mon: drawingDays.includes("mon") ? drawTime : null,
-        tue: drawingDays.includes("tue") ? drawTime : null,
-        wed: drawingDays.includes("wed") ? drawTime : null,
-        thu: drawingDays.includes("thu") ? drawTime : null,
-        fri: drawingDays.includes("fri") ? drawTime : null,
-        sat: drawingDays.includes("sat") ? drawTime : null,
+      let timezone = parseTimezone(nextDrawText) || draw?.next_draw_timezone || null
+      let schedule = emptySchedule()
+
+      // 1) Source of truth fallback from normalized Excel dataset.
+      if (officialSchedule) {
+        schedule = {
+          sun: officialSchedule.days.sun || null,
+          mon: officialSchedule.days.mon || null,
+          tue: officialSchedule.days.tue || null,
+          wed: officialSchedule.days.wed || null,
+          thu: officialSchedule.days.thu || null,
+          fri: officialSchedule.days.fri || null,
+          sat: officialSchedule.days.sat || null,
+        }
+        timezone = officialSchedule.timezone || timezone
+      } else {
+        // 2) API-derived heuristic (legacy behavior).
+        const drawTime = parseDrawTime(nextDrawText)
+        const drawingDays = inferDrawingDays(family.familyName, session.sessionName)
+        schedule = {
+          sun: drawingDays.includes("sun") ? drawTime : null,
+          mon: drawingDays.includes("mon") ? drawTime : null,
+          tue: drawingDays.includes("tue") ? drawTime : null,
+          wed: drawingDays.includes("wed") ? drawTime : null,
+          thu: drawingDays.includes("thu") ? drawTime : null,
+          fri: drawingDays.includes("fri") ? drawTime : null,
+          sat: drawingDays.includes("sat") ? drawTime : null,
+        }
       }
       
       rows.push({
