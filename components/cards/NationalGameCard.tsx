@@ -145,6 +145,7 @@ export function NationalGameCard({
             bonusItems={bonusItems}
             extraItems={extraItems}
             statusColor={draw.draw_status_color}
+            gameSlug={draw.game_slug || draw.game?.slug}
             size="md"
             centered={true}
           />

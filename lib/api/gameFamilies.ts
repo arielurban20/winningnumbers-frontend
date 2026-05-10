@@ -1,5 +1,5 @@
 import { getStates, getStateGames } from "./states"
-import { parseGameName, generateFamilySlug } from "@/lib/utils/groupGames"
+import { parseGameName, getFamilySlugForGame } from "@/lib/utils/groupGames"
 import type { Game } from "@/types/api"
 
 /**
@@ -179,7 +179,7 @@ export async function getAllIndividualGames(limit?: number): Promise<IndividualG
           
           for (const game of games) {
             const { familyName } = parseGameName(game.name)
-            const familySlug = generateFamilySlug(familyName)
+            const familySlug = getFamilySlugForGame(game)
             const { baseName, sessionLabel, sessionSlug } = parseSessionFromName(game.name)
             const isMultistate = isMultistateGame(game.slug, game.name)
             

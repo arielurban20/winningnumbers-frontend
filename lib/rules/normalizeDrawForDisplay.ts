@@ -52,11 +52,23 @@ const MULTIPLIER_LABELS = [
   "multiplier",
   "kicker",
   "ez match",
+  "ezmatch",
   "doubler",
   "multiplicador",
 ]
 
-const ADD_ON_LABELS = ["fireball", "wild ball", "super ball", "sum it up", "bullseye", "bulls-eye", "bulls eye"]
+const ADD_ON_LABELS = [
+  "fireball",
+  "wild ball",
+  "super ball",
+  "sum it up",
+  "bullseye",
+  "bulls-eye",
+  "bulls eye",
+  "kicker",
+  "ez match",
+  "ezmatch",
+]
 const IN_PLACE_LABELS = ["bullseye", "bulls-eye", "bulls eye", "pega", "bulls eye"]
 
 function normalize(value?: string | null): string {
@@ -91,6 +103,17 @@ function isAddOnLabel(label?: string | null): boolean {
 function isInPlaceLabel(label?: string | null): boolean {
   const normalized = normalize(label)
   return IN_PLACE_LABELS.some((token) => normalized.includes(token))
+}
+
+function canonicalLabel(value?: string | null): string {
+  return normalize(value).replace(/[^a-z0-9]/g, "")
+}
+
+function isRuleBonusNameMatch(label: string | null | undefined, rule: VisualRuleLookupResult): boolean {
+  const bonusName = canonicalLabel(rule.bonus_name)
+  const currentLabel = canonicalLabel(label)
+  if (!bonusName || !currentLabel) return false
+  return currentLabel.includes(bonusName) || bonusName.includes(currentLabel)
 }
 
 function extractInPlaceFromExtra(item: ExtraItem): InPlaceBonusMeta | null {
@@ -342,8 +365,15 @@ function normalizeBonusItems(
   })
 
   // Multipliers should be badges, never balls.
+  // Exception: for add_on_separate rules, items matching rule.bonus_name are
+  // true add-ons (e.g. Kicker, EZmatch) and should stay in add-on flow.
   const multiplierAsExtras = normalizedBonus
-    .filter((item) => isMultiplierLabel(item.label))
+    .filter((item) => {
+      if (bonusPosition === "add_on_separate" && isRuleBonusNameMatch(item.label, rule)) {
+        return false
+      }
+      return isMultiplierLabel(item.label)
+    })
     .map<ExtraItem>((item) => ({
       type: "multiplier",
       label: item.label,
@@ -472,6 +502,38 @@ export function normalizeDrawForDisplay<T extends NormalizableDraw>(
       isInPlaceLabel(item.label)
     ) return false
     return true
+  })
+
+  // Preserve explicit extra-item intent for cleaner frontend rendering.
+  // If provider sends add-ons directly in extra_items, mark them as `add_on`
+  // (without inventing values) so UI can separate add-ons from multipliers.
+  extraItems = extraItems.map((item) => {
+    const itemType = normalize(item.type)
+    if (itemType) return item
+
+    const label = item.label || item.name
+    if (effectiveRule.bonus_position === "add_on_separate" && isRuleBonusNameMatch(label, effectiveRule)) {
+      return {
+        ...item,
+        type: "add_on",
+      }
+    }
+
+    if (isAddOnLabel(label)) {
+      return {
+        ...item,
+        type: "add_on",
+      }
+    }
+
+    if (isMultiplierLabel(label)) {
+      return {
+        ...item,
+        type: "multiplier",
+      }
+    }
+
+    return item
   })
 
   // Keep secondary drawings as dedicated typed extras

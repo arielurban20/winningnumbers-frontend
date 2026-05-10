@@ -71,6 +71,7 @@ export function GroupedGameCard({ family, href }: GroupedGameCardProps) {
               stateSlug={stateSlug}
               familySlug={familySlug}
               draw={session.latestDraw!}
+              gameSlug={session.sessionSlug}
               showSessionName={family.sessions.length > 1}
               clickable={family.sessions.length > 1}
             />

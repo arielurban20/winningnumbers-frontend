@@ -302,7 +302,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
               <h2 className="text-2xl font-bold">Past {session.sessionName} Results</h2>
               <Badge variant="secondary">{pastDraws.length} draws</Badge>
             </div>
-            <PastDrawsTable draws={pastDraws} showSession={false} />
+            <PastDrawsTable draws={pastDraws} showSession={false} gameSlug={session.sessionSlug} />
           </section>
         )}
         

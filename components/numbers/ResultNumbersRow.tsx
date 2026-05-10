@@ -41,6 +41,13 @@ function isPegaLabel(label: string | undefined): boolean {
   return normalized === "pega" || normalized.startsWith("pega ")
 }
 
+function bonusKey(item: BonusItem): string {
+  const label = String(item.label || "").trim().toLowerCase()
+  const value = String(item.value ?? item.number ?? "").trim()
+  const color = String(item.color_hex || "").trim().toLowerCase()
+  return `${label}|${value}|${color}`
+}
+
 export function ResultNumbersRow({
   mainNumbers,
   mainItems,
@@ -146,7 +153,13 @@ export function ResultNumbersRow({
       color_hex: b.color_hex,
     }))
 
-  const allBonusItems = [...apiRealBonusItems, ...bonusBalls]
+  const bonusSeen = new Set<string>()
+  const allBonusItems = [...apiRealBonusItems, ...bonusBalls].filter((item) => {
+    const key = bonusKey(item)
+    if (bonusSeen.has(key)) return false
+    bonusSeen.add(key)
+    return true
+  })
   const allRegularExtras = [...regularExtras, ...apiBadgeExtras]
 
   const hasBonusItems = allBonusItems.length > 0
@@ -157,7 +170,7 @@ export function ResultNumbersRow({
     <div className={cn("space-y-3", className)}>
       <div
         className={cn(
-          "flex flex-wrap items-center gap-2",
+          "flex flex-wrap items-center gap-1.5 sm:gap-2 min-w-0",
           centered && "justify-center"
         )}
       >

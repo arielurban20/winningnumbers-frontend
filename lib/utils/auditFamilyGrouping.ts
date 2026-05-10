@@ -33,6 +33,9 @@ export interface StateAuditReport {
  * Patterns that indicate games should be grouped together
  */
 const EXPECTED_MULTI_SESSION_FAMILIES = [
+  "all-or-nothing",
+  "daily-3",
+  "daily-4",
   "pick-3",
   "pick-4", 
   "pick-5",
@@ -44,6 +47,7 @@ const EXPECTED_MULTI_SESSION_FAMILIES = [
   "dc-3",
   "dc-4",
   "dc-5",
+  "pega-2",
   "pega-3",
   "pega-4",
   "cash-pop",
@@ -214,4 +218,23 @@ export function logAuditResults(reports: StateAuditReport[]): void {
 export function quickAuditGames(games: Game[], stateSlug: string, stateName: string): string[] {
   const report = auditStateGrouping(stateSlug, stateName, games)
   return report.issues.map(i => `${i.familyName}: ${i.issue}`)
+}
+
+/**
+ * Compact grouping summary for quick "before vs after" verification in dev tools.
+ */
+export function summarizeStateFamilies(games: Game[], stateSlug: string, stateName: string) {
+  const families = groupGamesByFamily(games, undefined, stateSlug, stateName)
+  return {
+    stateSlug,
+    stateName,
+    totalGames: games.length,
+    totalFamilies: families.length,
+    families: families.map((family) => ({
+      familySlug: family.familySlug,
+      familyName: family.familyName,
+      sessionCount: family.sessions.length,
+      sessions: family.sessions.map((session) => session.sessionName),
+    })),
+  }
 }

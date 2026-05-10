@@ -48,22 +48,57 @@ export function slugMatchesFamily(gameSlug: string, familySlug: string): boolean
  * Removes session suffixes like "-day", "-night", "-midday", "-evening"
  */
 export function getGameFamilySlug(gameSlug: string): string {
-  const sessionPatterns = [
-    /-day$/,
-    /-night$/,
-    /-midday$/,
-    /-evening$/,
-    /-morning$/,
-    /-afternoon$/,
-    /-matutino$/,
-    /-noche$/,
-    /-dia$/,
-  ]
-  
-  let familySlug = gameSlug
-  for (const pattern of sessionPatterns) {
-    familySlug = familySlug.replace(pattern, "")
+  const sessionSuffixes = [
+    "morning-buzz",
+    "lunch-break",
+    "prime-time",
+    "night-owl",
+    "early-bird",
+    "coffee-break",
+    "rush-hour",
+    "drive-time",
+    "late-night",
+    "clock-out",
+    "session-1",
+    "session-2",
+    "drawing-1",
+    "drawing-2",
+    "supper-time",
+    "lunch-time",
+    "dinner-time",
+    "suppertime",
+    "lunchtime",
+    "dinnertime",
+    "daytime",
+    "afternoon",
+    "midnight",
+    "primetime",
+    "evening",
+    "morning",
+    "mid-day",
+    "midday",
+    "matinee",
+    "brunch",
+    "breakfast",
+    "lunch",
+    "night",
+    "noche",
+    "nite",
+    "day",
+    "dia",
+    "eve",
+    "mid",
+  ].sort((a, b) => b.length - a.length)
+
+  let familySlug = gameSlug.toLowerCase().replace(/-[a-z]{2}$/i, "")
+
+  for (const suffix of sessionSuffixes) {
+    const marker = `-${suffix}`
+    if (familySlug.endsWith(marker)) {
+      familySlug = familySlug.slice(0, -marker.length)
+      break
+    }
   }
-  
+
   return familySlug
 }

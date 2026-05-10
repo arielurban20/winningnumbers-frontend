@@ -235,6 +235,7 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
                       stateSlug={stateSlug}
                       familySlug={gameFamilySlug}
                       draw={session.latestDraw}
+                      gameSlug={session.sessionSlug}
                       showSessionName={hasMultipleSessions}
                       clickable={hasMultipleSessions}
                     />
@@ -274,6 +275,7 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
                   <PastDrawsTable
                     draws={pastDrawsMap.get(session.sessionSlug) || []}
                     showSession={false}
+                    gameSlug={session.sessionSlug}
                   />
                 </TabsContent>
               ))}
@@ -282,6 +284,7 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
             <PastDrawsTable
               draws={pastDrawsMap.get(family.sessions[0]?.sessionSlug) || []}
               showSession={false}
+              gameSlug={family.sessions[0]?.sessionSlug}
             />
           )}
         </section>

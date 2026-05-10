@@ -1,9 +1,7 @@
 import type { Game, GameFamily, GameSession, DrawResult } from "@/types/api"
 
-// Comprehensive session patterns to extract from game names
-// Order matters - longer patterns first to avoid partial matches
+// Session words at the end of game names (longest first to avoid partial matches).
 const SESSION_WORDS = [
-  // English multi-word sessions (longest first)
   "After Hours",
   "Coffee Break",
   "Lunch Break",
@@ -12,61 +10,178 @@ const SESSION_WORDS = [
   "Night Owl",
   "Drive Time",
   "Prime Time",
-  "Primetime",
   "Late Night",
+  "Clock Out",
+  "Supper Time",
+  "Lunch Time",
+  "Dinner Time",
   "Mid Day",
   "Drawing 1",
   "Drawing 2",
   "Session 1",
   "Session 2",
-  // Spanish multi-word
-  "Medio Día",
-  "Medio Dia",
-  "Mediodía",
-  "Mediodia",
-  // Food/time-of-day sessions
-  "Brunch",
+  "Morning Buzz",
+  "PrimeTime",
   "Suppertime",
-  "Supper Time",
-  "Lunch",
   "Lunchtime",
-  "Lunch Time",
-  "Dinner",
   "Dinnertime",
-  "Dinner Time",
+  "Daytime",
   "Breakfast",
-  // English single-word sessions
-  "Day",
-  "Night",
-  "Midday",
+  "Afternoon",
+  "Midnight",
   "Evening",
   "Morning",
-  "Afternoon",
+  "Midday",
+  "Matinee",
+  "Brunch",
+  "Lunch",
+  "Night",
+  "Noche",
+  "Nite",
+  "Day",
+  "Dia",
+  "Eve",
+  "Mid",
   "Early",
   "Late",
-  "Matinee",
-  // Spanish single-word
-  "Día",
-  "Dia",
-  "Noche",
-  "Tarde",
-  "Mañana",
-  "Manana",
-  "Matutina",
-  "Vespertina",
-  "Nocturna",
-  "Primera",
-  "Segunda",
-  "Tercera",
 ]
 
-// Time pattern regex - matches times like "1:50pm", "7:50 PM", "11:30pm", "10:00am"
+// Slug suffixes that indicate session variants.
+// These are stripped ONLY from the end of slug-core to build the family key.
+const SESSION_SLUG_SUFFIXES = [
+  "morning-buzz",
+  "lunch-break",
+  "prime-time",
+  "night-owl",
+  "early-bird",
+  "coffee-break",
+  "rush-hour",
+  "drive-time",
+  "late-night",
+  "clock-out",
+  "session-1",
+  "session-2",
+  "drawing-1",
+  "drawing-2",
+  "supper-time",
+  "lunch-time",
+  "dinner-time",
+  "suppertime",
+  "lunchtime",
+  "dinnertime",
+  "daytime",
+  "afternoon",
+  "midnight",
+  "primetime",
+  "evening",
+  "morning",
+  "mid-day",
+  "midday",
+  "matinee",
+  "brunch",
+  "breakfast",
+  "lunch",
+  "night",
+  "noche",
+  "nite",
+  "noon",
+  "day",
+  "dia",
+  "eve",
+  "mid",
+]
+
+const SESSION_SLUG_SUFFIXES_SORTED = [...SESSION_SLUG_SUFFIXES].sort(
+  (a, b) => b.length - a.length
+)
+
+const SESSION_LABEL_BY_SLUG: Record<string, string> = {
+  "morning-buzz": "Morning Buzz",
+  "lunch-break": "Lunch Break",
+  "prime-time": "Prime Time",
+  "night-owl": "Night Owl",
+  "early-bird": "Early Bird",
+  "coffee-break": "Coffee Break",
+  "rush-hour": "Rush Hour",
+  "drive-time": "Drive Time",
+  "late-night": "Late Night",
+  "clock-out": "Clock Out",
+  "session-1": "Session 1",
+  "session-2": "Session 2",
+  "drawing-1": "Drawing 1",
+  "drawing-2": "Drawing 2",
+  "supper-time": "Supper Time",
+  "lunch-time": "Lunch Time",
+  "dinner-time": "Dinner Time",
+  suppertime: "Suppertime",
+  lunchtime: "Lunchtime",
+  dinnertime: "Dinnertime",
+  daytime: "Daytime",
+  afternoon: "Afternoon",
+  midnight: "Midnight",
+  primetime: "Prime Time",
+  evening: "Evening",
+  "mid-day": "Midday",
+  midday: "Midday",
+  matinee: "Matinee",
+  brunch: "Brunch",
+  breakfast: "Breakfast",
+  lunch: "Lunch",
+  morning: "Morning",
+  night: "Night",
+  nite: "Nite",
+  noche: "Noche",
+  day: "Day",
+  dia: "Dia",
+  eve: "Eve",
+  mid: "Mid",
+  noon: "Noon",
+}
+
+const SESSION_SORT_ORDER = [
+  "early-bird",
+  "morning",
+  "coffee-break",
+  "breakfast",
+  "drive-time",
+  "brunch",
+  "midday",
+  "mid",
+  "matinee",
+  "lunch",
+  "lunch-break",
+  "day",
+  "daytime",
+  "dia",
+  "afternoon",
+  "clock-out",
+  "suppertime",
+  "supper-time",
+  "dinner-time",
+  "dinnertime",
+  "eve",
+  "evening",
+  "prime-time",
+  "primetime",
+  "rush-hour",
+  "night-owl",
+  "late-night",
+  "night",
+  "nite",
+  "noche",
+  "midnight",
+  "session-1",
+  "session-2",
+  "drawing-1",
+  "drawing-2",
+  "main",
+]
+
 const TIME_PATTERN = /\s+(\d{1,2}:\d{2}\s*[ap]m)$/i
 
-// Create regex pattern from session words (case insensitive, word boundary at end)
 const SESSION_PATTERN = new RegExp(
-  `\\s+(${SESSION_WORDS.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})$`,
-  'i'
+  `\\s+(${SESSION_WORDS.map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})$`,
+  "i"
 )
 
 export interface ParsedGameName {
@@ -74,37 +189,100 @@ export interface ParsedGameName {
   session: string | null
 }
 
+function normalize(value?: string | null): string {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+}
+
+function titleCase(value: string): string {
+  return value
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+}
+
+function normalizeSessionToken(value: string): string {
+  return normalize(value)
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .replace(/-+/g, "-")
+}
+
+function canonicalizeSessionDisplay(value: string): string {
+  const clean = value.trim().replace(/\s+/g, " ")
+  if (!clean) return clean
+
+  const timeMatch = clean.match(/^(\d{1,2}):(\d{2})\s*([ap]m)$/i)
+  if (timeMatch) {
+    return `${timeMatch[1]}:${timeMatch[2]} ${timeMatch[3].toUpperCase()}`
+  }
+
+  const token = normalizeSessionToken(clean)
+  if (SESSION_LABEL_BY_SLUG[token]) {
+    return SESSION_LABEL_BY_SLUG[token]
+  }
+  return titleCase(clean)
+}
+
+function stripStateSuffix(gameSlug: string): string {
+  return normalize(gameSlug).replace(/-[a-z]{2}$/i, "")
+}
+
+function splitFamilyAndSessionFromSlug(gameSlug: string): {
+  familySlug: string
+  sessionSlug: string | null
+} {
+  const slugCore = stripStateSuffix(gameSlug)
+
+  for (const suffix of SESSION_SLUG_SUFFIXES_SORTED) {
+    if (slugCore === suffix) continue
+    const marker = `-${suffix}`
+    if (slugCore.endsWith(marker)) {
+      const familySlug = slugCore.slice(0, -marker.length)
+      if (familySlug) {
+        return {
+          familySlug,
+          sessionSlug: suffix,
+        }
+      }
+    }
+  }
+
+  return {
+    familySlug: slugCore,
+    sessionSlug: null,
+  }
+}
+
+function familyNameFromSlug(familySlug: string): string {
+  return titleCase(familySlug.replace(/-/g, " "))
+}
+
 /**
- * Parse a game name to extract the family name and session
- * 
- * Examples:
- * - "Cash Pop Early Bird" -> { familyName: "Cash Pop", session: "Early Bird" }
- * - "Cash Pop Brunch" -> { familyName: "Cash Pop", session: "Brunch" }
- * - "Cash Pop Suppertime" -> { familyName: "Cash Pop", session: "Suppertime" }
- * - "Pick 3 Day" -> { familyName: "Pick 3", session: "Day" }
- * - "Pega 3 Día" -> { familyName: "Pega 3", session: "Día" }
- * - "DC-3 1:50pm" -> { familyName: "DC-3", session: "1:50pm" }
- * - "DC-4 7:50 PM" -> { familyName: "DC-4", session: "7:50 PM" }
+ * Parse a game name to extract family/session using name suffixes.
+ * Slug-based normalization is applied separately in groupGamesByFamily.
  */
 export function parseGameName(gameName: string): ParsedGameName {
-  // First, check for time patterns (e.g., "1:50pm", "7:50 PM", "11:30pm")
   const timeMatch = gameName.match(TIME_PATTERN)
   if (timeMatch) {
     return {
       familyName: gameName.slice(0, timeMatch.index).trim(),
-      session: timeMatch[1].trim(),
+      session: canonicalizeSessionDisplay(timeMatch[1]),
     }
   }
-  
-  // Then check for session word patterns
+
   const sessionMatch = gameName.match(SESSION_PATTERN)
   if (sessionMatch) {
     return {
       familyName: gameName.slice(0, sessionMatch.index).trim(),
-      session: sessionMatch[1].trim(),
+      session: canonicalizeSessionDisplay(sessionMatch[1]),
     }
   }
-  
+
   return {
     familyName: gameName,
     session: null,
@@ -112,46 +290,91 @@ export function parseGameName(gameName: string): ParsedGameName {
 }
 
 /**
- * Generate a normalized family slug from the family name
+ * Generate a normalized family slug from name.
  */
 export function generateFamilySlug(familyName: string): string {
   return familyName
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+    .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "")
 }
 
 /**
- * Generate a session slug from session name
- * 
- * Examples:
- * - "Early Bird" -> "early-bird"
- * - "1:50pm" -> "1-50pm"
- * - "7:50 PM" -> "7-50pm"
- * - "11:30pm" -> "11-30pm"
- * - "Brunch" -> "brunch"
+ * Generate a URL-safe session slug from session label.
  */
 export function generateSessionSlug(sessionName: string): string {
   if (!sessionName || sessionName === "Main") return ""
   return sessionName
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
-    .replace(/\s+/g, "") // Remove spaces (e.g., "7:50 PM" -> "7:50pm")
-    .replace(/:/g, "-") // Replace colon with dash (e.g., "7:50pm" -> "7-50pm")
-    .replace(/[^a-z0-9-]+/g, "-") // Replace other non-alphanumeric with dash
-    .replace(/^-|-$/g, "") // Remove leading/trailing dashes
-    .replace(/-+/g, "-") // Collapse multiple dashes
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "")
+    .replace(/:/g, "-")
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/^-|-$/g, "")
+    .replace(/-+/g, "-")
+}
+
+function deriveGroupingMeta(game: Game): {
+  familyName: string
+  familySlug: string
+  sessionName: string | null
+} {
+  const parsed = parseGameName(game.name)
+  const fromSlug = splitFamilyAndSessionFromSlug(game.slug)
+
+  const familySlug = fromSlug.familySlug || generateFamilySlug(parsed.familyName)
+  const hasNameSession = parsed.session && parsed.session !== "Main"
+  const sessionFromSlug = fromSlug.sessionSlug
+    ? canonicalizeSessionDisplay(fromSlug.sessionSlug)
+    : null
+  const sessionName = hasNameSession ? parsed.session : sessionFromSlug
+
+  let familyName = parsed.familyName
+
+  // If name parser did not strip a session but slug did, fallback to slug-derived family.
+  if (!hasNameSession && sessionFromSlug) {
+    familyName = familyNameFromSlug(familySlug)
+  }
+
+  return {
+    familyName,
+    familySlug,
+    sessionName,
+  }
+}
+
+export function getFamilySlugForGame(game: Pick<Game, "name" | "slug">): string {
+  return deriveGroupingMeta(game as Game).familySlug
+}
+
+export function getFamilyNameForGame(game: Pick<Game, "name" | "slug">): string {
+  return deriveGroupingMeta(game as Game).familyName
+}
+
+function parseTimeToMinutes(timeValue: string): number | null {
+  const match = timeValue.toLowerCase().match(/(\d{1,2}):(\d{2})\s*(am|pm)/)
+  if (!match) return null
+  let hours = parseInt(match[1], 10)
+  const minutes = parseInt(match[2], 10)
+  const isPM = match[3] === "pm"
+  if (isPM && hours !== 12) hours += 12
+  if (!isPM && hours === 12) hours = 0
+  return hours * 60 + minutes
+}
+
+function sessionSortKey(sessionName: string): string {
+  const token = normalizeSessionToken(sessionName)
+  if (token === "mid-day") return "midday"
+  if (token === "primetime") return "prime-time"
+  if (token === "dia") return "dia"
+  return token
 }
 
 /**
- * Group games by family, combining sessions (Day/Night/Early Bird/etc.) into one GameFamily
- * @param games - Array of games from API
- * @param drawResults - Optional map of game slug to latest draw result
- * @param stateSlug - State slug from URL params (required for building session URLs)
- * @param stateName - Optional state name for display
+ * Group games by family, combining session variants into one family card.
  */
 export function groupGamesByFamily(
   games: Game[],
@@ -160,36 +383,29 @@ export function groupGamesByFamily(
   stateName?: string
 ): GameFamily[] {
   const familyMap = new Map<string, GameFamily>()
-  
+
   for (const game of games) {
-    const { familyName, session } = parseGameName(game.name)
-    const familySlug = generateFamilySlug(familyName)
-    
+    const grouping = deriveGroupingMeta(game)
+
     const sessionData: GameSession = {
-      sessionName: session || "Main",
-      sessionSlug: game.slug, // Keep original API game slug for API calls
-      sessionDisplaySlug: generateSessionSlug(session || ""), // URL-friendly slug
+      sessionName: grouping.sessionName || "Main",
+      sessionSlug: game.slug,
+      sessionDisplaySlug: generateSessionSlug(grouping.sessionName || ""),
       game,
       latestDraw: drawResults?.get(game.slug),
     }
-    
-    if (familyMap.has(familySlug)) {
-      const family = familyMap.get(familySlug)!
+
+    if (familyMap.has(grouping.familySlug)) {
+      const family = familyMap.get(grouping.familySlug)!
       family.sessions.push(sessionData)
-      // Update logo if current game has one and family doesn't
-      if (!family.logo_url && game.logo_url) {
-        family.logo_url = game.logo_url
-      }
-      if (!family.logo && game.logo) {
-        family.logo = game.logo
-      }
-      if (!family.icon_url && game.icon_url) {
-        family.icon_url = game.icon_url
-      }
+
+      if (!family.logo_url && game.logo_url) family.logo_url = game.logo_url
+      if (!family.logo && game.logo) family.logo = game.logo
+      if (!family.icon_url && game.icon_url) family.icon_url = game.icon_url
     } else {
-      familyMap.set(familySlug, {
-        familyName,
-        familySlug,
+      familyMap.set(grouping.familySlug, {
+        familyName: grouping.familyName,
+        familySlug: grouping.familySlug,
         sessions: [sessionData],
         state_slug: stateSlug || game.state_slug || "",
         state_name: stateName || game.state_name || "",
@@ -199,170 +415,79 @@ export function groupGamesByFamily(
       })
     }
   }
-  
-  // Sort sessions within each family with comprehensive ordering
-  const sessionOrder = [
-    "early bird",
-    "morning",
-    "coffee break",
-    "breakfast",
-    "matutina",
-    "mañana",
-    "manana",
-    "drive time",
-    "brunch",
-    "midday",
-    "mid day",
-    "mediodía",
-    "mediodia",
-    "medio día",
-    "medio dia",
-    "matinee",
-    "lunch",
-    "lunchtime",
-    "day",
-    "día",
-    "dia",
-    "afternoon",
-    "tarde",
-    "vespertina",
-    "suppertime",
-    "supper time",
-    "dinner",
-    "dinnertime",
-    "evening",
-    "prime time",
-    "primetime",
-    "rush hour",
-    "night owl",
-    "late night",
-    "night",
-    "after hours",
-    "noche",
-    "nocturna",
-    "primera",
-    "segunda",
-    "tercera",
-    "session 1",
-    "session 2",
-    "drawing 1",
-    "drawing 2",
-    "main",
-  ]
-  
-  // Helper to parse time strings to minutes for sorting
-  const parseTimeToMinutes = (timeStr: string): number | null => {
-    const match = timeStr.toLowerCase().match(/(\d{1,2}):(\d{2})\s*(am|pm)/)
-    if (!match) return null
-    let hours = parseInt(match[1], 10)
-    const minutes = parseInt(match[2], 10)
-    const isPM = match[3] === "pm"
-    if (isPM && hours !== 12) hours += 12
-    if (!isPM && hours === 12) hours = 0
-    return hours * 60 + minutes
-  }
 
   for (const family of familyMap.values()) {
     family.sessions.sort((a, b) => {
-      const aLower = a.sessionName.toLowerCase()
-      const bLower = b.sessionName.toLowerCase()
-      
-      // Check if both are time-based sessions
-      const aTime = parseTimeToMinutes(aLower)
-      const bTime = parseTimeToMinutes(bLower)
-      
-      // If both are times, sort chronologically
-      if (aTime !== null && bTime !== null) {
-        return aTime - bTime
-      }
-      
-      // If only one is a time, times come after named sessions
+      const aTime = parseTimeToMinutes(a.sessionName)
+      const bTime = parseTimeToMinutes(b.sessionName)
+      if (aTime !== null && bTime !== null) return aTime - bTime
       if (aTime !== null) return 1
       if (bTime !== null) return -1
-      
-      // Otherwise use the session order
-      const aIndex = sessionOrder.findIndex((s) => aLower.includes(s) || aLower === s)
-      const bIndex = sessionOrder.findIndex((s) => bLower.includes(s) || bLower === s)
-      return (aIndex === -1 ? 99 : aIndex) - (bIndex === -1 ? 99 : bIndex)
+
+      const aKey = sessionSortKey(a.sessionName)
+      const bKey = sessionSortKey(b.sessionName)
+      const aIndex = SESSION_SORT_ORDER.findIndex((key) => aKey === key)
+      const bIndex = SESSION_SORT_ORDER.findIndex((key) => bKey === key)
+
+      if (aIndex === -1 && bIndex === -1) {
+        return a.sessionName.localeCompare(b.sessionName)
+      }
+      if (aIndex === -1) return 1
+      if (bIndex === -1) return -1
+      return aIndex - bIndex
     })
   }
-  
-  return Array.from(familyMap.values()).sort((a, b) => 
+
+  return Array.from(familyMap.values()).sort((a, b) =>
     a.familyName.localeCompare(b.familyName)
   )
 }
 
 /**
- * Find games that match a family slug
+ * Find games that belong to a family slug.
  */
 export function findGamesByFamilySlug(games: Game[], familySlug: string): Game[] {
-  return games.filter((game) => {
-    const { familyName } = parseGameName(game.name)
-    return generateFamilySlug(familyName) === familySlug
-  })
+  const normalizedTarget = normalize(familySlug)
+  return games.filter((game) => deriveGroupingMeta(game).familySlug === normalizedTarget)
 }
 
 /**
- * Find a specific session within a family
- * 
- * Handles various slug formats including time-based sessions:
- * - "early-bird" matches "Early Bird"
- * - "1-50pm" matches "1:50pm" or "1:50 PM"
- * - "7-50pm" matches "7:50pm" or "7:50 PM"
+ * Find a session inside a family.
  */
 export function findSessionInFamily(
   family: GameFamily,
   sessionSlug: string
 ): GameSession | undefined {
   const normalizedInput = sessionSlug.toLowerCase()
-  
-  return family.sessions.find((s) => {
-    // Try exact sessionDisplaySlug match
-    if (s.sessionDisplaySlug === sessionSlug) return true
-    
-    // Try normalized session name match
-    const normalizedSessionSlug = generateSessionSlug(s.sessionName)
+  const slugAsToken = normalizeSessionToken(normalizedInput)
+
+  return family.sessions.find((session) => {
+    if (session.sessionDisplaySlug === sessionSlug) return true
+    if (session.sessionSlug === sessionSlug) return true
+    if (session.sessionSlug.toLowerCase() === normalizedInput) return true
+
+    const normalizedSessionSlug = generateSessionSlug(session.sessionName)
     if (normalizedSessionSlug === normalizedInput) return true
-    
-    // Try game slug match (for API compatibility)
-    if (s.sessionSlug === sessionSlug) return true
-    if (s.sessionSlug.toLowerCase() === normalizedInput) return true
-    
-    // Try matching time formats (e.g., "1-50pm" should match session "1:50pm")
-    // Convert slug back to potential time format and compare
-    const timeFromSlug = normalizedInput.replace(/-/g, ":")
-    const sessionNameLower = s.sessionName.toLowerCase().replace(/\s+/g, "")
-    if (sessionNameLower === timeFromSlug) return true
-    
+
+    if (sessionSortKey(session.sessionName) === slugAsToken) return true
+
     return false
   })
 }
 
-/**
- * Get the display name for a session
- */
 export function getSessionDisplayName(session: string | null): string {
   if (!session || session === "Main") return ""
   return session
 }
 
-/**
- * Check if a game family has multiple sessions
- */
 export function hasMultipleSessions(family: GameFamily): boolean {
   return family.sessions.length > 1
 }
 
-/**
- * Build URL for a game family page
- */
 export function buildFamilyUrl(stateSlug: string, familySlug: string): string {
   return `/states/${stateSlug}/${familySlug}`
 }
 
-/**
- * Build URL for a session page
- */
 export function buildSessionUrl(
   stateSlug: string,
   familySlug: string,

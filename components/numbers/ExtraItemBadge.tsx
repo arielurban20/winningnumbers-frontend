@@ -9,6 +9,15 @@ interface ExtraItemBadgeProps {
   className?: string
 }
 
+function normalizeLabel(label: string): string {
+  const normalized = label.trim().toLowerCase()
+  if (normalized === "ezmatch") return "EZmatch"
+  if (normalized === "ez match") return "EZ Match"
+  if (normalized === "xtra") return "Xtra"
+  if (normalized === "kicker") return "Kicker"
+  return label
+}
+
 function isLightColor(hex: string): boolean {
   const color = hex.replace("#", "")
   const r = parseInt(color.substring(0, 2), 16)
@@ -28,6 +37,7 @@ export function ExtraItemBadge({
   colorHex,
   className,
 }: ExtraItemBadgeProps) {
+  const displayLabel = normalizeLabel(label)
   // Format value - arrays are joined with commas
   const displayValue = Array.isArray(value) ? value.join(", ") : value
   const hasCustomColor = colorHex && colorHex.length >= 6
@@ -50,7 +60,7 @@ export function ExtraItemBadge({
           border: `1px solid ${normalizedColor}40`,
         }}
       >
-        <span className="opacity-80">{label}</span>
+        <span className="opacity-80">{displayLabel}</span>
         <span className="font-bold">{displayValue}</span>
       </span>
     )
@@ -66,7 +76,7 @@ export function ExtraItemBadge({
         className
       )}
     >
-      <span className="opacity-80">{label}</span>
+      <span className="opacity-80">{displayLabel}</span>
       <span className="font-bold">{displayValue}</span>
     </span>
   )

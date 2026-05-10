@@ -87,6 +87,7 @@ const EXCLUDED_LABELS = [
   "megaplier",
   "multiplier",
   "ez match",
+  "ezmatch",
   "xtra",
   "kicker",
   "cash option",
@@ -284,8 +285,12 @@ export function parseSecondaryDrawings(extraItems: ExtraItem[] | undefined): Par
       }
     }
 
-    // Not a secondary drawing, keep as regular extra
-    regularExtras.push(item)
+    // Not a secondary drawing, keep as regular extra.
+    // Preserve backend label from `name` when provided.
+    regularExtras.push({
+      ...item,
+      label: resolvedLabel || item.label,
+    })
   }
 
   return { secondaryDrawings, regularExtras }
@@ -294,7 +299,7 @@ export function hasSecondaryDrawings(extraItems: ExtraItem[] | undefined): boole
   if (!extraItems || extraItems.length === 0) return false
   
   return extraItems.some(item => {
-    if (!isSecondaryDrawingLabel(item.label)) return false
+    if (!isSecondaryDrawingLabel(resolveExtraLabel(item))) return false
     const numbers = parseMultipleNumbers(item.value)
     return numbers !== null && numbers.length >= 2
   })
@@ -317,6 +322,7 @@ const MULTIPLIER_LABELS_NEVER_BONUS = [
   "megaplier",
   "multiplier",
   "ez match",
+  "ezmatch",
   "kicker",
   "boost",
   "doubler",
