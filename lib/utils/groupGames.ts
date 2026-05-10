@@ -563,3 +563,93 @@ export function buildSessionUrl(
   if (!sessionSlug) return buildFamilyUrl(stateSlug, familySlug)
   return `/states/${stateSlug}/${familySlug}/${sessionSlug}`
 }
+
+function countSecondaryDrawings(draw?: DrawResult): number {
+  if (!draw) return 0
+
+  let count = 0
+  const seen = new Set<string>()
+
+  const remember = (label: string, numbers: string) => {
+    const key = `${label}::${numbers}`
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  }
+
+  const addSecondary = (item: DrawResult["secondary_drawing"] | undefined) => {
+    if (!item || typeof item !== "object") return
+    const label = normalizeSessionToken(String(item.name || item.label || "secondary"))
+    const nums = Array.isArray(item.main_numbers)
+      ? item.main_numbers.map((n) => String(n)).join(",")
+      : ""
+    if (remember(label, nums)) count += 1
+  }
+
+  addSecondary(draw.secondary_drawing)
+  for (const item of draw.secondary_drawings || []) addSecondary(item)
+
+  for (const item of draw.extra_items || []) {
+    if (!item || typeof item !== "object") continue
+    if (String(item.type || "").toLowerCase() !== "secondary_drawing") continue
+    const label = normalizeSessionToken(String(item.name || item.label || "secondary"))
+    const nums = Array.isArray(item.main_numbers)
+      ? item.main_numbers.map((n) => String(n)).join(",")
+      : ""
+    if (remember(label, nums)) count += 1
+  }
+
+  return count
+}
+
+function estimateFamilyCardWeight(family: GameFamily): number {
+  const sessionsWithDraw = family.sessions.filter((s) => s.latestDraw)
+  const sessionBlocks = Math.max(sessionsWithDraw.length, 1)
+  const secondaryBlocks = sessionsWithDraw.reduce(
+    (acc, session) => acc + countSecondaryDrawings(session.latestDraw),
+    0
+  )
+  const addOnBadges = sessionsWithDraw.reduce((acc, session) => {
+    const draw = session.latestDraw
+    if (!draw) return acc
+    const items = draw.extra_items || []
+    const badgeCount = items.filter((item) => {
+      if (!item || typeof item !== "object") return false
+      const type = String(item.type || "").toLowerCase()
+      const label = String(item.label || item.name || "")
+      if (type === "secondary_drawing") return false
+      if (label.startsWith("__")) return false
+      return true
+    }).length
+    return acc + badgeCount
+  }, 0)
+  const familySlug = family.familySlug.toLowerCase()
+  const highFrequencyBoost =
+    familySlug.includes("cash-pop") || familySlug.includes("keno") ? 8 : 0
+
+  // Session count is the strongest predictor of card height in state grids.
+  return sessionBlocks * 100 + secondaryBlocks * 20 + addOnBadges * 5 + highFrequencyBoost
+}
+
+/**
+ * Desktop-only display ordering helper:
+ * short cards first, tall/multi-session cards later.
+ *
+ * This improves visual balance in state grids without changing URLs/grouping.
+ */
+export function sortGameFamiliesForDesktopLayout(families: GameFamily[]): GameFamily[] {
+  const originalOrder = new Map<string, number>()
+  families.forEach((family, idx) => originalOrder.set(family.familySlug, idx))
+
+  return [...families].sort((a, b) => {
+    const aWeight = estimateFamilyCardWeight(a)
+    const bWeight = estimateFamilyCardWeight(b)
+    if (aWeight !== bWeight) return aWeight - bWeight
+
+    const aIdx = originalOrder.get(a.familySlug) ?? 0
+    const bIdx = originalOrder.get(b.familySlug) ?? 0
+    if (aIdx !== bIdx) return aIdx - bIdx
+
+    return a.familyName.localeCompare(b.familyName)
+  })
+}

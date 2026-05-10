@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { getStateBySlug, getStateGames } from "@/lib/api/states"
 import { getDrawResult } from "@/lib/api/draws"
-import { groupGamesByFamily } from "@/lib/utils/groupGames"
+import { groupGamesByFamily, sortGameFamiliesForDesktopLayout } from "@/lib/utils/groupGames"
 import { GroupedGameCard } from "@/components/cards"
 import { StateDrawingScheduleTable } from "@/components/tables"
 import { JsonLd } from "@/components/seo"
@@ -72,6 +72,8 @@ export default async function StatePage({ params }: StatePageProps) {
 
   // Group games by family - pass stateSlug for proper URL building
   const gameFamilies = groupGamesByFamily(visibleGames, drawResults, stateSlug, state.name)
+  // Desktop-only display sort: smaller/shorter cards first, tall multi-session cards later.
+  const desktopSortedGameFamilies = sortGameFamiliesForDesktopLayout(gameFamilies)
   
   // Get properly formatted state name
   const stateName = getStateName(state)
@@ -149,8 +151,17 @@ export default async function StatePage({ params }: StatePageProps) {
                 Click a game to view detailed results and history
               </p>
             </div>
-            <div className="grid gap-3 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-3 sm:gap-6 md:hidden">
               {gameFamilies.map((family) => (
+                <GroupedGameCard
+                  key={family.familySlug}
+                  family={family}
+                  href={`/states/${stateSlug}/${family.familySlug}`}
+                />
+              ))}
+            </div>
+            <div className="hidden gap-3 sm:gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
+              {desktopSortedGameFamilies.map((family) => (
                 <GroupedGameCard
                   key={family.familySlug}
                   family={family}
