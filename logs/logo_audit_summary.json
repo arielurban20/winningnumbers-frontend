@@ -1,50 +1,33 @@
 {
-  "generated_at": "2026-05-10T17:26:45.841Z",
+  "generated_at": "2026-05-10T18:52:29.220Z",
   "api_base": "https://winningnumbers.us/api",
   "logo_base_url": "https://winningnumbers.us/assets/logos",
   "total_states": 47,
   "total_state_games": 496,
   "total_national_virtual_games": 9,
   "total_games_checked": 505,
-  "games_with_logo": 486,
-  "games_missing_logo": 19,
-  "fallback_logo_count": 19,
-  "unused_logo_files_count": 17,
+  "games_with_logo": 500,
+  "games_missing_logo": 5,
+  "fallback_logo_count": 232,
+  "fallback_family_logo_count": 229,
+  "fallback_default_logo_count": 3,
+  "unused_logo_files_count": 10,
   "duplicate_logo_files_count": 70,
   "local_logo_registry_key_count": 487,
   "mapped_logo_path_missing_files_count": 0,
   "missing_by_state": {
-    "pr": 7,
-    "ri": 2,
-    "xx": 2,
     "co": 1,
-    "ms": 1,
-    "mo": 1,
     "ne": 1,
-    "nm": 1,
-    "nc": 1,
+    "pr": 1,
     "tx": 1,
     "wa": 1
   },
   "missing_by_game_family": {
-    "numbers-game": 2,
     "colorado-lotto": 1,
-    "mississippi-match-5": 1,
-    "mo-millions": 1,
     "myday": 1,
-    "road-runner-cash": 1,
-    "cash-pop-primetime-pop": 1,
     "loteria-tradicional": 1,
-    "pega-2-dia": 1,
-    "pega-2-noche": 1,
-    "pega-3-dia": 1,
-    "pega-3-noche": 1,
-    "pega-4-dia": 1,
-    "pega-4-noche": 1,
     "lotto-texas": 1,
-    "daily-keno": 1,
-    "lucky-for-life": 1,
-    "cash4life": 1
+    "daily-keno": 1
   },
   "mapped_logo_path_missing_files": [],
   "top_missing_examples": [
@@ -57,22 +40,6 @@
       "suggested_filename": "co-colorado-lotto.svg"
     },
     {
-      "state_slug": "ms",
-      "game_slug": "mississippi-match-5-ms",
-      "game_name": "Mississippi Match 5",
-      "family_slug": "mississippi-match-5",
-      "expected_logo_key": "ms-mississippi-match-5",
-      "suggested_filename": "ms-mississippi-match-5.svg"
-    },
-    {
-      "state_slug": "mo",
-      "game_slug": "mo-millions-mo",
-      "game_name": "MO Millions",
-      "family_slug": "mo-millions",
-      "expected_logo_key": "mo-mo-millions",
-      "suggested_filename": "mo-mo-millions.svg"
-    },
-    {
       "state_slug": "ne",
       "game_slug": "myday-ne",
       "game_name": "MyDaY",
@@ -81,92 +48,12 @@
       "suggested_filename": "ne-myday.svg"
     },
     {
-      "state_slug": "nm",
-      "game_slug": "road-runner-cash-nm",
-      "game_name": "Road Runner Cash",
-      "family_slug": "road-runner-cash",
-      "expected_logo_key": "nm-road-runner-cash",
-      "suggested_filename": "nm-road-runner-cash.svg"
-    },
-    {
-      "state_slug": "nc",
-      "game_slug": "cash-pop-primetime-pop-nc",
-      "game_name": "Cash Pop Primetime Pop",
-      "family_slug": "cash-pop-primetime-pop",
-      "expected_logo_key": "nc-cash-pop-primetime-pop",
-      "suggested_filename": "nc-cash-pop-primetime-pop.svg"
-    },
-    {
       "state_slug": "pr",
       "game_slug": "loteria-tradicional-pr",
       "game_name": "Lotería Tradicional",
       "family_slug": "loteria-tradicional",
       "expected_logo_key": "pr-loteria-tradicional",
       "suggested_filename": "pr-loteria-tradicional.svg"
-    },
-    {
-      "state_slug": "pr",
-      "game_slug": "pega-2-dia-pr",
-      "game_name": "Pega 2 Dia",
-      "family_slug": "pega-2-dia",
-      "expected_logo_key": "pr-pega-2-dia",
-      "suggested_filename": "pr-pega-2-dia.svg"
-    },
-    {
-      "state_slug": "pr",
-      "game_slug": "pega-2-noche-pr",
-      "game_name": "Pega 2 Noche",
-      "family_slug": "pega-2-noche",
-      "expected_logo_key": "pr-pega-2-noche",
-      "suggested_filename": "pr-pega-2-noche.svg"
-    },
-    {
-      "state_slug": "pr",
-      "game_slug": "pega-3-dia-pr",
-      "game_name": "Pega 3 Dia",
-      "family_slug": "pega-3-dia",
-      "expected_logo_key": "pr-pega-3-dia",
-      "suggested_filename": "pr-pega-3-dia.svg"
-    },
-    {
-      "state_slug": "pr",
-      "game_slug": "pega-3-noche-pr",
-      "game_name": "Pega 3 Noche",
-      "family_slug": "pega-3-noche",
-      "expected_logo_key": "pr-pega-3-noche",
-      "suggested_filename": "pr-pega-3-noche.svg"
-    },
-    {
-      "state_slug": "pr",
-      "game_slug": "pega-4-dia-pr",
-      "game_name": "Pega 4 Dia",
-      "family_slug": "pega-4-dia",
-      "expected_logo_key": "pr-pega-4-dia",
-      "suggested_filename": "pr-pega-4-dia.svg"
-    },
-    {
-      "state_slug": "pr",
-      "game_slug": "pega-4-noche-pr",
-      "game_name": "Pega 4 Noche",
-      "family_slug": "pega-4-noche",
-      "expected_logo_key": "pr-pega-4-noche",
-      "suggested_filename": "pr-pega-4-noche.svg"
-    },
-    {
-      "state_slug": "ri",
-      "game_slug": "numbers-game-evening-ri",
-      "game_name": "Numbers Game Evening",
-      "family_slug": "numbers-game",
-      "expected_logo_key": "ri-numbers-game",
-      "suggested_filename": "ri-numbers-game.svg"
-    },
-    {
-      "state_slug": "ri",
-      "game_slug": "numbers-game-midday-ri",
-      "game_name": "Numbers Game Midday",
-      "family_slug": "numbers-game",
-      "expected_logo_key": "ri-numbers-game",
-      "suggested_filename": "ri-numbers-game.svg"
     },
     {
       "state_slug": "tx",
@@ -183,22 +70,1611 @@
       "family_slug": "daily-keno",
       "expected_logo_key": "wa-daily-keno",
       "suggested_filename": "wa-daily-keno.svg"
+    }
+  ],
+  "resolved_by_family_fallback_examples": [
+    {
+      "state_slug": "ar",
+      "game_slug": "cash-3-evening-ar",
+      "game_name": "Cash 3 Evening",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/ar-cash3-1.svg"
     },
     {
-      "state_slug": "xx",
-      "game_slug": "lucky-for-life",
-      "game_name": "lucky-for-life",
-      "family_slug": "lucky-for-life",
-      "expected_logo_key": "xx-lucky-for-life",
-      "suggested_filename": "xx-lucky-for-life.svg"
+      "state_slug": "ar",
+      "game_slug": "cash-3-midday-ar",
+      "game_name": "Cash 3 Midday",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/ar-cash3-1.svg"
     },
     {
-      "state_slug": "xx",
-      "game_slug": "cash4life",
-      "game_name": "cash4life",
-      "family_slug": "cash4life",
-      "expected_logo_key": "xx-cash4life",
-      "suggested_filename": "xx-cash4life.svg"
+      "state_slug": "ar",
+      "game_slug": "cash-4-evening-ar",
+      "game_name": "Cash 4 Evening",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/ar-cash4-1.svg"
+    },
+    {
+      "state_slug": "ar",
+      "game_slug": "cash-4-midday-ar",
+      "game_name": "Cash 4 Midday",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/ar-cash4-1.svg"
+    },
+    {
+      "state_slug": "ca",
+      "game_slug": "daily-3-evening-ca",
+      "game_name": "Daily 3 Evening",
+      "family_slug": "daily-3",
+      "resolved_logo": "/logos/ca-daily3.svg"
+    },
+    {
+      "state_slug": "ca",
+      "game_slug": "daily-3-midday-ca",
+      "game_name": "Daily 3 Midday",
+      "family_slug": "daily-3",
+      "resolved_logo": "/logos/ca-daily3.svg"
+    },
+    {
+      "state_slug": "co",
+      "game_slug": "pick-3-evening-co",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/co-pick3-1.svg"
+    },
+    {
+      "state_slug": "co",
+      "game_slug": "pick-3-midday-co",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/co-pick3-1.svg"
+    },
+    {
+      "state_slug": "ct",
+      "game_slug": "play-3-day-ct",
+      "game_name": "Play 3 Day",
+      "family_slug": "play-3",
+      "resolved_logo": "/logos/ct-play3.svg"
+    },
+    {
+      "state_slug": "ct",
+      "game_slug": "play-3-night-ct",
+      "game_name": "Play 3 Night",
+      "family_slug": "play-3",
+      "resolved_logo": "/logos/ct-play3.svg"
+    },
+    {
+      "state_slug": "ct",
+      "game_slug": "play-4-day-ct",
+      "game_name": "Play 4 Day",
+      "family_slug": "play-4",
+      "resolved_logo": "/logos/ct-play4.svg"
+    },
+    {
+      "state_slug": "ct",
+      "game_slug": "play-4-night-ct",
+      "game_name": "Play 4 Night",
+      "family_slug": "play-4",
+      "resolved_logo": "/logos/ct-play4.svg"
+    },
+    {
+      "state_slug": "de",
+      "game_slug": "play-3-day-de",
+      "game_name": "Play 3 Day",
+      "family_slug": "play-3",
+      "resolved_logo": "/logos/de-play3.svg"
+    },
+    {
+      "state_slug": "de",
+      "game_slug": "play-3-night-de",
+      "game_name": "Play 3 Night",
+      "family_slug": "play-3",
+      "resolved_logo": "/logos/de-play3.svg"
+    },
+    {
+      "state_slug": "de",
+      "game_slug": "play-4-day-de",
+      "game_name": "Play 4 Day",
+      "family_slug": "play-4",
+      "resolved_logo": "/logos/de-play4.svg"
+    },
+    {
+      "state_slug": "de",
+      "game_slug": "play-4-night-de",
+      "game_name": "Play 4 Night",
+      "family_slug": "play-4",
+      "resolved_logo": "/logos/de-play4.svg"
+    },
+    {
+      "state_slug": "de",
+      "game_slug": "play-5-day-de",
+      "game_name": "Play 5 Day",
+      "family_slug": "play-5",
+      "resolved_logo": "/logos/de-play5-1.svg"
+    },
+    {
+      "state_slug": "de",
+      "game_slug": "play-5-night-de",
+      "game_name": "Play 5 Night",
+      "family_slug": "play-5",
+      "resolved_logo": "/logos/de-play5-1.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "cash-pop-afternoon-fl",
+      "game_name": "Cash Pop Afternoon",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/fl-cashpop.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "cash-pop-evening-fl",
+      "game_name": "Cash Pop Evening",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/fl-cashpop.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "cash-pop-late-night-fl",
+      "game_name": "Cash Pop Late Night",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/fl-cashpop.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "cash-pop-matinee-fl",
+      "game_name": "Cash Pop Matinee",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/fl-cashpop.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "cash-pop-morning-fl",
+      "game_name": "Cash Pop Morning",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/fl-cashpop.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "fantasy-5-evening-fl",
+      "game_name": "Fantasy 5 Evening",
+      "family_slug": "fantasy-5",
+      "resolved_logo": "/logos/fl-fantasy5-1.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "fantasy-5-midday-fl",
+      "game_name": "Fantasy 5 Midday",
+      "family_slug": "fantasy-5",
+      "resolved_logo": "/logos/fl-fantasy5-1.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "pick-2-evening-fl",
+      "game_name": "Pick 2 Evening",
+      "family_slug": "pick-2",
+      "resolved_logo": "/logos/fl-pick2.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "pick-2-midday-fl",
+      "game_name": "Pick 2 Midday",
+      "family_slug": "pick-2",
+      "resolved_logo": "/logos/fl-pick2.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "pick-3-evening-fl",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/fl-pick3.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "pick-3-midday-fl",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/fl-pick3.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "pick-4-evening-fl",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/fl-pick4.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "pick-4-midday-fl",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/fl-pick4.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "pick-5-evening-fl",
+      "game_name": "Pick 5 Evening",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/fl-pick5.svg"
+    },
+    {
+      "state_slug": "fl",
+      "game_slug": "pick-5-midday-fl",
+      "game_name": "Pick 5 Midday",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/fl-pick5.svg"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-3-evening-ga",
+      "game_name": "Cash 3 Evening",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/ga-cash3.svg"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-3-midday-ga",
+      "game_name": "Cash 3 Midday",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/ga-cash3.svg"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-3-night-ga",
+      "game_name": "Cash 3 Night",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/ga-cash3.svg"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-4-evening-ga",
+      "game_name": "Cash 4 Evening",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/ga-cash4.svg"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-4-midday-ga",
+      "game_name": "Cash 4 Midday",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/ga-cash4.svg"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-4-night-ga",
+      "game_name": "Cash 4 Night",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/ga-cash4.svg"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-pop-drive-time-ga",
+      "game_name": "Cash Pop Drive Time",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/ga-cashpop-4x.png"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-pop-early-bird-ga",
+      "game_name": "Cash Pop Early Bird",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/ga-cashpop-4x.png"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-pop-matinee-ga",
+      "game_name": "Cash Pop Matinee",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/ga-cashpop-4x.png"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-pop-night-owl-ga",
+      "game_name": "Cash Pop Night Owl",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/ga-cashpop-4x.png"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "cash-pop-primetime-ga",
+      "game_name": "Cash Pop Primetime",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/ga-cashpop-4x.png"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "georgia-five-evening-ga",
+      "game_name": "Georgia Five Evening",
+      "family_slug": "georgia-five",
+      "resolved_logo": "/logos/ga-georgiafive.svg"
+    },
+    {
+      "state_slug": "ga",
+      "game_slug": "georgia-five-midday-ga",
+      "game_name": "Georgia Five Midday",
+      "family_slug": "georgia-five",
+      "resolved_logo": "/logos/ga-georgiafive.svg"
+    },
+    {
+      "state_slug": "id",
+      "game_slug": "pick-3-day-id",
+      "game_name": "Pick 3 Day",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/id-pick3-1.svg"
+    },
+    {
+      "state_slug": "id",
+      "game_slug": "pick-3-night-id",
+      "game_name": "Pick 3 Night",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/id-pick3-1.svg"
+    },
+    {
+      "state_slug": "id",
+      "game_slug": "pick-4-day-id",
+      "game_name": "Pick 4 Day",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/id-pick4-1.svg"
+    },
+    {
+      "state_slug": "id",
+      "game_slug": "pick-4-night-id",
+      "game_name": "Pick 4 Night",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/id-pick4-1.svg"
+    },
+    {
+      "state_slug": "il",
+      "game_slug": "lucky-day-lotto-evening-il",
+      "game_name": "Lucky Day Lotto Evening",
+      "family_slug": "lucky-day-lotto",
+      "resolved_logo": "/logos/il-luckydaylotto.svg"
+    },
+    {
+      "state_slug": "il",
+      "game_slug": "lucky-day-lotto-midday-il",
+      "game_name": "Lucky Day Lotto Midday",
+      "family_slug": "lucky-day-lotto",
+      "resolved_logo": "/logos/il-luckydaylotto.svg"
+    },
+    {
+      "state_slug": "il",
+      "game_slug": "pick-3-evening-il",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/il-pick3.svg"
+    },
+    {
+      "state_slug": "il",
+      "game_slug": "pick-3-midday-il",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/il-pick3.svg"
+    },
+    {
+      "state_slug": "il",
+      "game_slug": "pick-4-evening-il",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/il-pick4.svg"
+    },
+    {
+      "state_slug": "il",
+      "game_slug": "pick-4-midday-il",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/il-pick4.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "cash-pop-afternoon-in",
+      "game_name": "Cash Pop Afternoon",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/in-cashpop-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "cash-pop-evening-in",
+      "game_name": "Cash Pop Evening",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/in-cashpop-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "cash-pop-late-night-in",
+      "game_name": "Cash Pop Late Night",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/in-cashpop-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "cash-pop-matinee-in",
+      "game_name": "Cash Pop Matinee",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/in-cashpop-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "cash-pop-morning-in",
+      "game_name": "Cash Pop Morning",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/in-cashpop-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "daily-3-evening-in",
+      "game_name": "Daily 3 Evening",
+      "family_slug": "daily-3",
+      "resolved_logo": "/logos/in-daily3-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "daily-3-midday-in",
+      "game_name": "Daily 3 Midday",
+      "family_slug": "daily-3",
+      "resolved_logo": "/logos/in-daily3-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "daily-4-evening-in",
+      "game_name": "Daily 4 Evening",
+      "family_slug": "daily-4",
+      "resolved_logo": "/logos/in-daily4-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "daily-4-midday-in",
+      "game_name": "Daily 4 Midday",
+      "family_slug": "daily-4",
+      "resolved_logo": "/logos/in-daily4-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "quick-draw-evening-in",
+      "game_name": "Quick Draw Evening",
+      "family_slug": "quick-draw",
+      "resolved_logo": "/logos/in-quickdraw-1.svg"
+    },
+    {
+      "state_slug": "in",
+      "game_slug": "quick-draw-midday-in",
+      "game_name": "Quick Draw Midday",
+      "family_slug": "quick-draw",
+      "resolved_logo": "/logos/in-quickdraw-1.svg"
+    },
+    {
+      "state_slug": "ia",
+      "game_slug": "pick-3-evening-ia",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/ia-pick3-1.svg"
+    },
+    {
+      "state_slug": "ia",
+      "game_slug": "pick-3-midday-ia",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/ia-pick3-1.svg"
+    },
+    {
+      "state_slug": "ia",
+      "game_slug": "pick-4-evening-ia",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/ia-pick4-1.svg"
+    },
+    {
+      "state_slug": "ia",
+      "game_slug": "pick-4-midday-ia",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/ia-pick4-1.svg"
+    },
+    {
+      "state_slug": "ks",
+      "game_slug": "pick-3-evening-ks",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/ks-pick3-1.svg"
+    },
+    {
+      "state_slug": "ks",
+      "game_slug": "pick-3-midday-ks",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/ks-pick3-1.svg"
+    },
+    {
+      "state_slug": "ky",
+      "game_slug": "pick-3-evening-ky",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/ky-pick3-1.svg"
+    },
+    {
+      "state_slug": "ky",
+      "game_slug": "pick-3-midday-ky",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/ky-pick3-1.svg"
+    },
+    {
+      "state_slug": "ky",
+      "game_slug": "pick-4-evening-ky",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/ky-pick4-1.svg"
+    },
+    {
+      "state_slug": "ky",
+      "game_slug": "pick-4-midday-ky",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/ky-pick4-1.svg"
+    },
+    {
+      "state_slug": "me",
+      "game_slug": "cash-pop-brunch-me",
+      "game_name": "Cash Pop Brunch",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/me-cashpop-2x.png"
+    },
+    {
+      "state_slug": "me",
+      "game_slug": "cash-pop-early-bird-me",
+      "game_name": "Cash Pop Early Bird",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/me-cashpop-2x.png"
+    },
+    {
+      "state_slug": "me",
+      "game_slug": "cash-pop-matinee-me",
+      "game_name": "Cash Pop Matinee",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/me-cashpop-2x.png"
+    },
+    {
+      "state_slug": "me",
+      "game_slug": "cash-pop-night-owl-me",
+      "game_name": "Cash Pop Night Owl",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/me-cashpop-2x.png"
+    },
+    {
+      "state_slug": "me",
+      "game_slug": "cash-pop-suppertime-me",
+      "game_name": "Cash Pop Suppertime",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/me-cashpop-2x.png"
+    },
+    {
+      "state_slug": "me",
+      "game_slug": "pick-3-day-me",
+      "game_name": "Pick 3 Day",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/me-pick3-1.svg"
+    },
+    {
+      "state_slug": "me",
+      "game_slug": "pick-3-evening-me",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/me-pick3-1.svg"
+    },
+    {
+      "state_slug": "me",
+      "game_slug": "pick-4-day-me",
+      "game_name": "Pick 4 Day",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/me-pick4-1.svg"
+    },
+    {
+      "state_slug": "me",
+      "game_slug": "pick-4-evening-me",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/me-pick4-1.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "cash-pop-11pm-md",
+      "game_name": "Cash Pop 11PM",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/md-cashpop-2.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "cash-pop-1pm-md",
+      "game_name": "Cash Pop 1PM",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/md-cashpop-2.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "cash-pop-6pm-md",
+      "game_name": "Cash Pop 6PM",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/md-cashpop-2.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "cash-pop-9am-md",
+      "game_name": "Cash Pop 9AM",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/md-cashpop-2.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "pick-3-evening-md",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/md-pick3.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "pick-3-midday-md",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/md-pick3.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "pick-4-evening-md",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/md-pick4.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "pick-4-midday-md",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/md-pick4.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "pick-5-evening-md",
+      "game_name": "Pick 5 Evening",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/md-pick5.svg"
+    },
+    {
+      "state_slug": "md",
+      "game_slug": "pick-5-midday-md",
+      "game_name": "Pick 5 Midday",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/md-pick5.svg"
+    },
+    {
+      "state_slug": "ma",
+      "game_slug": "mass-cash-evening-ma",
+      "game_name": "Mass Cash Evening",
+      "family_slug": "mass-cash",
+      "resolved_logo": "/logos/ma-masscash-2.svg"
+    },
+    {
+      "state_slug": "ma",
+      "game_slug": "mass-cash-midday-ma",
+      "game_name": "Mass Cash Midday",
+      "family_slug": "mass-cash",
+      "resolved_logo": "/logos/ma-masscash-2.svg"
+    },
+    {
+      "state_slug": "ma",
+      "game_slug": "numbers-game-evening-ma",
+      "game_name": "Numbers Game Evening",
+      "family_slug": "numbers-game",
+      "resolved_logo": "/logos/ma-numbersgame-2.svg"
+    },
+    {
+      "state_slug": "ma",
+      "game_slug": "numbers-game-midday-ma",
+      "game_name": "Numbers Game Midday",
+      "family_slug": "numbers-game",
+      "resolved_logo": "/logos/ma-numbersgame-2.svg"
+    },
+    {
+      "state_slug": "mi",
+      "game_slug": "daily-3-evening-mi",
+      "game_name": "Daily 3 Evening",
+      "family_slug": "daily-3",
+      "resolved_logo": "/logos/mi-daily3-1.svg"
+    },
+    {
+      "state_slug": "mi",
+      "game_slug": "daily-3-midday-mi",
+      "game_name": "Daily 3 Midday",
+      "family_slug": "daily-3",
+      "resolved_logo": "/logos/mi-daily3-1.svg"
+    },
+    {
+      "state_slug": "mi",
+      "game_slug": "daily-4-evening-mi",
+      "game_name": "Daily 4 Evening",
+      "family_slug": "daily-4",
+      "resolved_logo": "/logos/mi-daily4-1.svg"
+    },
+    {
+      "state_slug": "mi",
+      "game_slug": "daily-4-midday-mi",
+      "game_name": "Daily 4 Midday",
+      "family_slug": "daily-4",
+      "resolved_logo": "/logos/mi-daily4-1.svg"
+    },
+    {
+      "state_slug": "ms",
+      "game_slug": "cash-3-evening-ms",
+      "game_name": "Cash 3 Evening",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/ms-cash3-1.svg"
+    },
+    {
+      "state_slug": "ms",
+      "game_slug": "cash-3-midday-ms",
+      "game_name": "Cash 3 Midday",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/ms-cash3-1.svg"
+    },
+    {
+      "state_slug": "ms",
+      "game_slug": "cash-4-evening-ms",
+      "game_name": "Cash 4 Evening",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/ms-cash4-1.svg"
+    },
+    {
+      "state_slug": "ms",
+      "game_slug": "cash-4-midday-ms",
+      "game_name": "Cash 4 Midday",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/ms-cash4-1.svg"
+    },
+    {
+      "state_slug": "ms",
+      "game_slug": "cash-pop-evening-ms",
+      "game_name": "Cash Pop Evening",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/ms-cashpop-1.svg"
+    },
+    {
+      "state_slug": "ms",
+      "game_slug": "cash-pop-midday-ms",
+      "game_name": "Cash Pop Midday",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/ms-cashpop-1.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "cash-pop-early-bird-mo",
+      "game_name": "Cash Pop Early Bird",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/mo-cashpop-1.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "cash-pop-late-morning-mo",
+      "game_name": "Cash Pop Late Morning",
+      "family_slug": "cash-pop-late",
+      "resolved_logo": "/logos/mo-cashpop-1.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "cash-pop-matinee-mo",
+      "game_name": "Cash Pop Matinee",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/mo-cashpop-1.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "cash-pop-night-owl-mo",
+      "game_name": "Cash Pop Night Owl",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/mo-cashpop-1.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "cash-pop-prime-time-mo",
+      "game_name": "Cash Pop Prime Time",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/mo-cashpop-1.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "pick-3-evening-mo",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/mo-pick3-1.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "pick-3-midday-mo",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/mo-pick3-1.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "pick-4-evening-mo",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/mo-pick4-1.svg"
+    },
+    {
+      "state_slug": "mo",
+      "game_slug": "pick-4-midday-mo",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/mo-pick4-1.svg"
+    },
+    {
+      "state_slug": "nh",
+      "game_slug": "pick-3-day-nh",
+      "game_name": "Pick 3 Day",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/nh-pick3-1.svg"
+    },
+    {
+      "state_slug": "nh",
+      "game_slug": "pick-3-evening-nh",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/nh-pick3-1.svg"
+    },
+    {
+      "state_slug": "nh",
+      "game_slug": "pick-4-day-nh",
+      "game_name": "Pick 4 Day",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/nh-pick4-1.svg"
+    },
+    {
+      "state_slug": "nh",
+      "game_slug": "pick-4-evening-nh",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/nh-pick4-1.svg"
+    },
+    {
+      "state_slug": "nj",
+      "game_slug": "pick-3-evening-nj",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/nj-pick3-1.svg"
+    },
+    {
+      "state_slug": "nj",
+      "game_slug": "pick-3-midday-nj",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/nj-pick3-1.svg"
+    },
+    {
+      "state_slug": "nj",
+      "game_slug": "pick-4-evening-nj",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/nj-pick4-1.svg"
+    },
+    {
+      "state_slug": "nj",
+      "game_slug": "pick-4-midday-nj",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/nj-pick4-1.svg"
+    },
+    {
+      "state_slug": "nm",
+      "game_slug": "pick-3-day-nm",
+      "game_name": "Pick 3 Day",
+      "family_slug": "pick-3",
+      "resolved_logo": "https://winningnumbers.us/assets/logos/pick-3.svg"
+    },
+    {
+      "state_slug": "nm",
+      "game_slug": "pick-3-evening-nm",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "https://winningnumbers.us/assets/logos/pick-3.svg"
+    },
+    {
+      "state_slug": "nm",
+      "game_slug": "pick-4-day-nm",
+      "game_name": "Pick 4 Day",
+      "family_slug": "pick-4",
+      "resolved_logo": "https://winningnumbers.us/assets/logos/pick-4.svg"
+    },
+    {
+      "state_slug": "nm",
+      "game_slug": "pick-4-evening-nm",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "https://winningnumbers.us/assets/logos/pick-4.svg"
+    },
+    {
+      "state_slug": "ny",
+      "game_slug": "numbers-evening-ny",
+      "game_name": "Numbers Evening",
+      "family_slug": "numbers",
+      "resolved_logo": "/logos/ny-numbers.svg"
+    },
+    {
+      "state_slug": "ny",
+      "game_slug": "numbers-midday-ny",
+      "game_name": "Numbers Midday",
+      "family_slug": "numbers",
+      "resolved_logo": "/logos/ny-numbers.svg"
+    },
+    {
+      "state_slug": "ny",
+      "game_slug": "take-5-evening-ny",
+      "game_name": "Take 5 Evening",
+      "family_slug": "take-5",
+      "resolved_logo": "/logos/ny-take5.svg"
+    },
+    {
+      "state_slug": "ny",
+      "game_slug": "take-5-midday-ny",
+      "game_name": "Take 5 Midday",
+      "family_slug": "take-5",
+      "resolved_logo": "/logos/ny-take5.svg"
+    },
+    {
+      "state_slug": "ny",
+      "game_slug": "win-4-evening-ny",
+      "game_name": "Win 4 Evening",
+      "family_slug": "win-4",
+      "resolved_logo": "/logos/ny-win4.svg"
+    },
+    {
+      "state_slug": "ny",
+      "game_slug": "win-4-midday-ny",
+      "game_name": "Win 4 Midday",
+      "family_slug": "win-4",
+      "resolved_logo": "/logos/ny-win4.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "cash-pop-clock-out-cash-nc",
+      "game_name": "Cash Pop Clock Out Cash",
+      "family_slug": "cash-pop-clock-out-cash",
+      "resolved_logo": "/logos/nc-cashpop-1.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "cash-pop-lunch-rush-nc",
+      "game_name": "Cash Pop Lunch Rush",
+      "family_slug": "cash-pop-lunch-rush",
+      "resolved_logo": "/logos/nc-cashpop-1.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "cash-pop-midnight-money-nc",
+      "game_name": "Cash Pop Midnight Money",
+      "family_slug": "cash-pop-midnight-money",
+      "resolved_logo": "/logos/nc-cashpop-1.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "cash-pop-morning-buzz-nc",
+      "game_name": "Cash Pop Morning Buzz",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/nc-cashpop-1.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "cash-pop-primetime-pop-nc",
+      "game_name": "Cash Pop Primetime Pop",
+      "family_slug": "cash-pop-primetime-pop",
+      "resolved_logo": "/logos/nc-cashpop-1.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "pick-3-daytime-nc",
+      "game_name": "Pick 3 Daytime",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/nc-pick3-1.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "pick-3-evening-nc",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/nc-pick3-1.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "pick-4-daytime-nc",
+      "game_name": "Pick 4 Daytime",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/nc-pick4-1.svg"
+    },
+    {
+      "state_slug": "nc",
+      "game_slug": "pick-4-evening-nc",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/nc-pick4-1.svg"
+    },
+    {
+      "state_slug": "oh",
+      "game_slug": "pick-3-evening-oh",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/oh-pick3-1.svg"
+    },
+    {
+      "state_slug": "oh",
+      "game_slug": "pick-3-midday-oh",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/oh-pick3-1.svg"
+    },
+    {
+      "state_slug": "oh",
+      "game_slug": "pick-4-evening-oh",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/oh-pick4-1.svg"
+    },
+    {
+      "state_slug": "oh",
+      "game_slug": "pick-4-midday-oh",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/oh-pick4-1.svg"
+    },
+    {
+      "state_slug": "oh",
+      "game_slug": "pick-5-evening-oh",
+      "game_name": "Pick 5 Evening",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/oh-pick5-1.svg"
+    },
+    {
+      "state_slug": "oh",
+      "game_slug": "pick-5-midday-oh",
+      "game_name": "Pick 5 Midday",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/oh-pick5-1.svg"
+    },
+    {
+      "state_slug": "or",
+      "game_slug": "pick-4-10pm-or",
+      "game_name": "Pick 4 10pm",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/or-pick4.svg"
+    },
+    {
+      "state_slug": "or",
+      "game_slug": "pick-4-1pm-or",
+      "game_name": "Pick 4 1pm",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/or-pick4.svg"
+    },
+    {
+      "state_slug": "or",
+      "game_slug": "pick-4-4pm-or",
+      "game_name": "Pick 4 4pm",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/or-pick4.svg"
+    },
+    {
+      "state_slug": "or",
+      "game_slug": "pick-4-7pm-or",
+      "game_name": "Pick 4 7pm",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/or-pick4.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "cash-pop-lunch-break-pa",
+      "game_name": "Cash Pop Lunch Break",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/pa-cashpop-1.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "cash-pop-morning-buzz-pa",
+      "game_name": "Cash Pop Morning Buzz",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/pa-cashpop-1.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "cash-pop-night-owl-pa",
+      "game_name": "Cash Pop Night Owl",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/pa-cashpop-1.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "cash-pop-prime-time-pa",
+      "game_name": "Cash Pop Prime Time",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/pa-cashpop-1.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "pick-2-day-pa",
+      "game_name": "Pick 2 Day",
+      "family_slug": "pick-2",
+      "resolved_logo": "/logos/pa-pick2.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "pick-2-evening-pa",
+      "game_name": "Pick 2 Evening",
+      "family_slug": "pick-2",
+      "resolved_logo": "/logos/pa-pick2.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "pick-3-day-pa",
+      "game_name": "Pick 3 Day",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/pa-pick3.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "pick-3-evening-pa",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/pa-pick3.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "pick-4-day-pa",
+      "game_name": "Pick 4 Day",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/pa-pick4.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "pick-4-evening-pa",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/pa-pick4.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "pick-5-day-pa",
+      "game_name": "Pick 5 Day",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/pa-pick5.svg"
+    },
+    {
+      "state_slug": "pa",
+      "game_slug": "pick-5-evening-pa",
+      "game_name": "Pick 5 Evening",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/pa-pick5.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-2-dia-pr",
+      "game_name": "Pega 2 Dia",
+      "family_slug": "pega-2",
+      "resolved_logo": "/logos/pr-pega2-1.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-2-noche-pr",
+      "game_name": "Pega 2 Noche",
+      "family_slug": "pega-2",
+      "resolved_logo": "/logos/pr-pega2-1.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-3-dia-pr",
+      "game_name": "Pega 3 Dia",
+      "family_slug": "pega-3",
+      "resolved_logo": "/logos/pr-pega3-1.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-3-noche-pr",
+      "game_name": "Pega 3 Noche",
+      "family_slug": "pega-3",
+      "resolved_logo": "/logos/pr-pega3-1.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-4-dia-pr",
+      "game_name": "Pega 4 Dia",
+      "family_slug": "pega-4",
+      "resolved_logo": "/logos/pr-pega4-1.svg"
+    },
+    {
+      "state_slug": "pr",
+      "game_slug": "pega-4-noche-pr",
+      "game_name": "Pega 4 Noche",
+      "family_slug": "pega-4",
+      "resolved_logo": "/logos/pr-pega4-1.svg"
+    },
+    {
+      "state_slug": "ri",
+      "game_slug": "numbers-game-evening-ri",
+      "game_name": "Numbers Game Evening",
+      "family_slug": "numbers-game",
+      "resolved_logo": "/logos/ri-numbers-1.svg"
+    },
+    {
+      "state_slug": "ri",
+      "game_slug": "numbers-game-midday-ri",
+      "game_name": "Numbers Game Midday",
+      "family_slug": "numbers-game",
+      "resolved_logo": "/logos/ri-numbers-1.svg"
+    },
+    {
+      "state_slug": "sc",
+      "game_slug": "cash-pop-evening-sc",
+      "game_name": "Cash Pop Evening",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/sc-cashpop.svg"
+    },
+    {
+      "state_slug": "sc",
+      "game_slug": "cash-pop-midday-sc",
+      "game_name": "Cash Pop Midday",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/sc-cashpop.svg"
+    },
+    {
+      "state_slug": "sc",
+      "game_slug": "pick-3-evening-sc",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "https://winningnumbers.us/assets/logos/pick-3.svg"
+    },
+    {
+      "state_slug": "sc",
+      "game_slug": "pick-3-midday-sc",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "https://winningnumbers.us/assets/logos/pick-3.svg"
+    },
+    {
+      "state_slug": "sc",
+      "game_slug": "pick-4-evening-sc",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "https://winningnumbers.us/assets/logos/pick-4.svg"
+    },
+    {
+      "state_slug": "sc",
+      "game_slug": "pick-4-midday-sc",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "https://winningnumbers.us/assets/logos/pick-4.svg"
+    },
+    {
+      "state_slug": "tn",
+      "game_slug": "cash-3-evening-tn",
+      "game_name": "Cash 3 Evening",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/tn-cash3-1.svg"
+    },
+    {
+      "state_slug": "tn",
+      "game_slug": "cash-3-midday-tn",
+      "game_name": "Cash 3 Midday",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/tn-cash3-1.svg"
+    },
+    {
+      "state_slug": "tn",
+      "game_slug": "cash-3-morning-tn",
+      "game_name": "Cash 3 Morning",
+      "family_slug": "cash-3",
+      "resolved_logo": "/logos/tn-cash3-1.svg"
+    },
+    {
+      "state_slug": "tn",
+      "game_slug": "cash-4-evening-tn",
+      "game_name": "Cash 4 Evening",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/tn-cash4-1.svg"
+    },
+    {
+      "state_slug": "tn",
+      "game_slug": "cash-4-midday-tn",
+      "game_name": "Cash 4 Midday",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/tn-cash4-1.svg"
+    },
+    {
+      "state_slug": "tn",
+      "game_slug": "cash-4-morning-tn",
+      "game_name": "Cash 4 Morning",
+      "family_slug": "cash-4",
+      "resolved_logo": "/logos/tn-cash4-1.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "all-or-nothing-day-tx",
+      "game_name": "All or Nothing Day",
+      "family_slug": "all-or-nothing",
+      "resolved_logo": "/logos/tx-allornothing.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "all-or-nothing-evening-tx",
+      "game_name": "All or Nothing Evening",
+      "family_slug": "all-or-nothing",
+      "resolved_logo": "/logos/tx-allornothing.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "all-or-nothing-morning-tx",
+      "game_name": "All or Nothing Morning",
+      "family_slug": "all-or-nothing",
+      "resolved_logo": "/logos/tx-allornothing.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "all-or-nothing-night-tx",
+      "game_name": "All or Nothing Night",
+      "family_slug": "all-or-nothing",
+      "resolved_logo": "/logos/tx-allornothing.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "daily-4-day-tx",
+      "game_name": "Daily 4 Day",
+      "family_slug": "daily-4",
+      "resolved_logo": "/logos/tx-daily4-1.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "daily-4-evening-tx",
+      "game_name": "Daily 4 Evening",
+      "family_slug": "daily-4",
+      "resolved_logo": "/logos/tx-daily4-1.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "daily-4-morning-tx",
+      "game_name": "Daily 4 Morning",
+      "family_slug": "daily-4",
+      "resolved_logo": "/logos/tx-daily4-1.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "daily-4-night-tx",
+      "game_name": "Daily 4 Night",
+      "family_slug": "daily-4",
+      "resolved_logo": "/logos/tx-daily4-1.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "pick-3-day-tx",
+      "game_name": "Pick 3 Day",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/tx-pick3-1.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "pick-3-evening-tx",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/tx-pick3-1.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "pick-3-morning-tx",
+      "game_name": "Pick 3 Morning",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/tx-pick3-1.svg"
+    },
+    {
+      "state_slug": "tx",
+      "game_slug": "pick-3-night-tx",
+      "game_name": "Pick 3 Night",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/tx-pick3-1.svg"
+    },
+    {
+      "state_slug": "vt",
+      "game_slug": "pick-3-day-vt",
+      "game_name": "Pick 3 Day",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/vt-pick3-1.svg"
+    },
+    {
+      "state_slug": "vt",
+      "game_slug": "pick-3-evening-vt",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/vt-pick3-1.svg"
+    },
+    {
+      "state_slug": "vt",
+      "game_slug": "pick-4-day-vt",
+      "game_name": "Pick 4 Day",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/vt-pick4-1.svg"
+    },
+    {
+      "state_slug": "vt",
+      "game_slug": "pick-4-evening-vt",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/vt-pick4-1.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "cash-pop-after-hours-va",
+      "game_name": "Cash Pop After Hours",
+      "family_slug": "cash-pop-after-hours",
+      "resolved_logo": "/logos/va-cashpop.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "cash-pop-coffee-break-va",
+      "game_name": "Cash Pop Coffee Break",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/va-cashpop.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "cash-pop-lunch-break-va",
+      "game_name": "Cash Pop Lunch Break",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/va-cashpop.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "cash-pop-prime-time-va",
+      "game_name": "Cash Pop Prime Time",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/va-cashpop.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "cash-pop-rush-hour-va",
+      "game_name": "Cash Pop Rush Hour",
+      "family_slug": "cash-pop",
+      "resolved_logo": "/logos/va-cashpop.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "pick-3-day-va",
+      "game_name": "Pick 3 Day",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/va-pick3.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "pick-3-night-va",
+      "game_name": "Pick 3 Night",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/va-pick3.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "pick-4-day-va",
+      "game_name": "Pick 4 Day",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/va-pick4.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "pick-4-night-va",
+      "game_name": "Pick 4 Night",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/va-pick4.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "pick-5-day-va",
+      "game_name": "Pick 5 Day",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/va-pick5-1.svg"
+    },
+    {
+      "state_slug": "va",
+      "game_slug": "pick-5-night-va",
+      "game_name": "Pick 5 Night",
+      "family_slug": "pick-5",
+      "resolved_logo": "/logos/va-pick5-1.svg"
+    },
+    {
+      "state_slug": "dc",
+      "game_slug": "dc-3-11-30pm-dc",
+      "game_name": "DC-3 11:30pm",
+      "family_slug": "dc-3",
+      "resolved_logo": "/logos/dc-dc3.svg"
+    },
+    {
+      "state_slug": "dc",
+      "game_slug": "dc-3-1-50pm-dc",
+      "game_name": "DC-3 1:50pm",
+      "family_slug": "dc-3",
+      "resolved_logo": "/logos/dc-dc3.svg"
+    },
+    {
+      "state_slug": "dc",
+      "game_slug": "dc-3-7-50pm-dc",
+      "game_name": "DC-3 7:50pm",
+      "family_slug": "dc-3",
+      "resolved_logo": "/logos/dc-dc3.svg"
+    },
+    {
+      "state_slug": "dc",
+      "game_slug": "dc-4-11-30pm-dc",
+      "game_name": "DC-4 11:30pm",
+      "family_slug": "dc-4",
+      "resolved_logo": "/logos/dc-dc4.svg"
+    },
+    {
+      "state_slug": "dc",
+      "game_slug": "dc-4-1-50pm-dc",
+      "game_name": "DC-4 1:50pm",
+      "family_slug": "dc-4",
+      "resolved_logo": "/logos/dc-dc4.svg"
+    },
+    {
+      "state_slug": "dc",
+      "game_slug": "dc-4-7-50pm-dc",
+      "game_name": "DC-4 7:50pm",
+      "family_slug": "dc-4",
+      "resolved_logo": "/logos/dc-dc4.svg"
+    },
+    {
+      "state_slug": "dc",
+      "game_slug": "dc-5-1-50pm-dc",
+      "game_name": "DC-5 1:50pm",
+      "family_slug": "dc-5",
+      "resolved_logo": "/logos/dc-dc5.svg"
+    },
+    {
+      "state_slug": "dc",
+      "game_slug": "dc-5-7-50pm-dc",
+      "game_name": "DC-5 7:50pm",
+      "family_slug": "dc-5",
+      "resolved_logo": "/logos/dc-dc5.svg"
+    },
+    {
+      "state_slug": "wi",
+      "game_slug": "all-or-nothing-eve-wi",
+      "game_name": "All or Nothing Eve",
+      "family_slug": "all-or-nothing",
+      "resolved_logo": "/logos/wi-allornothing.svg"
+    },
+    {
+      "state_slug": "wi",
+      "game_slug": "all-or-nothing-mid-wi",
+      "game_name": "All or Nothing Mid",
+      "family_slug": "all-or-nothing",
+      "resolved_logo": "/logos/wi-allornothing.svg"
+    },
+    {
+      "state_slug": "wi",
+      "game_slug": "pick-3-evening-wi",
+      "game_name": "Pick 3 Evening",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/wi-pick3.svg"
+    },
+    {
+      "state_slug": "wi",
+      "game_slug": "pick-3-midday-wi",
+      "game_name": "Pick 3 Midday",
+      "family_slug": "pick-3",
+      "resolved_logo": "/logos/wi-pick3.svg"
+    },
+    {
+      "state_slug": "wi",
+      "game_slug": "pick-4-evening-wi",
+      "game_name": "Pick 4 Evening",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/wi-pick4.svg"
+    },
+    {
+      "state_slug": "wi",
+      "game_slug": "pick-4-midday-wi",
+      "game_name": "Pick 4 Midday",
+      "family_slug": "pick-4",
+      "resolved_logo": "/logos/wi-pick4.svg"
     }
   ]
 }

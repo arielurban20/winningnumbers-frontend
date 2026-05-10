@@ -1,20 +1,6 @@
-state_slug,state_name,game_slug,game_name,family_slug,resolved_logo,fallback_used,expected_logo_key,suggested_filename
-co,Colorado,colorado-lotto-co,Colorado Lotto+,colorado-lotto,,true,co-colorado-lotto,co-colorado-lotto.svg
-ms,Mississippi,mississippi-match-5-ms,Mississippi Match 5,mississippi-match-5,,true,ms-mississippi-match-5,ms-mississippi-match-5.svg
-mo,Missouri,mo-millions-mo,MO Millions,mo-millions,,true,mo-mo-millions,mo-mo-millions.svg
-ne,Nebraska,myday-ne,MyDaY,myday,,true,ne-myday,ne-myday.svg
-nm,New Mexico,road-runner-cash-nm,Road Runner Cash,road-runner-cash,,true,nm-road-runner-cash,nm-road-runner-cash.svg
-nc,North Carolina,cash-pop-primetime-pop-nc,Cash Pop Primetime Pop,cash-pop-primetime-pop,,true,nc-cash-pop-primetime-pop,nc-cash-pop-primetime-pop.svg
-pr,Puerto Rico,loteria-tradicional-pr,Lotería Tradicional,loteria-tradicional,,true,pr-loteria-tradicional,pr-loteria-tradicional.svg
-pr,Puerto Rico,pega-2-dia-pr,Pega 2 Dia,pega-2-dia,,true,pr-pega-2-dia,pr-pega-2-dia.svg
-pr,Puerto Rico,pega-2-noche-pr,Pega 2 Noche,pega-2-noche,,true,pr-pega-2-noche,pr-pega-2-noche.svg
-pr,Puerto Rico,pega-3-dia-pr,Pega 3 Dia,pega-3-dia,,true,pr-pega-3-dia,pr-pega-3-dia.svg
-pr,Puerto Rico,pega-3-noche-pr,Pega 3 Noche,pega-3-noche,,true,pr-pega-3-noche,pr-pega-3-noche.svg
-pr,Puerto Rico,pega-4-dia-pr,Pega 4 Dia,pega-4-dia,,true,pr-pega-4-dia,pr-pega-4-dia.svg
-pr,Puerto Rico,pega-4-noche-pr,Pega 4 Noche,pega-4-noche,,true,pr-pega-4-noche,pr-pega-4-noche.svg
-ri,Rhode Island,numbers-game-evening-ri,Numbers Game Evening,numbers-game,,true,ri-numbers-game,ri-numbers-game.svg
-ri,Rhode Island,numbers-game-midday-ri,Numbers Game Midday,numbers-game,,true,ri-numbers-game,ri-numbers-game.svg
-tx,Texas,lotto-texas-tx,Lotto Texas,lotto-texas,,true,tx-lotto-texas,tx-lotto-texas.svg
-wa,Washington,daily-keno-wa,Daily Keno,daily-keno,,true,wa-daily-keno,wa-daily-keno.svg
-xx,National,lucky-for-life,lucky-for-life,lucky-for-life,,true,xx-lucky-for-life,xx-lucky-for-life.svg
-xx,National,cash4life,cash4life,cash4life,,true,xx-cash4life,xx-cash4life.svg
+state_slug,state_name,game_slug,game_name,family_slug,resolved_logo,fallback_used,fallback_type,expected_logo_key,suggested_filename
+co,Colorado,colorado-lotto-co,Colorado Lotto+,colorado-lotto,,false,none,co-colorado-lotto,co-colorado-lotto.svg
+ne,Nebraska,myday-ne,MyDaY,myday,,false,none,ne-myday,ne-myday.svg
+pr,Puerto Rico,loteria-tradicional-pr,Lotería Tradicional,loteria-tradicional,,false,none,pr-loteria-tradicional,pr-loteria-tradicional.svg
+tx,Texas,lotto-texas-tx,Lotto Texas,lotto-texas,,false,none,tx-lotto-texas,tx-lotto-texas.svg
+wa,Washington,daily-keno-wa,Daily Keno,daily-keno,,false,none,wa-daily-keno,wa-daily-keno.svg

@@ -9,6 +9,7 @@ import fs from "node:fs/promises"
 import path from "node:path"
 import crypto from "node:crypto"
 import { MULTI_STATE_LOGOS } from "../lib/logos/logoRegistry"
+import { getFamilySlugForGame } from "../lib/utils/groupGames"
 
 const ROOT = process.cwd()
 const API_BASE = process.env.LOGO_AUDIT_API_BASE || "https://winningnumbers.us/api"
@@ -165,6 +166,7 @@ interface AuditGame {
 interface ResolutionResult {
   resolved_logo: string | null
   fallback_used: boolean
+  fallback_type: "family_logo" | "default_logo" | "none"
   expected_logo_key: string
   suggested_filename: string
   used_local_mapping: boolean
@@ -203,6 +205,22 @@ function normalizeGameFamilySlug(gameSlug: string): string {
 
 function stripStateSuffix(slug: string): string {
   return normalizeSlug(slug).replace(/-[a-z]{2}$/i, "")
+}
+
+function compactSlug(slug: string): string {
+  return normalizeSlug(slug).replace(/-/g, "")
+}
+
+function uniqueStrings(values: string[]): string[] {
+  const seen = new Set<string>()
+  const out: string[] = []
+  for (const value of values) {
+    const normalized = normalizeSlug(value)
+    if (!normalized || seen.has(normalized)) continue
+    seen.add(normalized)
+    out.push(normalized)
+  }
+  return out
 }
 
 function toCsvValue(value: Primitive): string {
@@ -326,53 +344,64 @@ async function remoteUrlExists(url: string): Promise<boolean> {
   return runner
 }
 
+function buildFamilyFallbackSlugs(familySlug: string, rawSlugCore: string): string[] {
+  const candidates: string[] = [familySlug]
+
+  // Sessionized Cash Pop variants should inherit the base Cash Pop logo.
+  if (familySlug.startsWith("cash-pop-") || rawSlugCore.startsWith("cash-pop-")) {
+    candidates.push("cash-pop")
+  }
+
+  // Puerto Rico Pega session variants should use base Pega family logos.
+  const pegaMatch = rawSlugCore.match(/^(pega-[234])-/)
+  if (pegaMatch) {
+    candidates.push(pegaMatch[1])
+  }
+
+  // Numbers Game session variants may use a compact "numbers" key.
+  if (familySlug.endsWith("-game")) {
+    candidates.push(familySlug.replace(/-game$/i, ""))
+  }
+  if (familySlug.startsWith("numbers-game")) {
+    candidates.push("numbers")
+  }
+
+  return uniqueStrings(candidates)
+}
+
 function buildRemoteCandidates(
   game: AuditGame,
   stateSlug: string,
-  familySlug: string
-): string[] {
-  const urls: string[] = []
+  exactSlug: string,
+  familySlugs: string[],
+  defaultSlugs: string[]
+): Array<{ url: string; tier: "exact" | "family" | "default" }> {
+  const urls: Array<{ url: string; tier: "exact" | "family" | "default" }> = []
   const seen = new Set<string>()
 
-  const add = (url: string | undefined) => {
+  const add = (url: string | undefined, tier: "exact" | "family" | "default") => {
     if (!url) return
     const clean = String(url).trim()
     if (!clean || seen.has(clean)) return
     seen.add(clean)
-    urls.push(clean)
+    urls.push({ url: clean, tier })
   }
 
-  add(game.logo_url)
-  add(game.logo)
-
-  const rawSlug = normalizeSlug(game.game_slug)
-  const sourceSlug = normalizeSlug(game.source_game_slug || "")
   const state = normalizeSlug(stateSlug)
-
-  add(`${LOGO_BASE_URL}/${state}-${rawSlug}.svg`)
-  add(`${LOGO_BASE_URL}/${state}-${rawSlug}.png`)
-  if (familySlug && familySlug !== rawSlug) {
-    add(`${LOGO_BASE_URL}/${state}-${familySlug}.svg`)
-    add(`${LOGO_BASE_URL}/${state}-${familySlug}.png`)
-  }
-  if (sourceSlug) {
-    add(`${LOGO_BASE_URL}/${state}-${sourceSlug}.svg`)
-    add(`${LOGO_BASE_URL}/${state}-${sourceSlug}.png`)
+  const addSlugUrls = (slug: string, tier: "exact" | "family" | "default") => {
+    add(`${LOGO_BASE_URL}/${state}-${slug}.svg`, tier)
+    add(`${LOGO_BASE_URL}/${state}-${slug}.png`, tier)
+    add(`${LOGO_BASE_URL}/${slug}.svg`, tier)
+    add(`${LOGO_BASE_URL}/${slug}.png`, tier)
   }
 
-  add(`${LOGO_BASE_URL}/${familySlug}.svg`)
-  add(`${LOGO_BASE_URL}/${familySlug}.png`)
-  add(`${LOGO_BASE_URL}/${rawSlug}.svg`)
-  add(`${LOGO_BASE_URL}/${rawSlug}.png`)
+  // API-provided logo URLs are considered exact for the game.
+  add(game.logo_url, "exact")
+  add(game.logo, "exact")
 
-  if (game.is_multistate) {
-    for (const token of MULTISTATE_GAMES) {
-      if (rawSlug.includes(token) || familySlug.includes(token)) {
-        add(`${LOGO_BASE_URL}/${token}.svg`)
-        add(`${LOGO_BASE_URL}/${token}.png`)
-      }
-    }
-  }
+  addSlugUrls(exactSlug, "exact")
+  for (const familySlug of familySlugs) addSlugUrls(familySlug, "family")
+  for (const defaultSlug of defaultSlugs) addSlugUrls(defaultSlug, "default")
 
   return urls
 }
@@ -387,36 +416,80 @@ async function resolveGameLogo(
   localMap: Map<string, string>
 ): Promise<ResolutionResult> {
   const state = normalizeSlug(game.state_slug || "xx")
-  const rawSlug = normalizeSlug(game.game_slug)
-  const familySlug = normalizeGameFamilySlug(rawSlug)
-  const expectedLogoKey = `${state}-${familySlug}`
+  const rawSlugCore = stripStateSuffix(game.game_slug)
+  const rawSlug = normalizeSlug(rawSlugCore)
+  const familySlug = normalizeSlug(game.family_slug || rawSlug)
+  const familySlugs = buildFamilyFallbackSlugs(familySlug, rawSlug)
+  const expectedFamilySlug = familySlugs[0] || familySlug
+  const expectedLogoKey = `${state}-${expectedFamilySlug}`
   const suggestedFilename = `${expectedLogoKey}.svg`
 
-  const keysToTry = [
-    `${state}-${familySlug}`,
-    `${state}-${rawSlug}`,
-    familySlug,
-    rawSlug,
+  const sourceSlug = stripStateSuffix(game.source_game_slug || "")
+  const defaultSlugs = uniqueStrings([
+    sourceSlug,
+    ...MULTISTATE_GAMES.filter(
+      (token) =>
+        game.is_multistate ||
+        rawSlug.includes(token) ||
+        familySlugs.some((candidate) => candidate.includes(token))
+    ),
+  ])
+
+  const slugGroups: Array<{ tier: "exact" | "family" | "default"; slugs: string[] }> = [
+    { tier: "exact", slugs: uniqueStrings([rawSlug]) },
+    {
+      tier: "family",
+      slugs: uniqueStrings(familySlugs.filter((slug) => slug !== rawSlug)),
+    },
+    {
+      tier: "default",
+      slugs: uniqueStrings(
+        defaultSlugs.filter(
+          (slug) => slug !== rawSlug && !familySlugs.includes(slug)
+        )
+      ),
+    },
   ]
 
   let mappedPath: string | null = null
   let mappedKey: string | null = null
-  for (const key of keysToTry) {
-    const value = localMap.get(key)
-    if (value) {
-      mappedPath = value
-      mappedKey = key
-      break
+  let matchedTier: "exact" | "family" | "default" | null = null
+
+  for (const group of slugGroups) {
+    for (const slug of group.slugs) {
+      const keysToTry = uniqueStrings([
+        `${state}-${slug}`,
+        `${state}-${compactSlug(slug)}`,
+        slug,
+        compactSlug(slug),
+      ])
+      for (const key of keysToTry) {
+        const value = localMap.get(key)
+        if (!value) continue
+        mappedPath = value
+        mappedKey = key
+        matchedTier = group.tier
+        break
+      }
+      if (mappedPath) break
     }
+    if (mappedPath) break
   }
 
   if (mappedPath) {
     const fsPath = parseLocalPathToFs(mappedPath)
     const exists = fsPath ? await fileExists(fsPath) : false
     if (exists) {
+      const fallbackType =
+        matchedTier === "family"
+          ? "family_logo"
+          : matchedTier === "default"
+          ? "default_logo"
+          : "none"
       return {
         resolved_logo: mappedPath,
-        fallback_used: false,
+        fallback_used: fallbackType !== "none",
+        fallback_type: fallbackType,
         expected_logo_key: expectedLogoKey,
         suggested_filename: suggestedFilename,
         used_local_mapping: true,
@@ -426,29 +499,46 @@ async function resolveGameLogo(
     }
   }
 
-  const remoteCandidates = buildRemoteCandidates(game, state, familySlug)
+  const remoteCandidates = buildRemoteCandidates(
+    game,
+    state,
+    rawSlug,
+    familySlugs.filter((slug) => slug !== rawSlug),
+    defaultSlugs
+  )
   let resolvedRemote: string | null = null
+  let remoteTier: "exact" | "family" | "default" | null = null
   for (const candidate of remoteCandidates) {
-    if (candidate.startsWith("/logos/")) {
-      const fsPath = parseLocalPathToFs(candidate)
+    if (candidate.url.startsWith("/logos/")) {
+      const fsPath = parseLocalPathToFs(candidate.url)
       if (fsPath && (await fileExists(fsPath))) {
-        resolvedRemote = candidate
+        resolvedRemote = candidate.url
+        remoteTier = candidate.tier
         break
       }
       continue
     }
 
     // Skip obvious non-URL values.
-    if (!/^https?:\/\//i.test(candidate)) continue
-    if (await remoteUrlExists(candidate)) {
-      resolvedRemote = candidate
+    if (!/^https?:\/\//i.test(candidate.url)) continue
+    if (await remoteUrlExists(candidate.url)) {
+      resolvedRemote = candidate.url
+      remoteTier = candidate.tier
       break
     }
   }
 
+  const remoteFallbackType =
+    remoteTier === "family"
+      ? "family_logo"
+      : remoteTier === "default"
+      ? "default_logo"
+      : "none"
+
   return {
     resolved_logo: resolvedRemote,
-    fallback_used: !resolvedRemote,
+    fallback_used: Boolean(resolvedRemote) && remoteFallbackType !== "none",
+    fallback_type: resolvedRemote ? remoteFallbackType : "none",
     expected_logo_key: expectedLogoKey,
     suggested_filename: suggestedFilename,
     used_local_mapping: Boolean(mappedPath),
@@ -468,9 +558,12 @@ function normalizedDuplicateBaseName(fileName: string): string {
     .replace(/_copy$/g, "")
 }
 
-function extractFamilySlugForStats(gameSlug: string): string {
-  const raw = stripStateSuffix(gameSlug)
-  return normalizeGameFamilySlug(raw)
+function extractFamilySlugForStats(gameName: string, gameSlug: string): string {
+  const derived = getFamilySlugForGame({
+    name: gameName || gameSlug,
+    slug: gameSlug,
+  })
+  return normalizeSlug(derived || stripStateSuffix(gameSlug))
 }
 
 async function main() {
@@ -494,7 +587,7 @@ async function main() {
     const gamesPayload = await fetchJson<unknown>(`${API_BASE}/states/${state.slug}/games`)
     const games = extractItems<Game>(gamesPayload)
     for (const game of games) {
-      const familySlug = extractFamilySlugForStats(game.slug)
+      const familySlug = extractFamilySlugForStats(game.name, game.slug)
       allStateGames.push({
         state_slug: state.slug,
         state_name: state.name,
@@ -552,7 +645,9 @@ async function main() {
 
   const usedLocalFiles = new Set<string>()
   const usedMappedKeys = new Set<string>()
-  const fallbackRows: typeof resolvedRows = []
+  const unresolvedRows: typeof resolvedRows = []
+  const familyFallbackRows: typeof resolvedRows = []
+  const defaultFallbackRows: typeof resolvedRows = []
 
   for (const game of auditGames) {
     const result = await resolveGameLogo(game, localLogoMap)
@@ -567,8 +662,8 @@ async function main() {
     }
     resolvedRows.push(merged)
 
-    if (result.fallback_used) {
-      fallbackRows.push(merged)
+    if (!result.resolved_logo) {
+      unresolvedRows.push(merged)
       missingRows.push({
         state_slug: game.state_slug,
         state_name: game.state_name,
@@ -576,10 +671,15 @@ async function main() {
         game_name: game.game_name,
         family_slug: game.family_slug,
         resolved_logo: result.resolved_logo || "",
-        fallback_used: "true",
+        fallback_used: String(result.fallback_used),
+        fallback_type: result.fallback_type,
         expected_logo_key: result.expected_logo_key,
         suggested_filename: result.suggested_filename,
       })
+    } else if (result.fallback_type === "family_logo") {
+      familyFallbackRows.push(merged)
+    } else if (result.fallback_type === "default_logo") {
+      defaultFallbackRows.push(merged)
     }
   }
 
@@ -689,7 +789,7 @@ async function main() {
 
   const missingByState: Record<string, number> = {}
   const missingByFamily: Record<string, number> = {}
-  for (const row of fallbackRows) {
+  for (const row of unresolvedRows) {
     missingByState[row.state_slug] = (missingByState[row.state_slug] || 0) + 1
     missingByFamily[row.family_slug] = (missingByFamily[row.family_slug] || 0) + 1
   }
@@ -702,9 +802,11 @@ async function main() {
     total_state_games: allStateGames.length,
     total_national_virtual_games: nationalVirtualGames.length,
     total_games_checked: auditGames.length,
-    games_with_logo: resolvedRows.filter((r) => !r.fallback_used).length,
-    games_missing_logo: fallbackRows.length,
-    fallback_logo_count: fallbackRows.length,
+    games_with_logo: resolvedRows.filter((r) => Boolean(r.resolved_logo)).length,
+    games_missing_logo: unresolvedRows.length,
+    fallback_logo_count: familyFallbackRows.length + defaultFallbackRows.length,
+    fallback_family_logo_count: familyFallbackRows.length,
+    fallback_default_logo_count: defaultFallbackRows.length,
     unused_logo_files_count: unusedRows.length,
     duplicate_logo_files_count: duplicateRows.length,
     local_logo_registry_key_count: localLogoMap.size,
@@ -716,13 +818,20 @@ async function main() {
       Object.entries(missingByFamily).sort((a, b) => b[1] - a[1])
     ),
     mapped_logo_path_missing_files: mappedButMissingFiles,
-    top_missing_examples: fallbackRows.slice(0, 80).map((r) => ({
+    top_missing_examples: unresolvedRows.slice(0, 80).map((r) => ({
       state_slug: r.state_slug,
       game_slug: r.game_slug,
       game_name: r.game_name,
       family_slug: r.family_slug,
       expected_logo_key: r.expected_logo_key,
       suggested_filename: r.suggested_filename,
+    })),
+    resolved_by_family_fallback_examples: familyFallbackRows.slice(0, 500).map((r) => ({
+      state_slug: r.state_slug,
+      game_slug: r.game_slug,
+      game_name: r.game_name,
+      family_slug: r.family_slug,
+      resolved_logo: r.resolved_logo,
     })),
   }
 
@@ -736,6 +845,7 @@ async function main() {
       "family_slug",
       "resolved_logo",
       "fallback_used",
+      "fallback_type",
       "expected_logo_key",
       "suggested_filename",
     ],
@@ -769,6 +879,8 @@ async function main() {
     `games_with_logo=${summary.games_with_logo}`,
     `games_missing_logo=${summary.games_missing_logo}`,
     `fallback_logo_count=${summary.fallback_logo_count}`,
+    `fallback_family_logo_count=${summary.fallback_family_logo_count}`,
+    `fallback_default_logo_count=${summary.fallback_default_logo_count}`,
     `unused_logo_files_count=${summary.unused_logo_files_count}`,
     `duplicate_logo_files_count=${summary.duplicate_logo_files_count}`,
     `mapped_logo_path_missing_files_count=${summary.mapped_logo_path_missing_files_count}`,
@@ -793,6 +905,8 @@ async function main() {
     games_with_logo: summary.games_with_logo,
     games_missing_logo: summary.games_missing_logo,
     fallback_logo_count: summary.fallback_logo_count,
+    fallback_family_logo_count: summary.fallback_family_logo_count,
+    fallback_default_logo_count: summary.fallback_default_logo_count,
     unused_logo_files_count: summary.unused_logo_files_count,
     duplicate_logo_files_count: summary.duplicate_logo_files_count,
     summary_json: SUMMARY_JSON,

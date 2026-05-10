@@ -40,7 +40,7 @@ function JumpChip({ family, compact = false }: { family: StateGameJumpFamily; co
       className={cn(
         "group flex items-center justify-between gap-3 rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm",
         "transition-all duration-200 hover:border-primary/40 hover:bg-card hover:shadow-md hover:shadow-primary/10",
-        compact ? "min-w-[220px] p-2.5" : "p-3"
+        compact ? "min-h-[44px] p-2.5" : "p-3"
       )}
     >
       <div className="flex min-w-0 items-center gap-2.5">
@@ -54,7 +54,7 @@ function JumpChip({ family, compact = false }: { family: StateGameJumpFamily; co
           size="sm"
           className="h-8 w-8 sm:h-9 sm:w-9"
         />
-        <span className="truncate text-sm font-medium">{family.familyName}</span>
+        <span className="line-clamp-1 text-sm font-medium">{family.familyName}</span>
       </div>
 
       {family.hasCurrentResult && (
@@ -84,11 +84,9 @@ export function StateGameJumpNav({ stateName, gameFamilies }: StateGameJumpNavPr
       </div>
 
       <div className="md:hidden">
-        <div className="flex snap-x gap-2 overflow-x-auto pb-1">
+        <div className="grid grid-cols-2 gap-2">
           {gameFamilies.map((family) => (
-            <div key={family.familySlug} className="snap-start">
-              <JumpChip family={family} compact />
-            </div>
+            <JumpChip key={family.familySlug} family={family} compact />
           ))}
         </div>
       </div>
