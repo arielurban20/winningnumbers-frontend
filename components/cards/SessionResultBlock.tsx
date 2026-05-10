@@ -1,0 +1,125 @@
+"use client"
+
+import Link from "next/link"
+import { ResultNumbersRow } from "@/components/numbers"
+import { StatusBadge } from "./StatusBadge"
+import { formatDrawDate } from "@/lib/utils/formatDate"
+import { formatJackpot } from "@/lib/utils/formatCurrency"
+import { Calendar, Trophy, ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { NextDrawCountdown } from "./NextDrawCountdown"
+import type { DrawResult } from "@/types/api"
+
+interface SessionResultBlockProps {
+  sessionName: string
+  sessionDisplaySlug?: string
+  stateSlug: string
+  familySlug: string
+  draw: DrawResult
+  showSessionName?: boolean
+  clickable?: boolean
+  gameSlug?: string
+}
+
+/**
+ * Premium session result block within a grouped card
+ * Now clickable to navigate to individual session pages
+ * Mobile-optimized with compact layout
+ */
+export function SessionResultBlock({
+  sessionName,
+  sessionDisplaySlug,
+  stateSlug,
+  familySlug,
+  draw,
+  showSessionName = true,
+  clickable = true,
+  gameSlug,
+}: SessionResultBlockProps) {
+  const mainNumbers = draw.main_numbers || []
+  const mainItems = draw.main_items
+  const bonusItems = draw.bonus_items || []
+  const secondaryExtras = Array.isArray(draw.secondary_drawings)
+    ? draw.secondary_drawings
+    : draw.secondary_drawing
+    ? [draw.secondary_drawing]
+    : []
+  const extraItems = [...(draw.extra_items || []), ...secondaryExtras]
+  
+  const sessionUrl = sessionDisplaySlug 
+    ? `/states/${stateSlug}/${familySlug}/${sessionDisplaySlug}`
+    : `/states/${stateSlug}/${familySlug}`
+
+  const isMainSession = sessionName === "Main" || !sessionName
+
+  return (
+    <div className="flex flex-col gap-2.5 sm:gap-4 rounded-lg sm:rounded-xl bg-muted/30 p-3 sm:p-4">
+      {/* Session header - Compact on mobile */}
+      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {showSessionName && !isMainSession && (
+            <span className="inline-flex items-center rounded-md sm:rounded-lg bg-secondary px-2 py-0.5 sm:px-2.5 sm:py-1 text-xs sm:text-sm font-semibold text-secondary-foreground">
+              {sessionName}
+            </span>
+          )}
+          <span className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm text-muted-foreground">
+            <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+            {formatDrawDate(draw.draw_date)}
+          </span>
+        </div>
+        <StatusBadge statusColor={draw.draw_status_color} />
+      </div>
+
+      {/* Centered numbers section - Smaller on mobile */}
+      <div className="flex justify-center py-1 sm:py-2">
+        <ResultNumbersRow
+          mainNumbers={mainNumbers}
+          mainItems={mainItems}
+          bonusItems={bonusItems}
+          extraItems={extraItems}
+          statusColor={draw.draw_status_color}
+          gameSlug={gameSlug || draw.game_slug || draw.game?.slug}
+          size="sm"
+          centered={true}
+        />
+      </div>
+
+      {/* Jackpot and next draw info - Compact on mobile */}
+      {(draw.jackpot_next || draw.next_draw_text || draw.next_draw_relative || draw.countdown_seconds != null) && (
+        <div className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2 rounded-md sm:rounded-lg bg-background/50 p-2 sm:p-3 text-xs sm:text-sm">
+          {draw.jackpot_next && (
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <Trophy className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-lottery-gold" />
+              <span className="font-bold text-lottery-gold">
+                {formatJackpot(draw.jackpot_next)}
+              </span>
+            </div>
+          )}
+          {(draw.next_draw_text || draw.next_draw_relative || draw.countdown_seconds != null) && (
+            <NextDrawCountdown
+              countdown_seconds={draw.countdown_seconds}
+              next_draw_at_local={draw.next_draw_at_local}
+              next_draw_timezone={draw.next_draw_timezone}
+              next_draw_relative={draw.next_draw_relative}
+              next_draw_text={draw.next_draw_text}
+              variant="compact"
+              className="text-muted-foreground"
+            />
+          )}
+        </div>
+      )}
+
+      {/* View session link - Compact on mobile */}
+      {clickable && !isMainSession && (
+        <div className="flex justify-center">
+          <Button asChild variant="ghost" size="sm" className="text-primary h-7 text-xs sm:h-9 sm:text-sm">
+            <Link href={sessionUrl}>
+              View {sessionName}
+              <ArrowRight className="ml-1 h-3 w-3 sm:h-3.5 sm:w-3.5" />
+            </Link>
+          </Button>
+        </div>
+      )}
+    </div>
+  )
+}
