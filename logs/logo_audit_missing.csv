@@ -1,6 +1,1 @@
 state_slug,state_name,game_slug,game_name,family_slug,resolved_logo,fallback_used,fallback_type,expected_logo_key,suggested_filename
-co,Colorado,colorado-lotto-co,Colorado Lotto+,colorado-lotto,,false,none,co-colorado-lotto,co-colorado-lotto.svg
-ne,Nebraska,myday-ne,MyDaY,myday,,false,none,ne-myday,ne-myday.svg
-pr,Puerto Rico,loteria-tradicional-pr,Lotería Tradicional,loteria-tradicional,,false,none,pr-loteria-tradicional,pr-loteria-tradicional.svg
-tx,Texas,lotto-texas-tx,Lotto Texas,lotto-texas,,false,none,tx-lotto-texas,tx-lotto-texas.svg
-wa,Washington,daily-keno-wa,Daily Keno,daily-keno,,false,none,wa-daily-keno,wa-daily-keno.svg

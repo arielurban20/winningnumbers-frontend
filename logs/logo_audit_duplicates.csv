@@ -1,6 +1,16 @@
 duplicate_type,group_key,file_path,group_size
 name_variant,xx-powerball,/logos/xx-powerball-1.svg,2
 name_variant,xx-powerball,/logos/xx-powerball.svg,2
+content_hash,629240397d3466ff78926044775c11bd7b22261a,/logos/co-colorado-lotto.svg,2
+content_hash,629240397d3466ff78926044775c11bd7b22261a,/logos/co-coloradolottoplus-1.svg,2
+content_hash,0b8ba6d5c62ee4df98305ffcf344367ea39fc7cc,/logos/mo-mo-millions.svg,2
+content_hash,0b8ba6d5c62ee4df98305ffcf344367ea39fc7cc,/logos/mo-momillions-1.svg,2
+content_hash,c497d2445e0abd26038b43ea2c9819d8f4372c01,/logos/ms-match5.svg,2
+content_hash,c497d2445e0abd26038b43ea2c9819d8f4372c01,/logos/ms-mississippi-match-5.svg,2
+content_hash,93e73d07e4cda82994ecae0b6d4ab95dc20be728,/logos/ri-numbers-1.svg,2
+content_hash,93e73d07e4cda82994ecae0b6d4ab95dc20be728,/logos/ri-numbers-game.svg,2
+content_hash,41fce569e14e9756b667944c82d4cd7ad4c4ce46,/logos/tx-lotto-texas.svg,2
+content_hash,41fce569e14e9756b667944c82d4cd7ad4c4ce46,/logos/tx-lotto.svg,2
 national_family_suffix_across_states,powerball,/logos/ar-powerball.svg,25
 national_family_suffix_across_states,powerball,/logos/az-powerball.svg,25
 national_family_suffix_across_states,powerball,/logos/ca-powerball.svg,25

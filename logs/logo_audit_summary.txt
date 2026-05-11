@@ -1,5 +1,5 @@
 WinningNumbers Logo Audit
-generated_at=2026-05-10T18:52:29.220Z
+generated_at=2026-05-10T19:21:12.623Z
 api_base=https://winningnumbers.us/api
 logo_base_url=https://winningnumbers.us/assets/logos
 
@@ -7,28 +7,18 @@ total_states=47
 total_state_games=496
 total_national_virtual_games=9
 total_games_checked=505
-games_with_logo=500
-games_missing_logo=5
-fallback_logo_count=232
+games_with_logo=505
+games_missing_logo=0
+fallback_logo_count=229
 fallback_family_logo_count=229
-fallback_default_logo_count=3
-unused_logo_files_count=10
-duplicate_logo_files_count=70
+fallback_default_logo_count=0
+unused_logo_files_count=13
+duplicate_logo_files_count=80
 mapped_logo_path_missing_files_count=0
 
 Missing by state:
-- co: 1
-- ne: 1
-- pr: 1
-- tx: 1
-- wa: 1
 
 Missing by family:
-- colorado-lotto: 1
-- myday: 1
-- loteria-tradicional: 1
-- lotto-texas: 1
-- daily-keno: 1
 
 summary_json=C:\Users\ariel\OneDrive\Desktop\New folder\winningnumbers-frontend\logs\logo_audit_summary.json
 missing_csv=C:\Users\ariel\OneDrive\Desktop\New folder\winningnumbers-frontend\logs\logo_audit_missing.csv

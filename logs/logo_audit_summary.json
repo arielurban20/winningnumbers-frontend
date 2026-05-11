@@ -1,77 +1,24 @@
 {
-  "generated_at": "2026-05-10T18:52:29.220Z",
+  "generated_at": "2026-05-10T19:21:12.623Z",
   "api_base": "https://winningnumbers.us/api",
   "logo_base_url": "https://winningnumbers.us/assets/logos",
   "total_states": 47,
   "total_state_games": 496,
   "total_national_virtual_games": 9,
   "total_games_checked": 505,
-  "games_with_logo": 500,
-  "games_missing_logo": 5,
-  "fallback_logo_count": 232,
+  "games_with_logo": 505,
+  "games_missing_logo": 0,
+  "fallback_logo_count": 229,
   "fallback_family_logo_count": 229,
-  "fallback_default_logo_count": 3,
-  "unused_logo_files_count": 10,
-  "duplicate_logo_files_count": 70,
-  "local_logo_registry_key_count": 487,
+  "fallback_default_logo_count": 0,
+  "unused_logo_files_count": 13,
+  "duplicate_logo_files_count": 80,
+  "local_logo_registry_key_count": 508,
   "mapped_logo_path_missing_files_count": 0,
-  "missing_by_state": {
-    "co": 1,
-    "ne": 1,
-    "pr": 1,
-    "tx": 1,
-    "wa": 1
-  },
-  "missing_by_game_family": {
-    "colorado-lotto": 1,
-    "myday": 1,
-    "loteria-tradicional": 1,
-    "lotto-texas": 1,
-    "daily-keno": 1
-  },
+  "missing_by_state": {},
+  "missing_by_game_family": {},
   "mapped_logo_path_missing_files": [],
-  "top_missing_examples": [
-    {
-      "state_slug": "co",
-      "game_slug": "colorado-lotto-co",
-      "game_name": "Colorado Lotto+",
-      "family_slug": "colorado-lotto",
-      "expected_logo_key": "co-colorado-lotto",
-      "suggested_filename": "co-colorado-lotto.svg"
-    },
-    {
-      "state_slug": "ne",
-      "game_slug": "myday-ne",
-      "game_name": "MyDaY",
-      "family_slug": "myday",
-      "expected_logo_key": "ne-myday",
-      "suggested_filename": "ne-myday.svg"
-    },
-    {
-      "state_slug": "pr",
-      "game_slug": "loteria-tradicional-pr",
-      "game_name": "Lotería Tradicional",
-      "family_slug": "loteria-tradicional",
-      "expected_logo_key": "pr-loteria-tradicional",
-      "suggested_filename": "pr-loteria-tradicional.svg"
-    },
-    {
-      "state_slug": "tx",
-      "game_slug": "lotto-texas-tx",
-      "game_name": "Lotto Texas",
-      "family_slug": "lotto-texas",
-      "expected_logo_key": "tx-lotto-texas",
-      "suggested_filename": "tx-lotto-texas.svg"
-    },
-    {
-      "state_slug": "wa",
-      "game_slug": "daily-keno-wa",
-      "game_name": "Daily Keno",
-      "family_slug": "daily-keno",
-      "expected_logo_key": "wa-daily-keno",
-      "suggested_filename": "wa-daily-keno.svg"
-    }
-  ],
+  "top_missing_examples": [],
   "resolved_by_family_fallback_examples": [
     {
       "state_slug": "ar",
@@ -1296,14 +1243,14 @@
       "game_slug": "numbers-game-evening-ri",
       "game_name": "Numbers Game Evening",
       "family_slug": "numbers-game",
-      "resolved_logo": "/logos/ri-numbers-1.svg"
+      "resolved_logo": "/logos/ri-numbers-game.svg"
     },
     {
       "state_slug": "ri",
       "game_slug": "numbers-game-midday-ri",
       "game_name": "Numbers Game Midday",
       "family_slug": "numbers-game",
-      "resolved_logo": "/logos/ri-numbers-1.svg"
+      "resolved_logo": "/logos/ri-numbers-game.svg"
     },
     {
       "state_slug": "sc",
