@@ -244,9 +244,9 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
           <Card
             className={`mx-auto w-full ${latestCardMaxWidth} overflow-hidden border-border/50`}
           >
-            <CardContent className={hasMultipleSessions ? "divide-y p-3 sm:p-4" : "p-3 sm:p-4"}>
+            <CardContent className={hasMultipleSessions ? "divide-y p-2.5 sm:p-3 md:p-3.5 lg:p-4" : "p-2.5 sm:p-3 md:p-3.5 lg:p-4"}>
               {family.sessions.map((session, idx) => (
-                <div key={session.sessionSlug} className={idx > 0 ? "pt-4 sm:pt-5" : ""}>
+                <div key={session.sessionSlug} className={idx > 0 ? "pt-3 sm:pt-4 md:pt-5" : ""}>
                   {session.latestDraw ? (
                     <SessionResultBlock
                       sessionName={session.sessionName}
@@ -255,9 +255,9 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
                       familySlug={gameFamilySlug}
                       draw={session.latestDraw}
                       gameSlug={session.sessionSlug}
-                      showSessionName={hasMultipleSessions}
+                      showSessionName={true}
                       clickable={hasMultipleSessions}
-                      variant="compact"
+                      variant="individualCompact"
                     />
                   ) : (
                     <div className="flex items-center justify-center gap-3 rounded-lg bg-muted/50 py-8 text-muted-foreground">

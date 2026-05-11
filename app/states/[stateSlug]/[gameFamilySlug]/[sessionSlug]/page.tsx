@@ -194,10 +194,10 @@ export default async function SessionPage({ params }: SessionPageProps) {
         {/* Latest Result */}
         <section className="mb-12">
           <Card className={`mx-auto w-full ${latestCardMaxWidth} overflow-hidden border-border/50`}>
-            <CardHeader className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-3 py-2.5 sm:px-4 sm:py-3">
+            <CardHeader className="hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-3 py-2.5 sm:px-4 sm:py-3 lg:block">
               <CardTitle className="text-base sm:text-lg">Latest {session.sessionName} Result</CardTitle>
             </CardHeader>
-            <CardContent className="p-3 sm:p-4">
+            <CardContent className="p-2.5 sm:p-3 md:p-3.5 lg:p-4">
               {latestDraw ? (
                 <SessionResultBlock
                   sessionName={session.sessionName}
@@ -206,9 +206,9 @@ export default async function SessionPage({ params }: SessionPageProps) {
                   familySlug={gameFamilySlug}
                   draw={latestDraw}
                   gameSlug={session.sessionSlug}
-                  showSessionName={false}
+                  showSessionName={true}
                   clickable={false}
-                  variant="compact"
+                  variant="individualCompact"
                 />
               ) : (
                 <EmptyState
