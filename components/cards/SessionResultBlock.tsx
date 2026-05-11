@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Link from "next/link"
 import { ResultNumbersRow } from "@/components/numbers"
@@ -66,7 +66,7 @@ export function SessionResultBlock({
       if (visibleMainCount <= 6 && !hasSecondaryDrawings) return "sm" as const
       return "md" as const
     }
-    if (visibleMainCount <= 3 && !hasSecondaryDrawings) return "xs" as const
+    if (visibleMainCount <= 3 && !hasSecondaryDrawings) return "sm" as const
     if (visibleMainCount <= 5 && !hasSecondaryDrawings) return "sm" as const
     return "md" as const
   })()
