@@ -1,15 +1,22 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Container, Breadcrumbs } from "@/components/layout"
+import { JsonLd } from "@/components/seo"
 import { getCanonicalUrl } from "@/lib/seo/metadata"
+import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Cookie, CheckCircle2 } from "lucide-react"
 
+const PAGE_TITLE = "Cookie Policy | Winning Numbers"
+const PAGE_DESCRIPTION =
+  "Cookie Policy for Winning Numbers. Learn about the cookies and local storage we use on our lottery results website."
+const PAGE_URL = getCanonicalUrl("/cookie-policy")
+
 export const metadata: Metadata = {
-  title: "Cookie Policy | Winning Numbers",
-  description: "Cookie Policy for Winning Numbers. Learn about the cookies and local storage we use on our lottery results website.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: getCanonicalUrl("/cookie-policy"),
+    canonical: PAGE_URL,
   },
 }
 
@@ -31,6 +38,8 @@ const cookieTypes = [
 ]
 
 export default function CookiePolicyPage() {
+  const webPageSchema = generateWebPageSchema(PAGE_TITLE, PAGE_DESCRIPTION, PAGE_URL)
+
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "Cookie Policy", href: "/cookie-policy" },
@@ -40,6 +49,7 @@ export default function CookiePolicyPage() {
 
   return (
     <Container className="py-8">
+      <JsonLd data={webPageSchema} />
       <Breadcrumbs items={breadcrumbItems} />
 
       <div className="mt-8 max-w-4xl">

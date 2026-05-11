@@ -1,19 +1,28 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Container, Breadcrumbs } from "@/components/layout"
+import { JsonLd } from "@/components/seo"
 import { getCanonicalUrl } from "@/lib/seo/metadata"
+import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent } from "@/components/ui/card"
 import { FileText } from "lucide-react"
 
+const PAGE_TITLE = "Terms of Service | Winning Numbers"
+const PAGE_DESCRIPTION =
+  "Terms of Service for Winning Numbers. Review the terms and conditions for using our lottery results website."
+const PAGE_URL = getCanonicalUrl("/terms")
+
 export const metadata: Metadata = {
-  title: "Terms of Service | Winning Numbers",
-  description: "Terms of Service for Winning Numbers. Review the terms and conditions for using our lottery results website.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: getCanonicalUrl("/terms"),
+    canonical: PAGE_URL,
   },
 }
 
 export default function TermsPage() {
+  const webPageSchema = generateWebPageSchema(PAGE_TITLE, PAGE_DESCRIPTION, PAGE_URL)
+
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "Terms of Service", href: "/terms" },
@@ -23,6 +32,7 @@ export default function TermsPage() {
 
   return (
     <Container className="py-8">
+      <JsonLd data={webPageSchema} />
       <Breadcrumbs items={breadcrumbItems} />
 
       <div className="mt-8 max-w-4xl">

@@ -1,0 +1,13 @@
+ROUTE AUDIT SUMMARY
+Generated: 2026-05-11T05:25:56.261Z
+Site: https://winningnumbers.us
+
+Total routes checked: 1396
+Non-200 routes: 3
+HTML expected but non-HTML: 0
+Blank-like HTML pages: 0
+
+Top non-200 examples:
+- /api/internal/historical/games -> 404 
+- /api/internal/historical/results -> 404 
+- /api/internal/states -> 404 

@@ -1,0 +1,518 @@
+{
+  "generated_at": "2026-05-11T05:55:28.297Z",
+  "site_url": "http://localhost:3100",
+  "routes_audited": 1384,
+  "status_non_200_count": 0,
+  "missing_metadata_count": 0,
+  "canonical_issue_count": 1384,
+  "noindex_or_nofollow_count": 0,
+  "likely_blank_html_count": 0,
+  "duplicate_title_count": 2,
+  "duplicate_description_count": 2,
+  "duplicate_canonical_count": 0,
+  "title_length_issue_count": 501,
+  "description_length_issue_count": 0,
+  "critical_blockers": {
+    "non_200_routes": [],
+    "missing_title_or_description_or_canonical": [],
+    "canonical_invalid_or_mismatch": [
+      {
+        "path": "/",
+        "canonical": "https://winningnumbers.us",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/about",
+        "canonical": "https://winningnumbers.us/about",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/contact",
+        "canonical": "https://winningnumbers.us/contact",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/cookie-policy",
+        "canonical": "https://winningnumbers.us/cookie-policy",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/disclaimer",
+        "canonical": "https://winningnumbers.us/disclaimer",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/games",
+        "canonical": "https://winningnumbers.us/games",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/games/mega-millions",
+        "canonical": "https://winningnumbers.us/games/mega-millions",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/games/powerball",
+        "canonical": "https://winningnumbers.us/games/powerball",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/privacy-policy",
+        "canonical": "https://winningnumbers.us/privacy-policy",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states",
+        "canonical": "https://winningnumbers.us/states",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar",
+        "canonical": "https://winningnumbers.us/states/ar",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-3",
+        "canonical": "https://winningnumbers.us/states/ar/cash-3",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-3/evening",
+        "canonical": "https://winningnumbers.us/states/ar/cash-3/evening",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-3/historical",
+        "canonical": "https://winningnumbers.us/states/ar/cash-3/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-3/midday",
+        "canonical": "https://winningnumbers.us/states/ar/cash-3/midday",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-3/stats",
+        "canonical": "https://winningnumbers.us/states/ar/cash-3/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-4",
+        "canonical": "https://winningnumbers.us/states/ar/cash-4",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-4/evening",
+        "canonical": "https://winningnumbers.us/states/ar/cash-4/evening",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-4/historical",
+        "canonical": "https://winningnumbers.us/states/ar/cash-4/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-4/midday",
+        "canonical": "https://winningnumbers.us/states/ar/cash-4/midday",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/cash-4/stats",
+        "canonical": "https://winningnumbers.us/states/ar/cash-4/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/lotto",
+        "canonical": "https://winningnumbers.us/states/ar/lotto",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/lotto/historical",
+        "canonical": "https://winningnumbers.us/states/ar/lotto/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/lotto/stats",
+        "canonical": "https://winningnumbers.us/states/ar/lotto/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/mega-millions",
+        "canonical": "https://winningnumbers.us/states/ar/mega-millions",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/mega-millions/historical",
+        "canonical": "https://winningnumbers.us/states/ar/mega-millions/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/mega-millions/stats",
+        "canonical": "https://winningnumbers.us/states/ar/mega-millions/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/millionaire-for-life",
+        "canonical": "https://winningnumbers.us/states/ar/millionaire-for-life",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/millionaire-for-life/historical",
+        "canonical": "https://winningnumbers.us/states/ar/millionaire-for-life/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/millionaire-for-life/stats",
+        "canonical": "https://winningnumbers.us/states/ar/millionaire-for-life/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/natural-state-jackpot",
+        "canonical": "https://winningnumbers.us/states/ar/natural-state-jackpot",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/natural-state-jackpot/historical",
+        "canonical": "https://winningnumbers.us/states/ar/natural-state-jackpot/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/natural-state-jackpot/stats",
+        "canonical": "https://winningnumbers.us/states/ar/natural-state-jackpot/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/powerball",
+        "canonical": "https://winningnumbers.us/states/ar/powerball",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/powerball/historical",
+        "canonical": "https://winningnumbers.us/states/ar/powerball/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/ar/powerball/stats",
+        "canonical": "https://winningnumbers.us/states/ar/powerball/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az",
+        "canonical": "https://winningnumbers.us/states/az",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/fantasy-5",
+        "canonical": "https://winningnumbers.us/states/az/fantasy-5",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/fantasy-5/historical",
+        "canonical": "https://winningnumbers.us/states/az/fantasy-5/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/fantasy-5/stats",
+        "canonical": "https://winningnumbers.us/states/az/fantasy-5/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/mega-millions",
+        "canonical": "https://winningnumbers.us/states/az/mega-millions",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/mega-millions/historical",
+        "canonical": "https://winningnumbers.us/states/az/mega-millions/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/mega-millions/stats",
+        "canonical": "https://winningnumbers.us/states/az/mega-millions/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/pick-3",
+        "canonical": "https://winningnumbers.us/states/az/pick-3",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/pick-3/historical",
+        "canonical": "https://winningnumbers.us/states/az/pick-3/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/pick-3/stats",
+        "canonical": "https://winningnumbers.us/states/az/pick-3/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/powerball",
+        "canonical": "https://winningnumbers.us/states/az/powerball",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/powerball/historical",
+        "canonical": "https://winningnumbers.us/states/az/powerball/historical",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/powerball/stats",
+        "canonical": "https://winningnumbers.us/states/az/powerball/stats",
+        "mismatch": false,
+        "invalid_domain": true
+      },
+      {
+        "path": "/states/az/the-pick",
+        "canonical": "https://winningnumbers.us/states/az/the-pick",
+        "mismatch": false,
+        "invalid_domain": true
+      }
+    ]
+  },
+  "high_priority": {
+    "noindex_or_nofollow": [],
+    "duplicate_title_examples": [
+      {
+        "duplicate_type": "duplicate_title",
+        "value": "Cash Pop Virginia Results Today | Past Draws | Winning Numbers",
+        "count": 2,
+        "routes": "/states/va/cash-pop | /states/va/cash-pop-after-hours"
+      },
+      {
+        "duplicate_type": "duplicate_title",
+        "value": "Cash Pop Number Frequency | Virginia Lottery Stats | Winning Numbers",
+        "count": 2,
+        "routes": "/states/va/cash-pop-after-hours/stats | /states/va/cash-pop/stats"
+      }
+    ],
+    "duplicate_description_examples": [
+      {
+        "duplicate_type": "duplicate_description",
+        "value": "View the latest Cash Pop winning numbers for Virginia. Check past draws, number frequency stats, and historical results.",
+        "count": 2,
+        "routes": "/states/va/cash-pop | /states/va/cash-pop-after-hours"
+      },
+      {
+        "duplicate_type": "duplicate_description",
+        "value": "Analyze Cash Pop number frequency statistics for Virginia. View most and least frequently drawn numbers over the past year.",
+        "count": 2,
+        "routes": "/states/va/cash-pop-after-hours/stats | /states/va/cash-pop/stats"
+      }
+    ]
+  },
+  "medium_priority": {
+    "missing_og_or_twitter_or_h1_or_jsonld": [],
+    "title_length_examples": [
+      {
+        "path": "/games",
+        "length": 80
+      },
+      {
+        "path": "/states/ar/cash-3/evening",
+        "length": 73
+      },
+      {
+        "path": "/states/ar/cash-3/midday",
+        "length": 72
+      },
+      {
+        "path": "/states/ar/cash-4/evening",
+        "length": 73
+      },
+      {
+        "path": "/states/ar/cash-4/midday",
+        "length": 72
+      },
+      {
+        "path": "/states/ar/mega-millions/stats",
+        "length": 73
+      },
+      {
+        "path": "/states/ar/millionaire-for-life",
+        "length": 74
+      },
+      {
+        "path": "/states/ar/millionaire-for-life/stats",
+        "length": 80
+      },
+      {
+        "path": "/states/ar/natural-state-jackpot",
+        "length": 75
+      },
+      {
+        "path": "/states/ar/natural-state-jackpot/historical",
+        "length": 71
+      },
+      {
+        "path": "/states/ar/natural-state-jackpot/stats",
+        "length": 81
+      },
+      {
+        "path": "/states/az/mega-millions/stats",
+        "length": 72
+      },
+      {
+        "path": "/states/az/triple-twist/stats",
+        "length": 71
+      },
+      {
+        "path": "/states/ca/daily-3/evening",
+        "length": 76
+      },
+      {
+        "path": "/states/ca/daily-3/midday",
+        "length": 75
+      },
+      {
+        "path": "/states/ca/daily-derby/stats",
+        "length": 73
+      },
+      {
+        "path": "/states/ca/fantasy-5/stats",
+        "length": 71
+      },
+      {
+        "path": "/states/ca/mega-millions/stats",
+        "length": 75
+      },
+      {
+        "path": "/states/ca/powerball/stats",
+        "length": 71
+      },
+      {
+        "path": "/states/ca/superlotto-plus",
+        "length": 71
+      },
+      {
+        "path": "/states/ca/superlotto-plus/stats",
+        "length": 77
+      },
+      {
+        "path": "/states/co/colorado-lotto/stats",
+        "length": 75
+      },
+      {
+        "path": "/states/co/mega-millions/stats",
+        "length": 73
+      },
+      {
+        "path": "/states/co/millionaire-for-life",
+        "length": 74
+      },
+      {
+        "path": "/states/co/millionaire-for-life/stats",
+        "length": 80
+      },
+      {
+        "path": "/states/co/pick-3/evening",
+        "length": 73
+      },
+      {
+        "path": "/states/co/pick-3/midday",
+        "length": 72
+      },
+      {
+        "path": "/states/co/powerball-double-play",
+        "length": 75
+      },
+      {
+        "path": "/states/co/powerball-double-play/historical",
+        "length": 71
+      },
+      {
+        "path": "/states/co/powerball-double-play/stats",
+        "length": 81
+      },
+      {
+        "path": "/states/ct/mega-millions/stats",
+        "length": 76
+      },
+      {
+        "path": "/states/ct/millionaire-for-life",
+        "length": 77
+      },
+      {
+        "path": "/states/ct/millionaire-for-life/stats",
+        "length": 83
+      },
+      {
+        "path": "/states/ct/play-3/day",
+        "length": 72
+      },
+      {
+        "path": "/states/ct/play-3/night",
+        "length": 74
+      },
+      {
+        "path": "/states/ct/play-4/day",
+        "length": 72
+      },
+      {
+        "path": "/states/ct/play-4/night",
+        "length": 74
+      },
+      {
+        "path": "/states/ct/powerball-double-play",
+        "length": 78
+      },
+      {
+        "path": "/states/ct/powerball-double-play/historical",
+        "length": 71
+      },
+      {
+        "path": "/states/ct/powerball-double-play/stats",
+        "length": 84
+      }
+    ],
+    "description_length_examples": []
+  }
+}

@@ -1,15 +1,22 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Container, Breadcrumbs } from "@/components/layout"
+import { JsonLd } from "@/components/seo"
 import { getCanonicalUrl } from "@/lib/seo/metadata"
+import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Mail, HelpCircle, FileText, Shield } from "lucide-react"
 
+const PAGE_TITLE = "Contact Us | Winning Numbers"
+const PAGE_DESCRIPTION =
+  "Contact Winning Numbers for questions, feedback, or inquiries about our lottery results website."
+const PAGE_URL = getCanonicalUrl("/contact")
+
 export const metadata: Metadata = {
-  title: "Contact Us | Winning Numbers",
-  description: "Contact Winning Numbers for questions, feedback, or inquiries about our lottery results website.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: getCanonicalUrl("/contact"),
+    canonical: PAGE_URL,
   },
 }
 
@@ -35,6 +42,8 @@ const helpLinks = [
 ]
 
 export default function ContactPage() {
+  const webPageSchema = generateWebPageSchema(PAGE_TITLE, PAGE_DESCRIPTION, PAGE_URL)
+
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "Contact", href: "/contact" },
@@ -42,6 +51,7 @@ export default function ContactPage() {
 
   return (
     <Container className="py-8">
+      <JsonLd data={webPageSchema} />
       <Breadcrumbs items={breadcrumbItems} />
 
       <div className="mt-8 max-w-4xl">

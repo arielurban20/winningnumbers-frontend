@@ -1,16 +1,23 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Container, Breadcrumbs } from "@/components/layout"
+import { JsonLd } from "@/components/seo"
 import { getCanonicalUrl } from "@/lib/seo/metadata"
+import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Info, Target, Shield, Users, ArrowRight } from "lucide-react"
 
+const PAGE_TITLE = "About Us | Winning Numbers"
+const PAGE_DESCRIPTION =
+  "Learn about Winning Numbers - your trusted source for lottery results across the United States including Powerball, Mega Millions, and state lotteries."
+const PAGE_URL = getCanonicalUrl("/about")
+
 export const metadata: Metadata = {
-  title: "About Us | Winning Numbers",
-  description: "Learn about Winning Numbers - your trusted source for lottery results across the United States including Powerball, Mega Millions, and state lotteries.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: getCanonicalUrl("/about"),
+    canonical: PAGE_URL,
   },
 }
 
@@ -33,6 +40,8 @@ const features = [
 ]
 
 export default function AboutPage() {
+  const webPageSchema = generateWebPageSchema(PAGE_TITLE, PAGE_DESCRIPTION, PAGE_URL)
+
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
@@ -40,6 +49,7 @@ export default function AboutPage() {
 
   return (
     <Container className="py-8">
+      <JsonLd data={webPageSchema} />
       <Breadcrumbs items={breadcrumbItems} />
 
       <div className="mt-8 max-w-4xl">

@@ -1,19 +1,28 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { Container, Breadcrumbs } from "@/components/layout"
+import { JsonLd } from "@/components/seo"
 import { getCanonicalUrl } from "@/lib/seo/metadata"
+import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent } from "@/components/ui/card"
 import { AlertTriangle, Shield, Phone } from "lucide-react"
 
+const PAGE_TITLE = "Disclaimer | Winning Numbers"
+const PAGE_DESCRIPTION =
+  "Important disclaimer for Winning Numbers. Understand the limitations and intended use of our lottery results website."
+const PAGE_URL = getCanonicalUrl("/disclaimer")
+
 export const metadata: Metadata = {
-  title: "Disclaimer | Winning Numbers",
-  description: "Important disclaimer for Winning Numbers. Understand the limitations and intended use of our lottery results website.",
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
   alternates: {
-    canonical: getCanonicalUrl("/disclaimer"),
+    canonical: PAGE_URL,
   },
 }
 
 export default function DisclaimerPage() {
+  const webPageSchema = generateWebPageSchema(PAGE_TITLE, PAGE_DESCRIPTION, PAGE_URL)
+
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "Disclaimer", href: "/disclaimer" },
@@ -21,6 +30,7 @@ export default function DisclaimerPage() {
 
   return (
     <Container className="py-8">
+      <JsonLd data={webPageSchema} />
       <Breadcrumbs items={breadcrumbItems} />
 
       <div className="mt-8 max-w-4xl">

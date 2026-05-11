@@ -1,0 +1,16 @@
+SEO AUDIT SUMMARY
+Generated: 2026-05-11T05:55:28.297Z
+Site: http://localhost:3100
+
+Routes audited (indexable HTML): 1384
+Non-200 routes: 0
+Missing metadata rows: 0
+Canonical issues: 1384
+Noindex/nofollow issues: 0
+Duplicate title groups: 2
+Duplicate description groups: 2
+Duplicate canonical groups: 0
+
+Readiness for backlink scaling: NOT READY (fix critical blockers first)
+
+Top critical blockers:

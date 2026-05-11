@@ -1,0 +1,36 @@
+# Performance Audit Summary
+
+Generated: 2026-05-11T05:30:43.730Z
+
+## Build Artifacts
+- Total built JS size: 5.25 MB
+- Total built CSS size: 0.18 MB
+- Total JS/CSS assets scanned: 246
+
+## Largest Assets (Top 10)
+1. .next\server\chunks\0tk4_next_dist_esm_build_templates_app-route_0ynz2k2.js — 381.11 KB
+2. .next\build\chunks\node_modules__pnpm_0m2lgrq._.js — 256.21 KB
+3. .next\static\chunks\0uo2.ozg~15g_.js — 233.87 KB
+4. .next\server\chunks\ssr\_10tsx71._.js — 233.82 KB
+5. .next\static\chunks\094kycuwsu0-9.js — 221.99 KB
+6. .next\server\chunks\ssr\[root-of-the-server]__0cjgazy._.js — 214.2 KB
+7. .next\static\chunks\0zp_8mt-xvo4..css — 186.13 KB
+8. .next\server\chunks\ssr\_0u59f0g._.js — 171.21 KB
+9. .next\server\chunks\lib_04.ghqs._.js — 157.96 KB
+10. .next\static\chunks\0uu88okmxri61.js — 146.04 KB
+
+## Source-Level Risk Signals
+- "use client" components: 82 (low)
+- no-store / revalidate:0 fetch signals: 0 (low)
+- raw <img> tag usages: 2 (low)
+- next/image usages: 7
+
+## Findings
+- Large JS chunks: 2 assets above 250KB.
+- Image optimization risk: Raw <img> tags found (review these for optimization).
+- Caching pressure risk: No no-store/revalidate:0 patterns detected in scanned TS/JS source.
+
+## Lighthouse
+- If Lighthouse CLI is available, run:
+  - `npx lighthouse https://winningnumbers.us --preset=desktop --output=html --output-path=logs/lighthouse-desktop.html`
+  - `npx lighthouse https://winningnumbers.us --preset=perf --emulated-form-factor=mobile --output=html --output-path=logs/lighthouse-mobile.html`

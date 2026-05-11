@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-05-11T05:25:56.261Z",
+  "site_url": "https://winningnumbers.us",
+  "total_routes_checked": 1396,
+  "non_200_count": 3,
+  "html_expected_but_non_html_count": 0,
+  "blank_like_html_count": 0,
+  "api_internal_indexability_risk_count": 0,
+  "examples": {
+    "non_200": [
+      {
+        "path": "/api/internal/historical/games",
+        "status": 404,
+        "error": ""
+      },
+      {
+        "path": "/api/internal/historical/results",
+        "status": 404,
+        "error": ""
+      },
+      {
+        "path": "/api/internal/states",
+        "status": 404,
+        "error": ""
+      }
+    ],
+    "html_expected_but_non_html": [],
+    "blank_like_html": []
+  }
+}
