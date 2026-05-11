@@ -107,6 +107,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
     !hasLatestSecondaryDrawings &&
     (latestDraw?.bonus_items?.length || 0) <= 1
   const latestNumbersSize = isCompactNumberGame ? "md" : "lg"
+  const latestCardMaxWidth = isCompactNumberGame ? "max-w-2xl" : "max-w-3xl"
   
   const sessionName = session.game.name
   const stateName = getStateName(state)
@@ -197,7 +198,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
         
         {/* Latest Result */}
         <section className="mb-12">
-          <Card className="mx-auto w-full max-w-3xl overflow-hidden border-2 border-primary/20">
+          <Card className={`mx-auto w-full ${latestCardMaxWidth} overflow-hidden border-2 border-primary/20`}>
             <CardHeader className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-4 py-3 sm:px-5 sm:py-4">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>

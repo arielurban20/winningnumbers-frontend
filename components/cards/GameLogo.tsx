@@ -325,6 +325,8 @@ const LOCAL_LOGOS: Record<string, string> = {
   "mi-lotto-47": "/logos/mi-lotto47-1.svg",
   "mi-megamillions": "/logos/mi-megamillions-2.svg",
   "mi-mega-millions": "/logos/mi-megamillions-2.svg",
+  "mi-pokerlotto": "/logos/mi-poker-lotto.svg",
+  "mi-poker-lotto": "/logos/mi-poker-lotto.svg",
   "mi-powerball": "/logos/mi-powerball.svg",
   // Minnesota
   "mn-gopher5": "/logos/mn-gopher5.svg",

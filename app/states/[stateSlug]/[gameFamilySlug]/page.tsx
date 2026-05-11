@@ -119,6 +119,21 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
 
   const hasMultipleSessions = family.sessions.length > 1
   const hasSingleSession = family.sessions.length === 1
+  const singleSessionDraw = hasSingleSession ? family.sessions[0]?.latestDraw : undefined
+  const singleSessionExtraSecondaryCount =
+    singleSessionDraw?.extra_items?.filter((item) => item?.type === "secondary_drawing").length || 0
+  const singleSessionHasSecondary =
+    (singleSessionDraw?.secondary_drawings?.length || 0) > 0 ||
+    Boolean(singleSessionDraw?.secondary_drawing) ||
+    singleSessionExtraSecondaryCount > 0
+  const singleSessionMainCount = singleSessionDraw?.main_numbers?.length || 0
+  const isSingleSessionCompactGame =
+    hasSingleSession &&
+    singleSessionMainCount > 0 &&
+    singleSessionMainCount <= 4 &&
+    !singleSessionHasSecondary &&
+    (singleSessionDraw?.bonus_items?.length || 0) <= 1
+  const singleSessionLatestMaxWidth = isSingleSessionCompactGame ? "max-w-2xl" : "max-w-3xl"
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://winningnumbers.us"
   const stateName = getStateName(state)
   const faqs = getFAQsForGame(gameFamilySlug)
@@ -226,7 +241,7 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
             <h2 className="text-2xl font-bold tracking-tight">Latest Results</h2>
           </div>
           <Card
-            className={`overflow-hidden border-border/50 w-full ${hasSingleSession ? "mx-auto max-w-3xl" : ""}`}
+            className={`overflow-hidden border-border/50 w-full ${hasSingleSession ? `mx-auto ${singleSessionLatestMaxWidth}` : ""}`}
           >
             <CardContent className="divide-y p-4 sm:p-5">
               {family.sessions.map((session, idx) => (

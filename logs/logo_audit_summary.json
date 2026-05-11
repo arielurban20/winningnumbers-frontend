@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T19:21:12.623Z",
+  "generated_at": "2026-05-11T01:57:25.094Z",
   "api_base": "https://winningnumbers.us/api",
   "logo_base_url": "https://winningnumbers.us/assets/logos",
   "total_states": 47,
@@ -13,7 +13,7 @@
   "fallback_default_logo_count": 0,
   "unused_logo_files_count": 13,
   "duplicate_logo_files_count": 80,
-  "local_logo_registry_key_count": 508,
+  "local_logo_registry_key_count": 510,
   "mapped_logo_path_missing_files_count": 0,
   "missing_by_state": {},
   "missing_by_game_family": {},
