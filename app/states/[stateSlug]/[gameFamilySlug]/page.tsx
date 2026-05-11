@@ -27,6 +27,33 @@ interface GameFamilyPageProps {
   params: Promise<{ stateSlug: string; gameFamilySlug: string }>
 }
 
+function titleCaseFromSlug(slug: string): string {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((part) => {
+      if (/^\d+$/.test(part)) return part
+      if (part.length <= 2) return part.toUpperCase()
+      return part.charAt(0).toUpperCase() + part.slice(1)
+    })
+    .join(" ")
+}
+
+function resolveSeoGameName(gameName: string, gameFamilySlug: string): string {
+  const normalizedGameName = gameName.trim().toLowerCase()
+  const slugTitle = titleCaseFromSlug(gameFamilySlug)
+  const normalizedSlugTitle = slugTitle.toLowerCase()
+
+  if (
+    normalizedSlugTitle !== normalizedGameName &&
+    normalizedSlugTitle.startsWith(`${normalizedGameName} `)
+  ) {
+    return slugTitle
+  }
+
+  return gameName
+}
+
 export async function generateMetadata({
   params,
 }: GameFamilyPageProps): Promise<Metadata> {
@@ -41,9 +68,13 @@ export async function generateMetadata({
 
   const families = groupGamesByFamily(matchingGames, undefined, stateSlug, state?.name)
   const family = families[0]
+  const metadataGameName = resolveSeoGameName(
+    family?.familyName || gameFamilySlug,
+    gameFamilySlug
+  )
 
   return generateGameFamilyMetadata(
-    family?.familyName || gameFamilySlug,
+    metadataGameName,
     state.name,
     stateSlug,
     gameFamilySlug

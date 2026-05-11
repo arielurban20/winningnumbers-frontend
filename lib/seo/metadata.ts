@@ -3,6 +3,44 @@ import type { Metadata } from "next"
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://winningnumbers.us"
 const siteName = "Winning Numbers"
 
+function normalizeForCompare(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+}
+
+function titleCaseFromSlug(slug: string): string {
+  return slug
+    .split("-")
+    .filter(Boolean)
+    .map((token) => {
+      if (/^\d+$/.test(token)) return token
+      if (token.length <= 2) return token.toUpperCase()
+      return token.charAt(0).toUpperCase() + token.slice(1)
+    })
+    .join(" ")
+}
+
+function buildMetadataGameName(gameName: string, familySlug: string): string {
+  const normalizedGameName = normalizeForCompare(gameName)
+  const slugTitle = titleCaseFromSlug(familySlug)
+  const normalizedSlugTitle = normalizeForCompare(slugTitle)
+
+  // If the slug is clearly more specific than the game name (e.g. "cash-pop-after-hours"
+  // vs "Cash Pop"), prefer the slug title so metadata remains unique by route.
+  if (
+    normalizedSlugTitle !== normalizedGameName &&
+    normalizedSlugTitle.startsWith(`${normalizedGameName} `)
+  ) {
+    return slugTitle
+  }
+
+  return gameName
+}
+
 export function getCanonicalUrl(path: string): string {
   const cleanPath = path.startsWith("/") ? path : `/${path}`
   return `${siteUrl}${cleanPath}`
@@ -76,9 +114,10 @@ export function generateGameFamilyMetadata(
   stateSlug: string,
   familySlug: string
 ): Metadata {
+  const metadataGameName = buildMetadataGameName(gameName, familySlug)
   const url = getCanonicalUrl(`/states/${stateSlug}/${familySlug}`)
-  const title = `${gameName} ${stateName} Results Today | Past Draws`
-  const description = `View the latest ${gameName} winning numbers for ${stateName}. Check past draws, number frequency stats, and historical results.`
+  const title = `${metadataGameName} ${stateName} Results Today | Past Draws`
+  const description = `View the latest ${metadataGameName} winning numbers for ${stateName}. Check past draws, number frequency stats, and historical results.`
 
   return {
     title,
@@ -102,9 +141,10 @@ export function generateStatsMetadata(
   stateSlug: string,
   familySlug: string
 ): Metadata {
+  const metadataGameName = buildMetadataGameName(gameName, familySlug)
   const url = getCanonicalUrl(`/states/${stateSlug}/${familySlug}/stats`)
-  const title = `${gameName} Number Frequency | ${stateName} Lottery Stats`
-  const description = `Analyze ${gameName} number frequency statistics for ${stateName}. View most and least frequently drawn numbers over the past year.`
+  const title = `${metadataGameName} Number Frequency | ${stateName} Lottery Stats`
+  const description = `Analyze ${metadataGameName} number frequency statistics for ${stateName}. View most and least frequently drawn numbers over the past year.`
 
   return {
     title,
@@ -128,9 +168,10 @@ export function generateHistoricalMetadata(
   stateSlug: string,
   familySlug: string
 ): Metadata {
+  const metadataGameName = buildMetadataGameName(gameName, familySlug)
   const url = getCanonicalUrl(`/states/${stateSlug}/${familySlug}/historical`)
-  const title = `${gameName} Historical Results | ${stateName} Lottery`
-  const description = `Search historical ${gameName} results for ${stateName}. Filter by date range and export results to CSV.`
+  const title = `${metadataGameName} Historical Results | ${stateName} Lottery`
+  const description = `Search historical ${metadataGameName} results for ${stateName}. Filter by date range and export results to CSV.`
 
   return {
     title,
