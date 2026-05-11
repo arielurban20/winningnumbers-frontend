@@ -33,7 +33,7 @@ export default async function v0NextConfig(phase, { defaultConfig }) {
   },
   experimental: {
     ...userConfig.experimental,
-    transitionIndicator: true,
+    transitionIndicator: userConfig.experimental?.transitionIndicator ?? false,
     turbopackFileSystemCacheForDev: process.env.TURBOPACK_PERSISTENT_CACHE !== 'false' && process.env.TURBOPACK_PERSISTENT_CACHE !== '0',
     serverActions: {
       ...userConfig.experimental?.serverActions,

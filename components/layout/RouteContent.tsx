@@ -1,9 +1,10 @@
 "use client"
 
 import { usePathname } from "next/navigation"
+import type { ReactNode } from "react"
 
 interface RouteContentProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 /**
@@ -20,4 +21,3 @@ export function RouteContent({ children }: RouteContentProps) {
     </main>
   )
 }
-

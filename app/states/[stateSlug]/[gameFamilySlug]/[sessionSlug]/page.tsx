@@ -94,6 +94,19 @@ export default async function SessionPage({ params }: SessionPageProps) {
     getLeastFrequent(session.sessionSlug, 365, 10),
   ])
   const recentDraws = pastDraws.slice(0, 10)
+  const extraSecondaryCount =
+    latestDraw?.extra_items?.filter((item) => item?.type === "secondary_drawing").length || 0
+  const hasLatestSecondaryDrawings =
+    (latestDraw?.secondary_drawings?.length || 0) > 0 ||
+    Boolean(latestDraw?.secondary_drawing) ||
+    extraSecondaryCount > 0
+  const latestMainCount = latestDraw?.main_numbers?.length || 0
+  const isCompactNumberGame =
+    latestMainCount > 0 &&
+    latestMainCount <= 4 &&
+    !hasLatestSecondaryDrawings &&
+    (latestDraw?.bonus_items?.length || 0) <= 1
+  const latestNumbersSize = isCompactNumberGame ? "md" : "lg"
   
   const sessionName = session.game.name
   const stateName = getStateName(state)
@@ -184,11 +197,11 @@ export default async function SessionPage({ params }: SessionPageProps) {
         
         {/* Latest Result */}
         <section className="mb-12">
-          <Card className="overflow-hidden border-2 border-primary/20">
-            <CardHeader className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent">
+          <Card className="mx-auto w-full max-w-3xl overflow-hidden border-2 border-primary/20">
+            <CardHeader className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-4 py-3 sm:px-5 sm:py-4">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <CardTitle className="text-xl">Latest {session.sessionName} Result</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl">Latest {session.sessionName} Result</CardTitle>
                   {latestDraw && (
                     <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
                       <Calendar className="h-3.5 w-3.5" />
@@ -199,11 +212,11 @@ export default async function SessionPage({ params }: SessionPageProps) {
                 {latestDraw && <StatusBadge statusColor={latestDraw.draw_status_color} />}
               </div>
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className="p-4 sm:p-5">
               {latestDraw ? (
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {/* Centered Numbers */}
-                <div className="flex justify-center py-4">
+                <div className="flex justify-center py-1 sm:py-2">
                   {(() => {
                     const secondaryExtras = Array.isArray(latestDraw.secondary_drawings)
                       ? latestDraw.secondary_drawings
@@ -219,7 +232,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
                       extraItems={mergedExtras}
                       statusColor={latestDraw.draw_status_color}
                       gameSlug={latestDraw.game_slug}
-                      size="lg"
+                      size={latestNumbersSize}
                       centered={true}
                     />
                     )
@@ -228,12 +241,12 @@ export default async function SessionPage({ params }: SessionPageProps) {
                   
                   {/* Jackpot & Next Draw */}
                   {(latestDraw.jackpot_next || latestDraw.next_draw_text || latestDraw.next_draw_relative || latestDraw.countdown_seconds != null) && (
-                    <div className="flex flex-wrap items-center justify-center gap-6 rounded-xl bg-muted/50 p-4">
+                    <div className="mx-auto flex w-full max-w-xl flex-wrap items-center justify-center gap-x-4 gap-y-2 rounded-lg bg-muted/50 px-3 py-2.5 sm:gap-x-5 sm:px-4 sm:py-3">
                       {latestDraw.jackpot_next && (
                         <div className="flex items-center gap-2 text-center">
-                          <Trophy className="h-5 w-5 text-lottery-gold" />
-                          <span className="text-muted-foreground">Jackpot:</span>
-                          <span className="text-xl font-bold text-lottery-gold">
+                          <Trophy className="h-4 w-4 text-lottery-gold" />
+                          <span className="text-sm text-muted-foreground">Jackpot:</span>
+                          <span className="text-base font-bold text-lottery-gold sm:text-lg">
                             {formatJackpot(latestDraw.jackpot_next)}
                           </span>
                         </div>
@@ -245,7 +258,8 @@ export default async function SessionPage({ params }: SessionPageProps) {
                           next_draw_timezone={latestDraw.next_draw_timezone}
                           next_draw_relative={latestDraw.next_draw_relative}
                           next_draw_text={latestDraw.next_draw_text}
-                          variant="full"
+                          variant="compact"
+                          className="text-xs text-muted-foreground sm:text-sm"
                         />
                       )}
                     </div>
