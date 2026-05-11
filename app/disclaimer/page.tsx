@@ -7,7 +7,7 @@ import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent } from "@/components/ui/card"
 import { AlertTriangle, Shield, Phone } from "lucide-react"
 
-const PAGE_TITLE = "Disclaimer | Winning Numbers"
+const PAGE_TITLE = "Disclaimer"
 const PAGE_DESCRIPTION =
   "Important disclaimer for Winning Numbers. Understand the limitations and intended use of our lottery results website."
 const PAGE_URL = getCanonicalUrl("/disclaimer")

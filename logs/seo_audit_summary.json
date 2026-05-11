@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-11T07:06:48.024Z",
+  "generated_at": "2026-05-11T07:43:49.615Z",
   "site_url": "https://winningnumbers.us",
   "routes_audited": 1384,
   "status_non_200_count": 0,
@@ -7,10 +7,10 @@
   "canonical_issue_count": 0,
   "noindex_or_nofollow_count": 0,
   "likely_blank_html_count": 0,
-  "duplicate_title_count": 2,
-  "duplicate_description_count": 2,
+  "duplicate_title_count": 0,
+  "duplicate_description_count": 0,
   "duplicate_canonical_count": 0,
-  "title_length_issue_count": 501,
+  "title_length_issue_count": 503,
   "description_length_issue_count": 0,
   "critical_blockers": {
     "non_200_routes": [],
@@ -19,34 +19,8 @@
   },
   "high_priority": {
     "noindex_or_nofollow": [],
-    "duplicate_title_examples": [
-      {
-        "duplicate_type": "duplicate_title",
-        "value": "Cash Pop Virginia Results Today | Past Draws | Winning Numbers",
-        "count": 2,
-        "routes": "/states/va/cash-pop | /states/va/cash-pop-after-hours"
-      },
-      {
-        "duplicate_type": "duplicate_title",
-        "value": "Cash Pop Number Frequency | Virginia Lottery Stats | Winning Numbers",
-        "count": 2,
-        "routes": "/states/va/cash-pop-after-hours/stats | /states/va/cash-pop/stats"
-      }
-    ],
-    "duplicate_description_examples": [
-      {
-        "duplicate_type": "duplicate_description",
-        "value": "View the latest Cash Pop winning numbers for Virginia. Check past draws, number frequency stats, and historical results.",
-        "count": 2,
-        "routes": "/states/va/cash-pop | /states/va/cash-pop-after-hours"
-      },
-      {
-        "duplicate_type": "duplicate_description",
-        "value": "Analyze Cash Pop number frequency statistics for Virginia. View most and least frequently drawn numbers over the past year.",
-        "count": 2,
-        "routes": "/states/va/cash-pop-after-hours/stats | /states/va/cash-pop/stats"
-      }
-    ]
+    "duplicate_title_examples": [],
+    "duplicate_description_examples": []
   },
   "medium_priority": {
     "missing_og_or_twitter_or_h1_or_jsonld": [],

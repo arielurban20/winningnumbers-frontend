@@ -22,13 +22,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://winningnumbers.us"
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: "Mega Millions Results Today | Latest Winning Numbers",
+  title: "Mega Millions Results Today",
   description: "Get the latest Mega Millions winning numbers, jackpot amounts, and past draw results. Updated after every drawing. Check your tickets now!",
   alternates: {
     canonical: `${siteUrl}/games/mega-millions`,
   },
   openGraph: {
-    title: "Mega Millions Results Today | Latest Winning Numbers",
+    title: "Mega Millions Results Today",
     description: "Get the latest Mega Millions winning numbers, jackpot amounts, and past draw results. Updated after every drawing.",
     url: `${siteUrl}/games/mega-millions`,
     type: "website",

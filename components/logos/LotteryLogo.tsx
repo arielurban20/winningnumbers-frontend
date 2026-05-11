@@ -77,32 +77,8 @@ export function LotteryLogo({
     )
   }
 
-  // Check if the logo is an SVG
-  const isSvg = resolved.src.endsWith(".svg")
-  
-  // For SVGs, we can use img tag for better rendering
-  // For other formats, use Next.js Image for optimization
-  if (isSvg) {
-    return (
-      <div
-        className={cn(
-          "relative flex items-center justify-center overflow-hidden rounded-lg bg-background",
-          sizeConfig.container,
-          className
-        )}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={resolved.src}
-          alt={resolved.alt}
-          className="h-full w-full object-contain p-0.5"
-          loading={priority ? "eager" : "lazy"}
-          width={sizeConfig.image}
-          height={sizeConfig.image}
-        />
-      </div>
-    )
-  }
+  const isSvg = resolved.src.toLowerCase().endsWith(".svg")
+  const isRemote = resolved.src.startsWith("http")
 
   return (
     <div
@@ -117,9 +93,10 @@ export function LotteryLogo({
         alt={resolved.alt}
         width={sizeConfig.image}
         height={sizeConfig.image}
+        sizes={`${sizeConfig.image}px`}
         className="object-contain p-0.5"
         priority={priority}
-        unoptimized={resolved.src.startsWith("http")}
+        unoptimized={isRemote || isSvg}
       />
     </div>
   )

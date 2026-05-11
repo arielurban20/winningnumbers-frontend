@@ -7,7 +7,7 @@ import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Mail, HelpCircle, FileText, Shield } from "lucide-react"
 
-const PAGE_TITLE = "Contact Us | Winning Numbers"
+const PAGE_TITLE = "Contact Us"
 const PAGE_DESCRIPTION =
   "Contact Winning Numbers for questions, feedback, or inquiries about our lottery results website."
 const PAGE_URL = getCanonicalUrl("/contact")

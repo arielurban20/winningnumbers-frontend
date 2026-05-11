@@ -1,11 +1,11 @@
 # Performance Audit Summary
 
-Generated: 2026-05-11T05:30:43.730Z
+Generated: 2026-05-11T07:34:06.369Z
 
 ## Build Artifacts
-- Total built JS size: 5.25 MB
+- Total built JS size: 5.23 MB
 - Total built CSS size: 0.18 MB
-- Total JS/CSS assets scanned: 246
+- Total JS/CSS assets scanned: 245
 
 ## Largest Assets (Top 10)
 1. .next\server\chunks\0tk4_next_dist_esm_build_templates_app-route_0ynz2k2.js — 381.11 KB
@@ -17,17 +17,17 @@ Generated: 2026-05-11T05:30:43.730Z
 7. .next\static\chunks\0zp_8mt-xvo4..css — 186.13 KB
 8. .next\server\chunks\ssr\_0u59f0g._.js — 171.21 KB
 9. .next\server\chunks\lib_04.ghqs._.js — 157.96 KB
-10. .next\static\chunks\0uu88okmxri61.js — 146.04 KB
+10. .next\static\chunks\05uo~kiehe1ou.js — 142.54 KB
 
 ## Source-Level Risk Signals
 - "use client" components: 82 (low)
 - no-store / revalidate:0 fetch signals: 0 (low)
-- raw <img> tag usages: 2 (low)
-- next/image usages: 7
+- raw <img> tag usages: 0 (low)
+- next/image usages: 9
 
 ## Findings
 - Large JS chunks: 2 assets above 250KB.
-- Image optimization risk: Raw <img> tags found (review these for optimization).
+- Image optimization risk: No raw <img> tags found in scanned TS/JS source.
 - Caching pressure risk: No no-store/revalidate:0 patterns detected in scanned TS/JS source.
 
 ## Lighthouse

@@ -7,7 +7,7 @@ import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent } from "@/components/ui/card"
 import { Shield } from "lucide-react"
 
-const PAGE_TITLE = "Privacy Policy | Winning Numbers"
+const PAGE_TITLE = "Privacy Policy"
 const PAGE_DESCRIPTION =
   "Privacy Policy for Winning Numbers. Learn how we collect, use, and protect your information when using our lottery results website."
 const PAGE_URL = getCanonicalUrl("/privacy-policy")

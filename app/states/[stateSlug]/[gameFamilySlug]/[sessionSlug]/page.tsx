@@ -27,6 +27,17 @@ interface SessionPageProps {
   }>
 }
 
+function stateAbbrFromSlug(stateSlug: string): string {
+  const normalized = stateSlug.trim().toUpperCase()
+  if (/^[A-Z]{2}$/.test(normalized)) return normalized
+  return stateSlug
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join("")
+    .slice(0, 3) || normalized
+}
+
 export async function generateMetadata({ params }: SessionPageProps): Promise<Metadata> {
   const { stateSlug, gameFamilySlug, sessionSlug } = await params
   
@@ -46,10 +57,11 @@ export async function generateMetadata({ params }: SessionPageProps): Promise<Me
   
   const sessionName = session.game.name
   const stateName = state.name
+  const stateAbbr = stateAbbrFromSlug(stateSlug)
   const canonicalUrl = getCanonicalUrl(`/states/${stateSlug}/${gameFamilySlug}/${sessionSlug}`)
   
   return {
-    title: `${sessionName} ${stateName} Results Today | Winning Numbers`,
+    title: `${stateAbbr} ${sessionName} Results`,
     description: `Get the latest ${sessionName} lottery results for ${stateName}. View today's winning numbers, past draws, and statistics.`,
     alternates: {
       canonical: canonicalUrl,

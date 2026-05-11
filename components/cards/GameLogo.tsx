@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 
 interface GameLogoProps {
@@ -964,15 +965,16 @@ export function GameLogo({
         className
       )}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         key={imageKey}
         src={currentSrc}
         alt={`${gameName} logo`}
         className="h-full w-full object-contain"
-        loading={priority ? "eager" : "lazy"}
         width={imageSizes[size]}
         height={imageSizes[size]}
+        sizes={`${imageSizes[size]}px`}
+        priority={priority}
+        unoptimized={currentSrc.startsWith("http") || currentSrc.toLowerCase().endsWith(".svg")}
         onError={() => handleImageError(currentSrc!)}
       />
     </div>

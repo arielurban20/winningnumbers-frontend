@@ -7,7 +7,7 @@ import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent } from "@/components/ui/card"
 import { FileText } from "lucide-react"
 
-const PAGE_TITLE = "Terms of Service | Winning Numbers"
+const PAGE_TITLE = "Terms of Service"
 const PAGE_DESCRIPTION =
   "Terms of Service for Winning Numbers. Review the terms and conditions for using our lottery results website."
 const PAGE_URL = getCanonicalUrl("/terms")

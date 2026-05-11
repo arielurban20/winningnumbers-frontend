@@ -7,7 +7,7 @@ import { generateWebPageSchema } from "@/lib/seo/jsonLd"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Cookie, CheckCircle2 } from "lucide-react"
 
-const PAGE_TITLE = "Cookie Policy | Winning Numbers"
+const PAGE_TITLE = "Cookie Policy"
 const PAGE_DESCRIPTION =
   "Cookie Policy for Winning Numbers. Learn about the cookies and local storage we use on our lottery results website."
 const PAGE_URL = getCanonicalUrl("/cookie-policy")

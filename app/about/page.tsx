@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Info, Target, Shield, Users, ArrowRight } from "lucide-react"
 
-const PAGE_TITLE = "About Us | Winning Numbers"
+const PAGE_TITLE = "About Us"
 const PAGE_DESCRIPTION =
   "Learn about Winning Numbers - your trusted source for lottery results across the United States including Powerball, Mega Millions, and state lotteries."
 const PAGE_URL = getCanonicalUrl("/about")

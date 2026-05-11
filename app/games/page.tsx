@@ -13,13 +13,13 @@ import { Trophy, Sparkles, ArrowRight, MapPin, DollarSign, Calendar } from "luci
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://winningnumbers.us"
 
 export const metadata: Metadata = {
-  title: "All Lottery Games | Powerball, Mega Millions & State Lotteries",
+  title: "All Lottery Games, Powerball & Mega Millions",
   description: "Browse lottery games available across the United States including Powerball, Mega Millions, Pick 3, Pick 4, Cash 5, and state-specific games.",
   alternates: {
     canonical: getCanonicalUrl("/games"),
   },
   openGraph: {
-    title: "All Lottery Games | Powerball, Mega Millions & State Lotteries",
+    title: "All Lottery Games, Powerball & Mega Millions",
     description: "Browse lottery games available across the United States including Powerball, Mega Millions, and state-specific games.",
     url: getCanonicalUrl("/games"),
     type: "website",

@@ -1,5 +1,5 @@
 SEO AUDIT SUMMARY
-Generated: 2026-05-11T07:06:48.024Z
+Generated: 2026-05-11T07:43:49.615Z
 Site: https://winningnumbers.us
 
 Routes audited (indexable HTML): 1384
@@ -7,8 +7,8 @@ Non-200 routes: 0
 Missing metadata rows: 0
 Canonical issues: 0
 Noindex/nofollow issues: 0
-Duplicate title groups: 2
-Duplicate description groups: 2
+Duplicate title groups: 0
+Duplicate description groups: 0
 Duplicate canonical groups: 0
 
 Readiness for backlink scaling: READY (technical baseline OK)

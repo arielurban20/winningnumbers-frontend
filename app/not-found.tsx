@@ -6,7 +6,7 @@ import { FileQuestion, Home, Search } from "lucide-react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Page Not Found | Winning Numbers",
+  title: "Page Not Found",
   description: "The page you are looking for could not be found. Browse our lottery results by state or search for your favorite game.",
 }
 

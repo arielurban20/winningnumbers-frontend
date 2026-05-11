@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { JsonLd } from "@/components/seo"
-import { getCanonicalUrl } from "@/lib/seo/metadata"
+import { generateHistoricalMetadata, getCanonicalUrl } from "@/lib/seo/metadata"
 import { generateBreadcrumbSchema, generateWebPageSchema } from "@/lib/seo/jsonLd"
 
 interface HistoricalLayoutProps {
@@ -15,31 +15,24 @@ function formatSlugName(slug: string): string {
     .join(" ")
 }
 
+function stateAbbrFromSlug(stateSlug: string): string {
+  const normalized = stateSlug.trim().toUpperCase()
+  if (/^[A-Z]{2}$/.test(normalized)) return normalized
+  return stateSlug
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join("")
+    .slice(0, 3) || normalized
+}
+
 export async function generateMetadata({
   params,
 }: HistoricalLayoutProps): Promise<Metadata> {
   const { stateSlug, gameFamilySlug } = await params
-  
-  // Format slugs to readable names
   const stateName = formatSlugName(stateSlug)
-  
   const gameName = formatSlugName(gameFamilySlug)
-  
-  const canonicalUrl = getCanonicalUrl(`/states/${stateSlug}/${gameFamilySlug}/historical`)
-  
-  return {
-    title: `${gameName} Historical Results | ${stateName} Lottery`,
-    description: `Search historical ${gameName} results for ${stateName}. Filter by date range and export results to CSV.`,
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: `${gameName} Historical Results | ${stateName} Lottery`,
-      description: `Search historical ${gameName} lottery results for ${stateName}.`,
-      url: canonicalUrl,
-      type: "website",
-    },
-  }
+  return generateHistoricalMetadata(gameName, stateName, stateSlug, gameFamilySlug)
 }
 
 export default async function HistoricalLayout({
@@ -49,7 +42,8 @@ export default async function HistoricalLayout({
   const { stateSlug, gameFamilySlug } = await params
   const stateName = formatSlugName(stateSlug)
   const gameName = formatSlugName(gameFamilySlug)
-  const pageTitle = `${gameName} Historical Results | ${stateName} Lottery`
+  const stateAbbr = stateAbbrFromSlug(stateSlug)
+  const pageTitle = `${stateAbbr} ${gameName} Past Results | Winning Numbers`
   const pageDescription = `Search historical ${gameName} results for ${stateName}. Filter by date range and export results to CSV.`
   const canonicalUrl = getCanonicalUrl(`/states/${stateSlug}/${gameFamilySlug}/historical`)
 
@@ -65,7 +59,7 @@ export default async function HistoricalLayout({
   const datasetSchema = {
     "@context": "https://schema.org",
     "@type": "Dataset",
-    name: `${gameName} Historical Lottery Results (${stateName})`,
+    name: `${stateAbbr} ${gameName} Historical Lottery Results`,
     description: `Historical drawing results for ${gameName} in ${stateName}. Includes searchable date ranges and downloadable result views.`,
     url: canonicalUrl,
     isPartOf: {

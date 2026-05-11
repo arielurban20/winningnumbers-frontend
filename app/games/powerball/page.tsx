@@ -22,13 +22,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://winningnumbers.us"
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: "Powerball Results Today | Latest Winning Numbers",
+  title: "Powerball Results Today",
   description: "Get the latest Powerball winning numbers, jackpot amounts, and past draw results. Updated after every drawing. Check your tickets now!",
   alternates: {
     canonical: `${siteUrl}/games/powerball`,
   },
   openGraph: {
-    title: "Powerball Results Today | Latest Winning Numbers",
+    title: "Powerball Results Today",
     description: "Get the latest Powerball winning numbers, jackpot amounts, and past draw results. Updated after every drawing.",
     url: `${siteUrl}/games/powerball`,
     type: "website",

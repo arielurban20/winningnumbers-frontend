@@ -3,6 +3,18 @@ import type { Metadata } from "next"
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://winningnumbers.us"
 const siteName = "Winning Numbers"
 
+function getStateAbbreviation(stateSlug: string): string {
+  const normalized = stateSlug.trim().toUpperCase()
+  if (/^[A-Z]{2}$/.test(normalized)) return normalized
+
+  return stateSlug
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join("")
+    .slice(0, 3) || normalized
+}
+
 function normalizeForCompare(value: string): string {
   return value
     .toLowerCase()
@@ -68,7 +80,7 @@ export function generateHomeMetadata(): Metadata {
 export function generateStatesMetadata(): Metadata {
   const url = getCanonicalUrl("/states")
   return {
-    title: "Lottery Results by State | US Winning Numbers",
+    title: "US State Lottery Results",
     description:
       "Browse lottery results by state. Find winning numbers for your state lottery including Pick 3, Pick 4, Cash 5, and more.",
     alternates: {
@@ -89,7 +101,7 @@ export function generateStateMetadata(
   stateSlug: string
 ): Metadata {
   const url = getCanonicalUrl(`/states/${stateSlug}`)
-  const title = `${stateName} Lottery Results Today | Winning Numbers`
+  const title = `${stateName} Lottery Results Today`
   const description = `Get the latest ${stateName} lottery results. View winning numbers for all ${stateName} lottery games including Pick 3, Pick 4, and more.`
 
   return {
@@ -114,9 +126,10 @@ export function generateGameFamilyMetadata(
   stateSlug: string,
   familySlug: string
 ): Metadata {
+  const stateAbbr = getStateAbbreviation(stateSlug)
   const metadataGameName = buildMetadataGameName(gameName, familySlug)
   const url = getCanonicalUrl(`/states/${stateSlug}/${familySlug}`)
-  const title = `${metadataGameName} ${stateName} Results Today | Past Draws`
+  const title = `${stateAbbr} ${metadataGameName} Results`
   const description = `View the latest ${metadataGameName} winning numbers for ${stateName}. Check past draws, number frequency stats, and historical results.`
 
   return {
@@ -141,9 +154,10 @@ export function generateStatsMetadata(
   stateSlug: string,
   familySlug: string
 ): Metadata {
+  const stateAbbr = getStateAbbreviation(stateSlug)
   const metadataGameName = buildMetadataGameName(gameName, familySlug)
   const url = getCanonicalUrl(`/states/${stateSlug}/${familySlug}/stats`)
-  const title = `${metadataGameName} Number Frequency | ${stateName} Lottery Stats`
+  const title = `${stateAbbr} ${metadataGameName} Hot & Cold Numbers`
   const description = `Analyze ${metadataGameName} number frequency statistics for ${stateName}. View most and least frequently drawn numbers over the past year.`
 
   return {
@@ -168,9 +182,10 @@ export function generateHistoricalMetadata(
   stateSlug: string,
   familySlug: string
 ): Metadata {
+  const stateAbbr = getStateAbbreviation(stateSlug)
   const metadataGameName = buildMetadataGameName(gameName, familySlug)
   const url = getCanonicalUrl(`/states/${stateSlug}/${familySlug}/historical`)
-  const title = `${metadataGameName} Historical Results | ${stateName} Lottery`
+  const title = `${stateAbbr} ${metadataGameName} Past Results`
   const description = `Search historical ${metadataGameName} results for ${stateName}. Filter by date range and export results to CSV.`
 
   return {
@@ -194,7 +209,7 @@ export function generateNationalGameMetadata(
   gameSlug: string
 ): Metadata {
   const url = getCanonicalUrl(`/games/${gameSlug}`)
-  const title = `${gameName} Results Today | Latest Winning Numbers & Jackpot`
+  const title = `${gameName} Results Today`
   const description = `Get the latest ${gameName} winning numbers and jackpot information. View past draws and next drawing dates.`
 
   return {
