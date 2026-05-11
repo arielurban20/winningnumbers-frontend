@@ -118,6 +118,7 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
   const coldNumbers = coldNumbersMap.get(firstSessionSlug) || []
 
   const hasMultipleSessions = family.sessions.length > 1
+  const hasSingleSession = family.sessions.length === 1
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://winningnumbers.us"
   const stateName = getStateName(state)
   const faqs = getFAQsForGame(gameFamilySlug)
@@ -224,10 +225,12 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-bold tracking-tight">Latest Results</h2>
           </div>
-          <Card className="overflow-hidden border-border/50">
-            <CardContent className="divide-y p-6">
+          <Card
+            className={`overflow-hidden border-border/50 w-full ${hasSingleSession ? "mx-auto max-w-3xl" : ""}`}
+          >
+            <CardContent className="divide-y p-4 sm:p-5">
               {family.sessions.map((session, idx) => (
-                <div key={session.sessionSlug} className={idx > 0 ? "pt-6" : ""}>
+                <div key={session.sessionSlug} className={idx > 0 ? "pt-4 sm:pt-5" : ""}>
                   {session.latestDraw ? (
                     <SessionResultBlock
                       sessionName={session.sessionName}
@@ -254,11 +257,22 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
           </Card>
         </section>
 
-        {/* Past 365 Draws */}
+        {/* Recent Results (Last 10 Draws) */}
         <section className="mb-16">
-          <div className="mb-6 flex items-center gap-2">
-            <Calendar className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl font-bold tracking-tight">Past 365 Days</h2>
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <Calendar className="h-6 w-6 text-primary" />
+                <h2 className="text-2xl font-bold tracking-tight">Recent Results</h2>
+              </div>
+              <p className="mt-1 text-sm text-muted-foreground">Last 10 draws</p>
+            </div>
+            <Button asChild variant="outline" size="sm">
+              <Link href={`/states/${stateSlug}/${gameFamilySlug}/historical`}>
+                View Full Historical Data
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
           
           {hasMultipleSessions ? (
@@ -273,7 +287,7 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
               {family.sessions.map((session) => (
                 <TabsContent key={session.sessionSlug} value={session.sessionSlug}>
                   <PastDrawsTable
-                    draws={pastDrawsMap.get(session.sessionSlug) || []}
+                    draws={(pastDrawsMap.get(session.sessionSlug) || []).slice(0, 10)}
                     showSession={false}
                     gameSlug={session.sessionSlug}
                   />
@@ -282,7 +296,7 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
             </Tabs>
           ) : (
             <PastDrawsTable
-              draws={pastDrawsMap.get(family.sessions[0]?.sessionSlug) || []}
+              draws={(pastDrawsMap.get(family.sessions[0]?.sessionSlug) || []).slice(0, 10)}
               showSession={false}
               gameSlug={family.sessions[0]?.sessionSlug}
             />
@@ -293,7 +307,10 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
         {(hotNumbers.length > 0 || coldNumbers.length > 0) && (
           <section className="mb-16">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold tracking-tight">Number Statistics</h2>
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight">Number Statistics</h2>
+                <p className="mt-1 text-sm text-muted-foreground">Based on the last 365 days</p>
+              </div>
               <Button asChild variant="outline" size="sm">
                 <Link href={`/states/${stateSlug}/${gameFamilySlug}/stats`}>
                   View Full Stats

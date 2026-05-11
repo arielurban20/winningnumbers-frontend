@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import { BackToTopButton } from "@/components/layout/BackToTopButton"
 import { ScrollToTop } from "@/components/layout/ScrollToTop"
+import { RouteContent } from "@/components/layout/RouteContent"
 import { CookieConsentBanner } from "@/components/legal"
 import "./globals.css"
 
@@ -142,7 +143,7 @@ export default function RootLayout({
         >
           <ScrollToTop />
           <Header />
-          <main className="flex-1">{children}</main>
+          <RouteContent>{children}</RouteContent>
           <Footer />
           <BackToTopButton />
           <CookieConsentBanner />

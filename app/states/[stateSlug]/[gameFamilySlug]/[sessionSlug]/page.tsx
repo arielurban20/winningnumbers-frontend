@@ -93,6 +93,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
     getMostFrequent(session.sessionSlug, 365, 10),
     getLeastFrequent(session.sessionSlug, 365, 10),
   ])
+  const recentDraws = pastDraws.slice(0, 10)
   
   const sessionName = session.game.name
   const stateName = getStateName(state)
@@ -261,10 +262,32 @@ export default async function SessionPage({ params }: SessionPageProps) {
           </Card>
         </section>
         
+        {/* Recent Results (Last 10 Draws) */}
+        {recentDraws.length > 0 && (
+          <section className="mb-12">
+            <div className="mb-6 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold">Recent Results</h2>
+                <p className="mt-1 text-sm text-muted-foreground">Last 10 draws</p>
+              </div>
+              <Button asChild variant="outline" size="sm">
+                <Link href={historicalUrl}>
+                  View Full Historical Data
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <PastDrawsTable draws={recentDraws} showSession={false} gameSlug={session.sessionSlug} />
+          </section>
+        )}
+
         {/* Hot/Cold Numbers */}
         {(hotNumbers.length > 0 || coldNumbers.length > 0) && (
           <section className="mb-12">
-            <h2 className="mb-6 text-2xl font-bold">Number Statistics</h2>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold">Number Statistics</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Based on the last 365 days</p>
+            </div>
             <NumberStatsCards
               hotNumbers={hotNumbers}
               coldNumbers={coldNumbers}
@@ -292,17 +315,6 @@ export default async function SessionPage({ params }: SessionPageProps) {
                 </Button>
               ))}
             </div>
-          </section>
-        )}
-        
-        {/* Past 365 Results */}
-        {pastDraws && pastDraws.length > 0 && (
-          <section className="mb-12">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Past {session.sessionName} Results</h2>
-              <Badge variant="secondary">{pastDraws.length} draws</Badge>
-            </div>
-            <PastDrawsTable draws={pastDraws} showSession={false} gameSlug={session.sessionSlug} />
           </section>
         )}
         
