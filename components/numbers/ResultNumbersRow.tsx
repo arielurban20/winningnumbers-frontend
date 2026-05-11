@@ -18,7 +18,7 @@ interface ResultNumbersRowProps {
   bonusItems?: BonusItem[]
   extraItems?: ExtraItem[]
   statusColor: DrawStatusColor
-  size?: "sm" | "md" | "lg"
+  size?: "xs" | "sm" | "md" | "lg"
   centered?: boolean
   showExtras?: boolean
   className?: string

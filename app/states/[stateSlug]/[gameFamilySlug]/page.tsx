@@ -134,6 +134,7 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
     !singleSessionHasSecondary &&
     (singleSessionDraw?.bonus_items?.length || 0) <= 1
   const singleSessionLatestMaxWidth = isSingleSessionCompactGame ? "max-w-2xl" : "max-w-3xl"
+  const latestCardMaxWidth = hasMultipleSessions ? "max-w-4xl" : singleSessionLatestMaxWidth
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://winningnumbers.us"
   const stateName = getStateName(state)
   const faqs = getFAQsForGame(gameFamilySlug)
@@ -241,9 +242,9 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
             <h2 className="text-2xl font-bold tracking-tight">Latest Results</h2>
           </div>
           <Card
-            className={`overflow-hidden border-border/50 w-full ${hasSingleSession ? `mx-auto ${singleSessionLatestMaxWidth}` : ""}`}
+            className={`mx-auto w-full ${latestCardMaxWidth} overflow-hidden border-border/50`}
           >
-            <CardContent className="divide-y p-4 sm:p-5">
+            <CardContent className={hasMultipleSessions ? "divide-y p-3 sm:p-4" : "p-3 sm:p-4"}>
               {family.sessions.map((session, idx) => (
                 <div key={session.sessionSlug} className={idx > 0 ? "pt-4 sm:pt-5" : ""}>
                   {session.latestDraw ? (
@@ -256,6 +257,7 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
                       gameSlug={session.sessionSlug}
                       showSessionName={hasMultipleSessions}
                       clickable={hasMultipleSessions}
+                      variant="compact"
                     />
                   ) : (
                     <div className="flex items-center justify-center gap-3 rounded-lg bg-muted/50 py-8 text-muted-foreground">

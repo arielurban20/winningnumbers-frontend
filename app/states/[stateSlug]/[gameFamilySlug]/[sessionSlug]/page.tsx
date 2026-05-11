@@ -8,19 +8,15 @@ import { buildFamilyUrl, buildSessionUrl, buildStatsUrl, buildHistoricalUrl, get
 import { Breadcrumbs, SEOTextBlock, Container } from "@/components/layout"
 import { PastDrawsTable } from "@/components/tables"
 import { NumberStatsCards } from "@/components/stats"
-import { ResultNumbersRow } from "@/components/numbers"
-import { StatusBadge, GameLogo } from "@/components/cards"
+import { GameLogo, SessionResultBlock } from "@/components/cards"
 import { JsonLd } from "@/components/seo"
 import { generateBreadcrumbSchema } from "@/lib/seo/jsonLd"
 import { getCanonicalUrl } from "@/lib/seo/metadata"
-import { formatDrawDate } from "@/lib/utils/formatDate"
-import { formatJackpot } from "@/lib/utils/formatCurrency"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { EmptyState } from "@/components/feedback"
-import { NextDrawCountdown } from "@/components/cards/NextDrawCountdown"
-import { Calendar, Trophy, ArrowRight, ChevronRight, BarChart3, History, Layers } from "lucide-react"
+import { ArrowRight, ChevronRight, BarChart3, History, Layers } from "lucide-react"
 import type { Metadata } from "next"
 
 interface SessionPageProps {
@@ -103,10 +99,9 @@ export default async function SessionPage({ params }: SessionPageProps) {
   const latestMainCount = latestDraw?.main_numbers?.length || 0
   const isCompactNumberGame =
     latestMainCount > 0 &&
-    latestMainCount <= 4 &&
+    latestMainCount <= 5 &&
     !hasLatestSecondaryDrawings &&
     (latestDraw?.bonus_items?.length || 0) <= 1
-  const latestNumbersSize = isCompactNumberGame ? "md" : "lg"
   const latestCardMaxWidth = isCompactNumberGame ? "max-w-2xl" : "max-w-3xl"
   
   const sessionName = session.game.name
@@ -198,74 +193,23 @@ export default async function SessionPage({ params }: SessionPageProps) {
         
         {/* Latest Result */}
         <section className="mb-12">
-          <Card className={`mx-auto w-full ${latestCardMaxWidth} overflow-hidden border-2 border-primary/20`}>
-            <CardHeader className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-4 py-3 sm:px-5 sm:py-4">
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div>
-                  <CardTitle className="text-lg sm:text-xl">Latest {session.sessionName} Result</CardTitle>
-                  {latestDraw && (
-                    <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
-                      <Calendar className="h-3.5 w-3.5" />
-                      {formatDrawDate(latestDraw.draw_date)}
-                    </div>
-                  )}
-                </div>
-                {latestDraw && <StatusBadge statusColor={latestDraw.draw_status_color} />}
-              </div>
+          <Card className={`mx-auto w-full ${latestCardMaxWidth} overflow-hidden border-border/50`}>
+            <CardHeader className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-3 py-2.5 sm:px-4 sm:py-3">
+              <CardTitle className="text-base sm:text-lg">Latest {session.sessionName} Result</CardTitle>
             </CardHeader>
-            <CardContent className="p-4 sm:p-5">
+            <CardContent className="p-3 sm:p-4">
               {latestDraw ? (
-                <div className="space-y-4">
-                  {/* Centered Numbers */}
-                <div className="flex justify-center py-1 sm:py-2">
-                  {(() => {
-                    const secondaryExtras = Array.isArray(latestDraw.secondary_drawings)
-                      ? latestDraw.secondary_drawings
-                      : latestDraw.secondary_drawing
-                      ? [latestDraw.secondary_drawing]
-                      : []
-                    const mergedExtras = [...(latestDraw.extra_items || []), ...secondaryExtras]
-                    return (
-                    <ResultNumbersRow
-                      mainNumbers={latestDraw.main_numbers || []}
-                      mainItems={latestDraw.main_items}
-                      bonusItems={latestDraw.bonus_items || []}
-                      extraItems={mergedExtras}
-                      statusColor={latestDraw.draw_status_color}
-                      gameSlug={latestDraw.game_slug}
-                      size={latestNumbersSize}
-                      centered={true}
-                    />
-                    )
-                  })()}
-                </div>
-                  
-                  {/* Jackpot & Next Draw */}
-                  {(latestDraw.jackpot_next || latestDraw.next_draw_text || latestDraw.next_draw_relative || latestDraw.countdown_seconds != null) && (
-                    <div className="mx-auto flex w-full max-w-xl flex-wrap items-center justify-center gap-x-4 gap-y-2 rounded-lg bg-muted/50 px-3 py-2.5 sm:gap-x-5 sm:px-4 sm:py-3">
-                      {latestDraw.jackpot_next && (
-                        <div className="flex items-center gap-2 text-center">
-                          <Trophy className="h-4 w-4 text-lottery-gold" />
-                          <span className="text-sm text-muted-foreground">Jackpot:</span>
-                          <span className="text-base font-bold text-lottery-gold sm:text-lg">
-                            {formatJackpot(latestDraw.jackpot_next)}
-                          </span>
-                        </div>
-                      )}
-                      {(latestDraw.next_draw_text || latestDraw.next_draw_relative || latestDraw.countdown_seconds != null) && (
-                        <NextDrawCountdown
-                          countdown_seconds={latestDraw.countdown_seconds}
-                          next_draw_at_local={latestDraw.next_draw_at_local}
-                          next_draw_timezone={latestDraw.next_draw_timezone}
-                          next_draw_relative={latestDraw.next_draw_relative}
-                          next_draw_text={latestDraw.next_draw_text}
-                          variant="compact"
-                          className="text-xs text-muted-foreground sm:text-sm"
-                        />
-                      )}
-                    </div>
-                  )}
-                </div>
+                <SessionResultBlock
+                  sessionName={session.sessionName}
+                  sessionDisplaySlug={session.sessionDisplaySlug}
+                  stateSlug={stateSlug}
+                  familySlug={gameFamilySlug}
+                  draw={latestDraw}
+                  gameSlug={session.sessionSlug}
+                  showSessionName={false}
+                  clickable={false}
+                  variant="compact"
+                />
               ) : (
                 <EmptyState
                   type="no-data"
