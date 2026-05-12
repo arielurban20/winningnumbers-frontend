@@ -7,12 +7,14 @@ import { BackToTopButton } from "@/components/layout/BackToTopButton"
 import { ScrollToTop } from "@/components/layout/ScrollToTop"
 import { RouteContent } from "@/components/layout/RouteContent"
 import { CookieConsentBanner } from "@/components/legal"
+import { GoogleTagManager } from "@next/third-parties/google"
 import "./globals.css"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://winningnumbers.us"
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID || "GTM-KHN9NPTN"
 
 export const metadata: Metadata = {
   title: {
@@ -135,6 +137,16 @@ export default function RootLayout({
         </style>
       </head>
       <body className="font-sans antialiased flex flex-col bg-background text-foreground">
+        {/* Google Tag Manager - GTM-KHN9NPTN */}
+        <GoogleTagManager gtmId={gtmId} />
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
