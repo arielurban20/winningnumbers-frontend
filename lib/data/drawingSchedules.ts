@@ -57,8 +57,16 @@ const SESSION_ALIAS: Record<string, string[]> = {
   night: ["night", "nite", "noche"],
   day: ["day", "dia", "daytime"],
   "prime-time": ["prime-time", "primetime", "prime time"],
+  "primetime-pop": ["primetime-pop", "primetime pop"],
   "early-bird": ["early-bird", "early bird"],
   "night-owl": ["night-owl", "night owl"],
+  "coffee-break": ["coffee-break", "coffee break"],
+  "lunch-break": ["lunch-break", "lunch break"],
+  "lunch-rush": ["lunch-rush", "lunch rush"],
+  "rush-hour": ["rush-hour", "rush hour"],
+  "clock-out-cash": ["clock-out-cash", "clock out cash"],
+  "midnight-money": ["midnight-money", "midnight money"],
+  "after-hours": ["after-hours", "after hours"],
 }
 
 const byState = new Map<string, DrawingScheduleEntry[]>()
@@ -84,6 +92,26 @@ function normalizeLookupToken(value: string | null | undefined): string {
 
 function normalizeSessionKey(value: string | null | undefined): string {
   return normalizeLookupToken(value).replace(/\s+/g, "-")
+}
+
+export function parseScheduleTimeToMinutes(drawTime: string | null | undefined): number | null {
+  const value = String(drawTime || "").trim()
+  if (!value) return null
+
+  const match = value.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)$/i)
+  if (!match) return null
+
+  let hours = parseInt(match[1], 10)
+  const minutes = match[2] ? parseInt(match[2], 10) : 0
+  const meridiem = match[3].toLowerCase()
+
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) return null
+  if (hours < 1 || hours > 12 || minutes < 0 || minutes > 59) return null
+
+  if (meridiem === "pm" && hours !== 12) hours += 12
+  if (meridiem === "am" && hours === 12) hours = 0
+
+  return hours * 60 + minutes
 }
 
 function stripStateSuffix(slug: string): string {

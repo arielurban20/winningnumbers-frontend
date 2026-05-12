@@ -1,7 +1,16 @@
 import type { Game, GameFamily, GameSession, DrawResult } from "@/types/api"
+import {
+  getDrawingScheduleForSession,
+  parseScheduleTimeToMinutes,
+} from "@/lib/data/drawingSchedules"
 
 // Session words at the end of game names (longest first to avoid partial matches).
 const SESSION_WORDS = [
+  "Prime Time Pop",
+  "Clock Out Cash",
+  "Midnight Money",
+  "Lunch Rush",
+  "Primetime Pop",
   "After Hours",
   "Coffee Break",
   "Lunch Break",
@@ -98,6 +107,12 @@ const SESSION_SLUG_SUFFIXES_SORTED = [...SESSION_SLUG_SUFFIXES].sort(
 )
 
 const SESSION_LABEL_BY_SLUG: Record<string, string> = {
+  "clock-out-cash": "Clock Out Cash",
+  "midnight-money": "Midnight Money",
+  "lunch-rush": "Lunch Rush",
+  "prime-time-pop": "Prime Time Pop",
+  "primetime-pop": "Primetime Pop",
+  "after-hours": "After Hours",
   "morning-buzz": "Morning Buzz",
   "lunch-break": "Lunch Break",
   "prime-time": "Prime Time",
@@ -152,25 +167,31 @@ const SESSION_SORT_ORDER = [
   "matinee",
   "lunch",
   "lunch-break",
+  "lunch-rush",
   "day",
   "daytime",
   "dia",
   "afternoon",
   "clock-out",
+  "clock-out-cash",
   "suppertime",
   "supper-time",
   "dinner-time",
   "dinnertime",
   "eve",
   "evening",
+  "prime-time-pop",
   "prime-time",
+  "primetime-pop",
   "primetime",
   "rush-hour",
   "night-owl",
+  "after-hours",
   "late-night",
   "night",
   "nite",
   "noche",
+  "midnight-money",
   "midnight",
   "session-1",
   "session-2",
@@ -337,6 +358,23 @@ function familyNameFromSlug(familySlug: string): string {
   return titleCase(familySlug.replace(/-/g, " "))
 }
 
+function getScheduleMinutesForFamilySession(
+  stateSlug: string,
+  family: GameFamily,
+  session: GameSession
+): number | null {
+  const scheduleEntry = getDrawingScheduleForSession({
+    stateSlug,
+    familyName: family.familyName,
+    familySlug: family.familySlug,
+    sessionName: session.sessionName,
+    gameName: session.game?.name || family.familyName,
+    gameSlug: session.game?.slug || session.sessionSlug,
+  })
+
+  return parseScheduleTimeToMinutes(scheduleEntry?.draw_time)
+}
+
 /**
  * Parse a game name to extract family/session using name suffixes.
  * Slug-based normalization is applied separately in groupGamesByFamily.
@@ -500,7 +538,28 @@ export function groupGamesByFamily(
   }
 
   for (const family of familyMap.values()) {
+    const familyStateSlug =
+      String(family.state_slug || stateSlug || "").trim().toLowerCase()
+    const scheduleMinutesBySessionSlug = new Map<string, number>()
+
+    if (familyStateSlug) {
+      for (const session of family.sessions) {
+        const minutes = getScheduleMinutesForFamilySession(familyStateSlug, family, session)
+        if (minutes !== null) {
+          scheduleMinutesBySessionSlug.set(session.sessionSlug, minutes)
+        }
+      }
+    }
+
     family.sessions.sort((a, b) => {
+      const aScheduleMinutes = scheduleMinutesBySessionSlug.get(a.sessionSlug)
+      const bScheduleMinutes = scheduleMinutesBySessionSlug.get(b.sessionSlug)
+      if (aScheduleMinutes != null && bScheduleMinutes != null) {
+        return aScheduleMinutes - bScheduleMinutes
+      }
+      if (aScheduleMinutes != null) return -1
+      if (bScheduleMinutes != null) return 1
+
       const aTime = parseTimeToMinutes(a.sessionName)
       const bTime = parseTimeToMinutes(b.sessionName)
       if (aTime !== null && bTime !== null) return aTime - bTime
