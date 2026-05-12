@@ -92,6 +92,11 @@ export function getGameFamilySlug(gameSlug: string): string {
 
   let familySlug = gameSlug.toLowerCase().replace(/-[a-z]{2}$/i, "")
 
+  // Cash Pop has many session-variant suffixes by state. Treat all variants as
+  // one family key for grouping/auditing.
+  if (familySlug === "cash-pop") return "cash-pop"
+  if (familySlug.startsWith("cash-pop-")) return "cash-pop"
+
   // Dynamic time suffixes:
   // - pick-4-1pm-or
   // - pick-4-10pm-or

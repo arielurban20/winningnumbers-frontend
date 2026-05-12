@@ -300,3 +300,17 @@ export function findDuplicateVisibleFamilyCards(
       cards: entries,
     }))
 }
+
+/**
+ * Targeted check for Cash Pop family splitting.
+ * Returns a single entry only when a state still renders more than one
+ * visible Cash Pop family card after grouping.
+ */
+export function findCashPopFamilyCardDuplicate(
+  games: Game[],
+  stateSlug: string,
+  stateName: string
+) {
+  const duplicates = findDuplicateVisibleFamilyCards(games, stateSlug, stateName)
+  return duplicates.find((entry) => entry.base === "cash-pop") || null
+}

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-11T07:43:49.615Z",
+  "generated_at": "2026-05-11T07:59:54.530Z",
   "site_url": "https://winningnumbers.us",
   "routes_audited": 1384,
   "status_non_200_count": 0,
@@ -10,7 +10,7 @@
   "duplicate_title_count": 0,
   "duplicate_description_count": 0,
   "duplicate_canonical_count": 0,
-  "title_length_issue_count": 503,
+  "title_length_issue_count": 0,
   "description_length_issue_count": 0,
   "critical_blockers": {
     "non_200_routes": [],
@@ -24,168 +24,7 @@
   },
   "medium_priority": {
     "missing_og_or_twitter_or_h1_or_jsonld": [],
-    "title_length_examples": [
-      {
-        "path": "/games",
-        "length": 80
-      },
-      {
-        "path": "/states/ar/cash-3/evening",
-        "length": 73
-      },
-      {
-        "path": "/states/ar/cash-3/midday",
-        "length": 72
-      },
-      {
-        "path": "/states/ar/cash-4/evening",
-        "length": 73
-      },
-      {
-        "path": "/states/ar/cash-4/midday",
-        "length": 72
-      },
-      {
-        "path": "/states/ar/mega-millions/stats",
-        "length": 73
-      },
-      {
-        "path": "/states/ar/millionaire-for-life",
-        "length": 74
-      },
-      {
-        "path": "/states/ar/millionaire-for-life/stats",
-        "length": 80
-      },
-      {
-        "path": "/states/ar/natural-state-jackpot",
-        "length": 75
-      },
-      {
-        "path": "/states/ar/natural-state-jackpot/historical",
-        "length": 71
-      },
-      {
-        "path": "/states/ar/natural-state-jackpot/stats",
-        "length": 81
-      },
-      {
-        "path": "/states/az/mega-millions/stats",
-        "length": 72
-      },
-      {
-        "path": "/states/az/triple-twist/stats",
-        "length": 71
-      },
-      {
-        "path": "/states/ca/daily-3/evening",
-        "length": 76
-      },
-      {
-        "path": "/states/ca/daily-3/midday",
-        "length": 75
-      },
-      {
-        "path": "/states/ca/daily-derby/stats",
-        "length": 73
-      },
-      {
-        "path": "/states/ca/fantasy-5/stats",
-        "length": 71
-      },
-      {
-        "path": "/states/ca/mega-millions/stats",
-        "length": 75
-      },
-      {
-        "path": "/states/ca/powerball/stats",
-        "length": 71
-      },
-      {
-        "path": "/states/ca/superlotto-plus",
-        "length": 71
-      },
-      {
-        "path": "/states/ca/superlotto-plus/stats",
-        "length": 77
-      },
-      {
-        "path": "/states/co/colorado-lotto/stats",
-        "length": 75
-      },
-      {
-        "path": "/states/co/mega-millions/stats",
-        "length": 73
-      },
-      {
-        "path": "/states/co/millionaire-for-life",
-        "length": 74
-      },
-      {
-        "path": "/states/co/millionaire-for-life/stats",
-        "length": 80
-      },
-      {
-        "path": "/states/co/pick-3/evening",
-        "length": 73
-      },
-      {
-        "path": "/states/co/pick-3/midday",
-        "length": 72
-      },
-      {
-        "path": "/states/co/powerball-double-play",
-        "length": 75
-      },
-      {
-        "path": "/states/co/powerball-double-play/historical",
-        "length": 71
-      },
-      {
-        "path": "/states/co/powerball-double-play/stats",
-        "length": 81
-      },
-      {
-        "path": "/states/ct/mega-millions/stats",
-        "length": 76
-      },
-      {
-        "path": "/states/ct/millionaire-for-life",
-        "length": 77
-      },
-      {
-        "path": "/states/ct/millionaire-for-life/stats",
-        "length": 83
-      },
-      {
-        "path": "/states/ct/play-3/day",
-        "length": 72
-      },
-      {
-        "path": "/states/ct/play-3/night",
-        "length": 74
-      },
-      {
-        "path": "/states/ct/play-4/day",
-        "length": 72
-      },
-      {
-        "path": "/states/ct/play-4/night",
-        "length": 74
-      },
-      {
-        "path": "/states/ct/powerball-double-play",
-        "length": 78
-      },
-      {
-        "path": "/states/ct/powerball-double-play/historical",
-        "length": 71
-      },
-      {
-        "path": "/states/ct/powerball-double-play/stats",
-        "length": 84
-      }
-    ],
+    "title_length_examples": [],
     "description_length_examples": []
   }
 }

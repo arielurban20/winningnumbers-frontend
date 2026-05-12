@@ -297,6 +297,22 @@ function splitFamilyAndSessionFromSlug(gameSlug: string): {
     return parsedTime
   }
 
+  // Cash Pop uses many state-specific session suffixes (e.g. clock-out-cash,
+  // midnight-money, primetime-pop, late, after-hours). Normalize all of them
+  // to a single visible family card key: "cash-pop".
+  if (slugCore === "cash-pop") {
+    return {
+      familySlug: "cash-pop",
+      sessionSlug: null,
+    }
+  }
+  if (slugCore.startsWith("cash-pop-")) {
+    return {
+      familySlug: "cash-pop",
+      sessionSlug: slugCore.slice("cash-pop-".length) || null,
+    }
+  }
+
   for (const suffix of SESSION_SLUG_SUFFIXES_SORTED) {
     if (slugCore === suffix) continue
     const marker = `-${suffix}`

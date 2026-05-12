@@ -1,5 +1,5 @@
 SEO AUDIT SUMMARY
-Generated: 2026-05-11T07:43:49.615Z
+Generated: 2026-05-11T07:59:54.530Z
 Site: https://winningnumbers.us
 
 Routes audited (indexable HTML): 1384
