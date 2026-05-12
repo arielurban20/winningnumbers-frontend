@@ -1,29 +1,108 @@
 {
-  "generated_at": "2026-05-11T07:59:54.530Z",
+  "generated_at": "2026-05-12T00:30:14.892Z",
   "site_url": "https://winningnumbers.us",
-  "routes_audited": 1384,
-  "status_non_200_count": 0,
-  "missing_metadata_count": 0,
-  "canonical_issue_count": 0,
-  "noindex_or_nofollow_count": 0,
+  "routes_audited": 1375,
+  "status_non_200_count": 2,
+  "missing_metadata_count": 2,
+  "canonical_issue_count": 2,
+  "noindex_or_nofollow_count": 2,
   "likely_blank_html_count": 0,
-  "duplicate_title_count": 0,
-  "duplicate_description_count": 0,
+  "duplicate_title_count": 1,
+  "duplicate_description_count": 1,
   "duplicate_canonical_count": 0,
   "title_length_issue_count": 0,
   "description_length_issue_count": 0,
   "critical_blockers": {
-    "non_200_routes": [],
-    "missing_title_or_description_or_canonical": [],
-    "canonical_invalid_or_mismatch": []
+    "non_200_routes": [
+      {
+        "path": "/games/mega-millions/jackpot-history",
+        "status": 404
+      },
+      {
+        "path": "/games/powerball/jackpot-history",
+        "status": 404
+      }
+    ],
+    "missing_title_or_description_or_canonical": [
+      {
+        "path": "/games/mega-millions/jackpot-history",
+        "missing": [
+          "canonical",
+          "h1",
+          "jsonld"
+        ]
+      },
+      {
+        "path": "/games/powerball/jackpot-history",
+        "missing": [
+          "canonical",
+          "h1",
+          "jsonld"
+        ]
+      }
+    ],
+    "canonical_invalid_or_mismatch": [
+      {
+        "path": "/games/mega-millions/jackpot-history",
+        "canonical": "",
+        "mismatch": false,
+        "invalid_domain": false
+      },
+      {
+        "path": "/games/powerball/jackpot-history",
+        "canonical": "",
+        "mismatch": false,
+        "invalid_domain": false
+      }
+    ]
   },
   "high_priority": {
-    "noindex_or_nofollow": [],
-    "duplicate_title_examples": [],
-    "duplicate_description_examples": []
+    "noindex_or_nofollow": [
+      {
+        "path": "/games/mega-millions/jackpot-history",
+        "robots": "noindex"
+      },
+      {
+        "path": "/games/powerball/jackpot-history",
+        "robots": "noindex"
+      }
+    ],
+    "duplicate_title_examples": [
+      {
+        "duplicate_type": "duplicate_title",
+        "value": "Page Not Found | Winning Numbers",
+        "count": 2,
+        "routes": "/games/mega-millions/jackpot-history | /games/powerball/jackpot-history"
+      }
+    ],
+    "duplicate_description_examples": [
+      {
+        "duplicate_type": "duplicate_description",
+        "value": "The page you are looking for could not be found. Browse our lottery results by state or search for your favorite game.",
+        "count": 2,
+        "routes": "/games/mega-millions/jackpot-history | /games/powerball/jackpot-history"
+      }
+    ]
   },
   "medium_priority": {
-    "missing_og_or_twitter_or_h1_or_jsonld": [],
+    "missing_og_or_twitter_or_h1_or_jsonld": [
+      {
+        "path": "/games/mega-millions/jackpot-history",
+        "missing": [
+          "canonical",
+          "h1",
+          "jsonld"
+        ]
+      },
+      {
+        "path": "/games/powerball/jackpot-history",
+        "missing": [
+          "canonical",
+          "h1",
+          "jsonld"
+        ]
+      }
+    ],
     "title_length_examples": [],
     "description_length_examples": []
   }

@@ -1,16 +1,20 @@
 SEO AUDIT SUMMARY
-Generated: 2026-05-11T07:59:54.530Z
+Generated: 2026-05-12T00:30:14.892Z
 Site: https://winningnumbers.us
 
-Routes audited (indexable HTML): 1384
-Non-200 routes: 0
-Missing metadata rows: 0
-Canonical issues: 0
-Noindex/nofollow issues: 0
-Duplicate title groups: 0
-Duplicate description groups: 0
+Routes audited (indexable HTML): 1375
+Non-200 routes: 2
+Missing metadata rows: 2
+Canonical issues: 2
+Noindex/nofollow issues: 2
+Duplicate title groups: 1
+Duplicate description groups: 1
 Duplicate canonical groups: 0
 
-Readiness for backlink scaling: READY (technical baseline OK)
+Readiness for backlink scaling: NOT READY (fix critical blockers first)
 
 Top critical blockers:
+- /games/mega-millions/jackpot-history -> 404
+- /games/powerball/jackpot-history -> 404
+- /games/mega-millions/jackpot-history missing: canonical, h1, jsonld
+- /games/powerball/jackpot-history missing: canonical, h1, jsonld

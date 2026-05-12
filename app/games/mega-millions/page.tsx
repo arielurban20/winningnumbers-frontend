@@ -283,6 +283,9 @@ export default function MegaMillionsPage() {
               <Link href="/games/powerball">Powerball Results</Link>
             </Button>
             <Button asChild variant="outline">
+              <Link href="/games/mega-millions/jackpot-history">Mega Millions Jackpot History</Link>
+            </Button>
+            <Button asChild variant="outline">
               <Link href="/states">Browse All States</Link>
             </Button>
           </div>

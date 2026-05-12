@@ -9,6 +9,8 @@ export async function GET() {
     { url: "/games", priority: "0.9", changefreq: "daily" },
     { url: "/games/powerball", priority: "0.9", changefreq: "daily" },
     { url: "/games/mega-millions", priority: "0.9", changefreq: "daily" },
+    { url: "/games/powerball/jackpot-history", priority: "0.8", changefreq: "weekly" },
+    { url: "/games/mega-millions/jackpot-history", priority: "0.8", changefreq: "weekly" },
   ]
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

@@ -194,6 +194,8 @@ export async function buildRouteInventory(): Promise<RouteEntry[]> {
     { path: "/games", type: "games_index", expectedContent: "html", indexableExpected: true },
     { path: "/games/powerball", type: "national", expectedContent: "html", indexableExpected: true },
     { path: "/games/mega-millions", type: "national", expectedContent: "html", indexableExpected: true },
+    { path: "/games/powerball/jackpot-history", type: "national", expectedContent: "html", indexableExpected: true },
+    { path: "/games/mega-millions/jackpot-history", type: "national", expectedContent: "html", indexableExpected: true },
     { path: "/about", type: "legal", expectedContent: "html", indexableExpected: true },
     { path: "/contact", type: "legal", expectedContent: "html", indexableExpected: true },
     { path: "/privacy-policy", type: "legal", expectedContent: "html", indexableExpected: true },
@@ -300,4 +302,3 @@ export function removeTrailingSlash(pathname: string): string {
   if (pathname.length <= 1) return pathname
   return pathname.replace(/\/+$/, "")
 }
-

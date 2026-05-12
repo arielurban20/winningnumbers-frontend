@@ -1,2 +1,3 @@
 path,url,status,missing_fields,title,meta_description,canonical,h1_count,og_title,twitter_title,jsonld_count,canonical_mismatch,canonical_invalid_domain,has_noindex
-
+/games/mega-millions/jackpot-history,https://winningnumbers.us/games/mega-millions/jackpot-history,404,canonical|h1|jsonld,Page Not Found | Winning Numbers,The page you are looking for could not be found. Browse our lottery results by state or search for your favorite game.,,0,Winning Numbers | Latest Lottery Results Today,Winning Numbers | Latest Lottery Results Today,0,false,false,true
+/games/powerball/jackpot-history,https://winningnumbers.us/games/powerball/jackpot-history,404,canonical|h1|jsonld,Page Not Found | Winning Numbers,The page you are looking for could not be found. Browse our lottery results by state or search for your favorite game.,,0,Winning Numbers | Latest Lottery Results Today,Winning Numbers | Latest Lottery Results Today,0,false,false,true

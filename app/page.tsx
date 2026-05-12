@@ -14,6 +14,7 @@ import {
   TodayResultsSection,
   UpcomingDrawingsSection,
   TopJackpotsSection,
+  TopLotteryJackpotsTeaserSection,
   LotteryToolsSection,
 } from "@/components/sections"
 import { generateWebSiteSchema } from "@/lib/seo/jsonLd"
@@ -264,6 +265,13 @@ export default function HomePage() {
         <Suspense fallback={null}>
           <DynamicHomeSections />
         </Suspense>
+
+        {/* Jackpot History Teaser */}
+        <section className="mb-12 sm:mb-16 md:mb-20">
+          <Container>
+            <TopLotteryJackpotsTeaserSection />
+          </Container>
+        </section>
 
         {/* Browse by Game and State Sections */}
         <Suspense
