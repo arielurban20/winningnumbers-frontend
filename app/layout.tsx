@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import { BackToTopButton } from "@/components/layout/BackToTopButton"
 import { ScrollToTop } from "@/components/layout/ScrollToTop"
+import { FreshnessRefresh } from "@/components/layout/FreshnessRefresh"
 import { RouteContent } from "@/components/layout/RouteContent"
 import { CookieConsentBanner } from "@/components/legal"
 import { GoogleTagManager } from "@next/third-parties/google"
@@ -153,6 +154,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <FreshnessRefresh />
           <ScrollToTop />
           <Header />
           <RouteContent>{children}</RouteContent>

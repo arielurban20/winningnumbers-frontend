@@ -25,13 +25,19 @@ interface GetStatesOptions {
   includeTodayResults?: boolean
 }
 
-// Cache states list for 5 minutes (states don't change often)
+const STATES_DEFAULT_REVALIDATE_SECONDS = 300
+const STATES_TODAY_REVALIDATE_SECONDS = 60
+
+// Keep state-level "today/current" indicators fresher than static state inventory.
 export async function getStates(options: GetStatesOptions = {}): Promise<State[]> {
   const endpoint = options.includeTodayResults
     ? "/api/states?include_today_results=true"
     : "/api/states"
+  const revalidateSeconds = options.includeTodayResults
+    ? STATES_TODAY_REVALIDATE_SECONDS
+    : STATES_DEFAULT_REVALIDATE_SECONDS
 
-  const { data, error } = await apiGetCached<State[] | StatesResponse>(endpoint, 300)
+  const { data, error } = await apiGetCached<State[] | StatesResponse>(endpoint, revalidateSeconds)
 
   if (error || !data) {
     console.error("Failed to fetch states:", error?.message)
