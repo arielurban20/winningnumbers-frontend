@@ -26,8 +26,10 @@ import type { DrawResult } from "@/types/api"
 
 export const metadata = generateHomeMetadata()
 
-// Revalidate every 60 seconds to ensure fresh lottery results
-export const revalidate = 60
+// Freshness-critical route: never serve stale ISR HTML for live lottery data.
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+export const fetchCache = "force-no-store"
 
 const homeFAQ = [
   {

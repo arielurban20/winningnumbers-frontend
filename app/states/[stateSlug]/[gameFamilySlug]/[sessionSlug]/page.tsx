@@ -27,6 +27,10 @@ interface SessionPageProps {
   }>
 }
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+export const fetchCache = "force-no-store"
+
 function stateAbbrFromSlug(stateSlug: string): string {
   const normalized = stateSlug.trim().toUpperCase()
   if (/^[A-Z]{2}$/.test(normalized)) return normalized
