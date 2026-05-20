@@ -3,7 +3,7 @@ import Link from "next/link"
 import { getPowerballMega, getPast365National } from "@/lib/api/draws"
 import { getMostFrequent, getLeastFrequent } from "@/lib/api/stats"
 import { NationalGameCard } from "@/components/cards"
-import { NationalCardSkeleton } from "@/components/feedback"
+import { NationalCardSkeleton, TableSkeleton } from "@/components/feedback"
 import { PastDrawsTable } from "@/components/tables"
 import { NumberStatsCards } from "@/components/stats"
 import { Breadcrumbs, SEOTextBlock, Container } from "@/components/layout"
@@ -61,81 +61,32 @@ const powerballFAQ = [
   },
 ]
 
-async function PowerballContent() {
+async function PowerballLatestResult() {
   try {
-    const [pbData, pastDraws, hotNumbers, coldNumbers] = await Promise.all([
-      getPowerballMega(),
-      getPast365National("powerball"),
-      getMostFrequent("powerball", 365, 10),
-      getLeastFrequent("powerball", 365, 10),
-    ])
+    const pbData = await getPowerballMega()
+
+    if (!pbData.powerball) {
+      return (
+        <Card className="border-dashed">
+          <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+              <Info className="h-6 w-6 text-muted-foreground" />
+            </div>
+            <p className="text-lg font-medium">Powerball Results Unavailable</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Results are temporarily unavailable. Please check back soon.
+            </p>
+          </CardContent>
+        </Card>
+      )
+    }
 
     return (
-      <>
-        {/* Latest Result */}
-        <section className="mb-12">
-          {pbData.powerball ? (
-            <div className="max-w-2xl">
-              <NationalGameCard draw={pbData.powerball} featured />
-            </div>
-          ) : (
-            <Card className="border-dashed">
-              <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-                  <Info className="h-6 w-6 text-muted-foreground" />
-                </div>
-                <p className="text-lg font-medium">Powerball Results Unavailable</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Results are temporarily unavailable. Please check back soon.
-                </p>
-              </CardContent>
-            </Card>
-          )}
-        </section>
-
-        {/* Hot/Cold Numbers */}
-        {(hotNumbers.length > 0 || coldNumbers.length > 0) && (
-          <section className="mb-12">
-            <div className="mb-6 flex items-center gap-2">
-              <BarChart3 className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold tracking-tight">Number Statistics</h2>
-            </div>
-            <NumberStatsCards
-              hotNumbers={hotNumbers}
-              coldNumbers={coldNumbers}
-              gameName="Powerball"
-            />
-          </section>
-        )}
-
-        {/* Past Results */}
-        {pastDraws.length > 0 ? (
-          <section className="mb-12">
-            <div className="mb-6 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <History className="h-6 w-6 text-primary" />
-                <h2 className="text-2xl font-bold tracking-tight">Past Powerball Results</h2>
-              </div>
-              <Badge variant="secondary">{pastDraws.length} draws</Badge>
-            </div>
-            <PastDrawsTable draws={pastDraws} showSession={false} />
-          </section>
-        ) : (
-          <section className="mb-12">
-            <Card className="border-dashed bg-muted/30">
-              <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-                <Calendar className="mb-4 h-10 w-10 text-muted-foreground/50" />
-                <p className="text-lg font-medium">Past Results Temporarily Unavailable</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Historical Powerball results are temporarily unavailable. Check back soon.
-                </p>
-              </CardContent>
-            </Card>
-          </section>
-        )}
-      </>
+      <div className="max-w-2xl">
+        <NationalGameCard draw={pbData.powerball} featured />
+      </div>
     )
-  } catch (error) {
+  } catch {
     return (
       <Card className="border-dashed">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
@@ -148,6 +99,84 @@ async function PowerballContent() {
           </p>
         </CardContent>
       </Card>
+    )
+  }
+}
+
+async function PowerballStatsSection() {
+  try {
+    const [hotNumbers, coldNumbers] = await Promise.all([
+      getMostFrequent("powerball", 365, 10),
+      getLeastFrequent("powerball", 365, 10),
+    ])
+
+    if (hotNumbers.length === 0 && coldNumbers.length === 0) {
+      return null
+    }
+
+    return (
+      <section className="mb-12">
+        <div className="mb-6 flex items-center gap-2">
+          <BarChart3 className="h-6 w-6 text-primary" />
+          <h2 className="text-2xl font-bold tracking-tight">Number Statistics</h2>
+        </div>
+        <NumberStatsCards
+          hotNumbers={hotNumbers}
+          coldNumbers={coldNumbers}
+          gameName="Powerball"
+        />
+      </section>
+    )
+  } catch {
+    return null
+  }
+}
+
+async function PowerballPastResultsSection() {
+  try {
+    const pastDraws = await getPast365National("powerball")
+
+    if (pastDraws.length === 0) {
+      return (
+        <section className="mb-12">
+          <Card className="border-dashed bg-muted/30">
+            <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+              <Calendar className="mb-4 h-10 w-10 text-muted-foreground/50" />
+              <p className="text-lg font-medium">Past Results Temporarily Unavailable</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Historical Powerball results are temporarily unavailable. Check back soon.
+              </p>
+            </CardContent>
+          </Card>
+        </section>
+      )
+    }
+
+    return (
+      <section className="mb-12">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <History className="h-6 w-6 text-primary" />
+            <h2 className="text-2xl font-bold tracking-tight">Past Powerball Results</h2>
+          </div>
+          <Badge variant="secondary">{pastDraws.length} draws</Badge>
+        </div>
+        <PastDrawsTable draws={pastDraws} showSession={false} />
+      </section>
+    )
+  } catch {
+    return (
+      <section className="mb-12">
+        <Card className="border-dashed bg-muted/30">
+          <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+            <Calendar className="mb-4 h-10 w-10 text-muted-foreground/50" />
+            <p className="text-lg font-medium">Past Results Temporarily Unavailable</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Historical Powerball results are temporarily unavailable. Check back soon.
+            </p>
+          </CardContent>
+        </Card>
+      </section>
     )
   }
 }
@@ -179,8 +208,16 @@ export default function PowerballPage() {
         </section>
 
         {/* Dynamic Content */}
-        <Suspense fallback={<NationalCardSkeleton />}>
-          <PowerballContent />
+        <section className="mb-12">
+          <Suspense fallback={<NationalCardSkeleton />}>
+            <PowerballLatestResult />
+          </Suspense>
+        </section>
+        <Suspense fallback={null}>
+          <PowerballStatsSection />
+        </Suspense>
+        <Suspense fallback={<TableSkeleton rows={8} />}>
+          <PowerballPastResultsSection />
         </Suspense>
 
         {/* Info Cards */}

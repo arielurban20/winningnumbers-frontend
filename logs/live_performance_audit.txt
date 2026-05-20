@@ -1,0 +1,27 @@
+# Live Route Performance Audit
+
+Generated: 2026-05-20T02:21:18.008Z
+Base URL: http://127.0.0.1:3010
+
+## Route Metrics
+- / | status=200 | time=983ms | size=388.3KB
+- /states | status=200 | time=1748ms | size=162.1KB
+- /states/fl | status=200 | time=1800ms | size=379.0KB
+- /states/ca | status=200 | time=1765ms | size=231.5KB
+- /games/powerball | status=200 | time=1919ms | size=339.6KB
+- /games/mega-millions | status=200 | time=1947ms | size=287.2KB
+
+## Summary
+- routes_checked: 6
+- successful: 6
+- failed: 0
+- avg_time: 1694ms
+- slowest_route: /games/mega-millions (1947ms)
+
+## Slowest Routes
+1. /games/mega-millions - 1947ms - 287.2KB
+2. /games/powerball - 1919ms - 339.6KB
+3. /states/fl - 1800ms - 379.0KB
+4. /states/ca - 1765ms - 231.5KB
+5. /states - 1748ms - 162.1KB
+6. / - 983ms - 388.3KB

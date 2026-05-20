@@ -3,7 +3,7 @@ import Link from "next/link"
 import { getPowerballMega, getPast365National } from "@/lib/api/draws"
 import { getMostFrequent, getLeastFrequent } from "@/lib/api/stats"
 import { NationalGameCard } from "@/components/cards"
-import { NationalCardSkeleton } from "@/components/feedback"
+import { NationalCardSkeleton, TableSkeleton } from "@/components/feedback"
 import { PastDrawsTable } from "@/components/tables"
 import { NumberStatsCards } from "@/components/stats"
 import { Breadcrumbs, SEOTextBlock, Container } from "@/components/layout"
@@ -61,81 +61,32 @@ const megaMillionsFAQ = [
   },
 ]
 
-async function MegaMillionsContent() {
+async function MegaMillionsLatestResult() {
   try {
-    const [mmData, pastDraws, hotNumbers, coldNumbers] = await Promise.all([
-      getPowerballMega(),
-      getPast365National("mega-millions"),
-      getMostFrequent("mega-millions", 365, 10),
-      getLeastFrequent("mega-millions", 365, 10),
-    ])
+    const mmData = await getPowerballMega()
+
+    if (!mmData.mega_millions) {
+      return (
+        <Card className="border-dashed">
+          <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+              <Info className="h-6 w-6 text-muted-foreground" />
+            </div>
+            <p className="text-lg font-medium">Mega Millions Results Unavailable</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Results are temporarily unavailable. Please check back soon.
+            </p>
+          </CardContent>
+        </Card>
+      )
+    }
 
     return (
-      <>
-        {/* Latest Result */}
-        <section className="mb-12">
-          {mmData.mega_millions ? (
-            <div className="max-w-2xl">
-              <NationalGameCard draw={mmData.mega_millions} featured />
-            </div>
-          ) : (
-            <Card className="border-dashed">
-              <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-                  <Info className="h-6 w-6 text-muted-foreground" />
-                </div>
-                <p className="text-lg font-medium">Mega Millions Results Unavailable</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Results are temporarily unavailable. Please check back soon.
-                </p>
-              </CardContent>
-            </Card>
-          )}
-        </section>
-
-        {/* Hot/Cold Numbers */}
-        {(hotNumbers.length > 0 || coldNumbers.length > 0) && (
-          <section className="mb-12">
-            <div className="mb-6 flex items-center gap-2">
-              <BarChart3 className="h-6 w-6 text-lottery-gold" />
-              <h2 className="text-2xl font-bold tracking-tight">Number Statistics</h2>
-            </div>
-            <NumberStatsCards
-              hotNumbers={hotNumbers}
-              coldNumbers={coldNumbers}
-              gameName="Mega Millions"
-            />
-          </section>
-        )}
-
-        {/* Past Results */}
-        {pastDraws.length > 0 ? (
-          <section className="mb-12">
-            <div className="mb-6 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <History className="h-6 w-6 text-lottery-gold" />
-                <h2 className="text-2xl font-bold tracking-tight">Past Mega Millions Results</h2>
-              </div>
-              <Badge variant="secondary">{pastDraws.length} draws</Badge>
-            </div>
-            <PastDrawsTable draws={pastDraws} showSession={false} />
-          </section>
-        ) : (
-          <section className="mb-12">
-            <Card className="border-dashed bg-muted/30">
-              <CardContent className="flex flex-col items-center justify-center py-12 text-center">
-                <Calendar className="mb-4 h-10 w-10 text-muted-foreground/50" />
-                <p className="text-lg font-medium">Past Results Temporarily Unavailable</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Historical Mega Millions results are temporarily unavailable. Check back soon.
-                </p>
-              </CardContent>
-            </Card>
-          </section>
-        )}
-      </>
+      <div className="max-w-2xl">
+        <NationalGameCard draw={mmData.mega_millions} featured />
+      </div>
     )
-  } catch (error) {
+  } catch {
     return (
       <Card className="border-dashed">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
@@ -148,6 +99,84 @@ async function MegaMillionsContent() {
           </p>
         </CardContent>
       </Card>
+    )
+  }
+}
+
+async function MegaMillionsStatsSection() {
+  try {
+    const [hotNumbers, coldNumbers] = await Promise.all([
+      getMostFrequent("mega-millions", 365, 10),
+      getLeastFrequent("mega-millions", 365, 10),
+    ])
+
+    if (hotNumbers.length === 0 && coldNumbers.length === 0) {
+      return null
+    }
+
+    return (
+      <section className="mb-12">
+        <div className="mb-6 flex items-center gap-2">
+          <BarChart3 className="h-6 w-6 text-lottery-gold" />
+          <h2 className="text-2xl font-bold tracking-tight">Number Statistics</h2>
+        </div>
+        <NumberStatsCards
+          hotNumbers={hotNumbers}
+          coldNumbers={coldNumbers}
+          gameName="Mega Millions"
+        />
+      </section>
+    )
+  } catch {
+    return null
+  }
+}
+
+async function MegaMillionsPastResultsSection() {
+  try {
+    const pastDraws = await getPast365National("mega-millions")
+
+    if (pastDraws.length === 0) {
+      return (
+        <section className="mb-12">
+          <Card className="border-dashed bg-muted/30">
+            <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+              <Calendar className="mb-4 h-10 w-10 text-muted-foreground/50" />
+              <p className="text-lg font-medium">Past Results Temporarily Unavailable</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Historical Mega Millions results are temporarily unavailable. Check back soon.
+              </p>
+            </CardContent>
+          </Card>
+        </section>
+      )
+    }
+
+    return (
+      <section className="mb-12">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <History className="h-6 w-6 text-lottery-gold" />
+            <h2 className="text-2xl font-bold tracking-tight">Past Mega Millions Results</h2>
+          </div>
+          <Badge variant="secondary">{pastDraws.length} draws</Badge>
+        </div>
+        <PastDrawsTable draws={pastDraws} showSession={false} />
+      </section>
+    )
+  } catch {
+    return (
+      <section className="mb-12">
+        <Card className="border-dashed bg-muted/30">
+          <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+            <Calendar className="mb-4 h-10 w-10 text-muted-foreground/50" />
+            <p className="text-lg font-medium">Past Results Temporarily Unavailable</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Historical Mega Millions results are temporarily unavailable. Check back soon.
+            </p>
+          </CardContent>
+        </Card>
+      </section>
     )
   }
 }
@@ -179,8 +208,16 @@ export default function MegaMillionsPage() {
         </section>
 
         {/* Dynamic Content */}
-        <Suspense fallback={<NationalCardSkeleton />}>
-          <MegaMillionsContent />
+        <section className="mb-12">
+          <Suspense fallback={<NationalCardSkeleton />}>
+            <MegaMillionsLatestResult />
+          </Suspense>
+        </section>
+        <Suspense fallback={null}>
+          <MegaMillionsStatsSection />
+        </Suspense>
+        <Suspense fallback={<TableSkeleton rows={8} />}>
+          <MegaMillionsPastResultsSection />
         </Suspense>
 
         {/* Info Cards */}

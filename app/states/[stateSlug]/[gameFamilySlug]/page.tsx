@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import { Suspense } from "react"
 import { getStateBySlug, getStateGames } from "@/lib/api/states"
 import { getDrawResult, getPast365Draws } from "@/lib/api/draws"
 import { getMostFrequent, getLeastFrequent } from "@/lib/api/stats"
@@ -11,6 +12,7 @@ import { NumberStatsCards } from "@/components/stats"
 import { JsonLd, FAQSection } from "@/components/seo"
 import { SEOTextBlock, Breadcrumbs, Container } from "@/components/layout"
 import { GameLogo } from "@/components/cards/GameLogo"
+import { TableSkeleton } from "@/components/feedback"
 import { generateGameFamilyMetadata, getCanonicalUrl } from "@/lib/seo/metadata"
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo/jsonLd"
 import { getFAQsForGame } from "@/content/faq"
@@ -21,7 +23,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { BarChart3, History, ArrowRight, Calendar, Info, ChevronRight } from "lucide-react"
 import type { Metadata } from "next"
-import type { DrawResult, PastDraw, StatItem } from "@/types/api"
+import type { DrawResult, GameSession, PastDraw, StatItem } from "@/types/api"
 
 interface GameFamilyPageProps {
   params: Promise<{ stateSlug: string; gameFamilySlug: string }>
@@ -85,6 +87,127 @@ export async function generateMetadata({
   )
 }
 
+interface FamilyHistoryAndStatsProps {
+  stateSlug: string
+  gameFamilySlug: string
+  familyName: string
+  sessions: GameSession[]
+  hasMultipleSessions: boolean
+}
+
+async function FamilyHistoryAndStats({
+  stateSlug,
+  gameFamilySlug,
+  familyName,
+  sessions,
+  hasMultipleSessions,
+}: FamilyHistoryAndStatsProps) {
+  const pastDrawsMap = new Map<string, PastDraw[]>()
+  const hotNumbersMap = new Map<string, StatItem[]>()
+  const coldNumbersMap = new Map<string, StatItem[]>()
+
+  await Promise.all(
+    sessions.map(async (session) => {
+      try {
+        const [draws, hot, cold] = await Promise.all([
+          getPast365Draws(stateSlug, session.sessionSlug),
+          getMostFrequent(session.sessionSlug, 365, 10),
+          getLeastFrequent(session.sessionSlug, 365, 10),
+        ])
+        pastDrawsMap.set(session.sessionSlug, draws)
+        hotNumbersMap.set(session.sessionSlug, hot)
+        coldNumbersMap.set(session.sessionSlug, cold)
+      } catch {
+        pastDrawsMap.set(session.sessionSlug, [])
+        hotNumbersMap.set(session.sessionSlug, [])
+        coldNumbersMap.set(session.sessionSlug, [])
+      }
+    })
+  )
+
+  const firstSessionSlug = sessions[0]?.sessionSlug || ""
+  const hotNumbers = hotNumbersMap.get(firstSessionSlug) || []
+  const coldNumbers = coldNumbersMap.get(firstSessionSlug) || []
+
+  return (
+    <>
+      {/* Recent Results (Last 10 Draws) */}
+      <section className="mb-16">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <Calendar className="h-6 w-6 text-primary" />
+              <h2 className="text-2xl font-bold tracking-tight">Recent Results</h2>
+            </div>
+            <p className="mt-1 text-sm text-muted-foreground">Last 10 draws</p>
+          </div>
+          <Button asChild variant="outline" size="sm">
+            <Link href={`/states/${stateSlug}/${gameFamilySlug}/historical`}>
+              View Full Historical Data
+              <ArrowRight className="ml-1 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+
+        {hasMultipleSessions ? (
+          <Tabs defaultValue={sessions[0].sessionSlug}>
+            <TabsList className="mb-6 flex-wrap">
+              {sessions.map((session) => (
+                <TabsTrigger key={session.sessionSlug} value={session.sessionSlug}>
+                  {session.sessionName}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+            {sessions.map((session) => (
+              <TabsContent key={session.sessionSlug} value={session.sessionSlug}>
+                <PastDrawsTable
+                  draws={(pastDrawsMap.get(session.sessionSlug) || []).slice(0, 10)}
+                  showSession={false}
+                  gameSlug={session.sessionSlug}
+                />
+              </TabsContent>
+            ))}
+          </Tabs>
+        ) : (
+          <PastDrawsTable
+            draws={(pastDrawsMap.get(sessions[0]?.sessionSlug) || []).slice(0, 10)}
+            showSession={false}
+            gameSlug={sessions[0]?.sessionSlug}
+          />
+        )}
+      </section>
+
+      {/* Hot/Cold Numbers */}
+      {(hotNumbers.length > 0 || coldNumbers.length > 0) && (
+        <section className="mb-16">
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight">Number Statistics</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Based on the last 365 days</p>
+            </div>
+            <Button asChild variant="outline" size="sm">
+              <Link href={`/states/${stateSlug}/${gameFamilySlug}/stats`}>
+                View Full Stats
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          <NumberStatsCards
+            hotNumbers={hotNumbers}
+            coldNumbers={coldNumbers}
+            gameName={familyName}
+          />
+          {hasMultipleSessions && (
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              Showing stats for {sessions[0]?.sessionName}. View individual session pages for session-specific statistics.
+            </p>
+          )}
+        </section>
+      )}
+    </>
+  )
+}
+
 export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
   const { stateSlug, gameFamilySlug } = await params
   const [state, games] = await Promise.all([
@@ -123,34 +246,6 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
   if (!family) {
     notFound()
   }
-
-  // Fetch past draws and stats for each session
-  const pastDrawsMap = new Map<string, PastDraw[]>()
-  const hotNumbersMap = new Map<string, StatItem[]>()
-  const coldNumbersMap = new Map<string, StatItem[]>()
-  
-  const pastDrawsPromises = family.sessions.map(async (session) => {
-    try {
-      const [draws, hot, cold] = await Promise.all([
-        getPast365Draws(stateSlug, session.sessionSlug),
-        getMostFrequent(session.sessionSlug, 365, 10),
-        getLeastFrequent(session.sessionSlug, 365, 10),
-      ])
-      pastDrawsMap.set(session.sessionSlug, draws)
-      hotNumbersMap.set(session.sessionSlug, hot)
-      coldNumbersMap.set(session.sessionSlug, cold)
-    } catch {
-      pastDrawsMap.set(session.sessionSlug, [])
-      hotNumbersMap.set(session.sessionSlug, [])
-      coldNumbersMap.set(session.sessionSlug, [])
-    }
-  })
-  await Promise.all(pastDrawsPromises)
-  
-  // For display, use the first session's stats or combine if single session
-  const firstSessionSlug = family.sessions[0]?.sessionSlug || ""
-  const hotNumbers = hotNumbersMap.get(firstSessionSlug) || []
-  const coldNumbers = coldNumbersMap.get(firstSessionSlug) || []
 
   const hasMultipleSessions = family.sessions.length > 1
   const hasSingleSession = family.sessions.length === 1
@@ -309,79 +404,15 @@ export default async function GameFamilyPage({ params }: GameFamilyPageProps) {
           </Card>
         </section>
 
-        {/* Recent Results (Last 10 Draws) */}
-        <section className="mb-16">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <div className="flex items-center gap-2">
-                <Calendar className="h-6 w-6 text-primary" />
-                <h2 className="text-2xl font-bold tracking-tight">Recent Results</h2>
-              </div>
-              <p className="mt-1 text-sm text-muted-foreground">Last 10 draws</p>
-            </div>
-            <Button asChild variant="outline" size="sm">
-              <Link href={`/states/${stateSlug}/${gameFamilySlug}/historical`}>
-                View Full Historical Data
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-          
-          {hasMultipleSessions ? (
-            <Tabs defaultValue={family.sessions[0].sessionSlug}>
-              <TabsList className="mb-6 flex-wrap">
-                {family.sessions.map((session) => (
-                  <TabsTrigger key={session.sessionSlug} value={session.sessionSlug}>
-                    {session.sessionName}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-              {family.sessions.map((session) => (
-                <TabsContent key={session.sessionSlug} value={session.sessionSlug}>
-                  <PastDrawsTable
-                    draws={(pastDrawsMap.get(session.sessionSlug) || []).slice(0, 10)}
-                    showSession={false}
-                    gameSlug={session.sessionSlug}
-                  />
-                </TabsContent>
-              ))}
-            </Tabs>
-          ) : (
-            <PastDrawsTable
-              draws={(pastDrawsMap.get(family.sessions[0]?.sessionSlug) || []).slice(0, 10)}
-              showSession={false}
-              gameSlug={family.sessions[0]?.sessionSlug}
-            />
-          )}
-        </section>
-
-        {/* Hot/Cold Numbers */}
-        {(hotNumbers.length > 0 || coldNumbers.length > 0) && (
-          <section className="mb-16">
-            <div className="mb-6 flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-bold tracking-tight">Number Statistics</h2>
-                <p className="mt-1 text-sm text-muted-foreground">Based on the last 365 days</p>
-              </div>
-              <Button asChild variant="outline" size="sm">
-                <Link href={`/states/${stateSlug}/${gameFamilySlug}/stats`}>
-                  View Full Stats
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <NumberStatsCards
-              hotNumbers={hotNumbers}
-              coldNumbers={coldNumbers}
-              gameName={family.familyName}
-            />
-            {hasMultipleSessions && (
-              <p className="mt-4 text-center text-xs text-muted-foreground">
-                Showing stats for {family.sessions[0]?.sessionName}. View individual session pages for session-specific statistics.
-              </p>
-            )}
-          </section>
-        )}
+        <Suspense fallback={<TableSkeleton rows={10} />}>
+          <FamilyHistoryAndStats
+            stateSlug={stateSlug}
+            gameFamilySlug={gameFamilySlug}
+            familyName={family.familyName}
+            sessions={family.sessions}
+            hasMultipleSessions={hasMultipleSessions}
+          />
+        </Suspense>
 
         {/* How to Play */}
         <section className="mb-16 space-y-6">

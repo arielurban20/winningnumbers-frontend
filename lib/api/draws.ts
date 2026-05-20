@@ -1,4 +1,5 @@
 import { apiGet, apiGetCached } from "./client"
+import { cache } from "react"
 import { resolveNationalGameResult } from "@/lib/utils/resolveNationalGameResult"
 import {
   normalizeDrawForDisplay as normalizeWithVisualRules,
@@ -114,16 +115,7 @@ export async function getDrawResult(
   stateSlug: string,
   gameFamilySlug?: string
 ): Promise<DrawResult | null> {
-  const { data, error } = await apiGet<DrawResult | DrawResultResponse>(
-    `/api/draws/result?game_slug=${encodeURIComponent(gameSlug)}&state_slug=${encodeURIComponent(stateSlug)}`
-  )
-
-  if (error || !data) {
-    console.error(`Failed to fetch draw result for ${gameSlug}:`, error?.message)
-    return null
-  }
-
-  const result = unwrapDrawResult(data)
+  const result = await getDrawResultRawCached(gameSlug, stateSlug)
   if (!result) return null
 
   return normalizeDraw(result, {
@@ -133,6 +125,19 @@ export async function getDrawResult(
     gameFamilySlug,
   })
 }
+
+const getDrawResultRawCached = cache(async (gameSlug: string, stateSlug: string): Promise<DrawResult | null> => {
+  const { data, error } = await apiGet<DrawResult | DrawResultResponse>(
+    `/api/draws/result?game_slug=${encodeURIComponent(gameSlug)}&state_slug=${encodeURIComponent(stateSlug)}`
+  )
+
+  if (error || !data) {
+    console.error(`Failed to fetch draw result for ${gameSlug}:`, error?.message)
+    return null
+  }
+
+  return unwrapDrawResult(data)
+})
 
 export async function getPast365Draws(
   stateSlug: string,
@@ -222,7 +227,7 @@ export async function getRecentDraws(limit: number = 12): Promise<DrawResult[]> 
   )
 }
 
-export async function getPowerballMega(): Promise<PowerballMegaResponse> {
+const getPowerballMegaCached = cache(async (): Promise<PowerballMegaResponse> => {
   const { data, error } = await apiGetCached<PowerballMegaAPIResponse>("/api/draws/powerball-mega", 60)
 
   let powerball: DrawResult | undefined
@@ -294,4 +299,8 @@ export async function getPowerballMega(): Promise<PowerballMegaResponse> {
     powerball,
     mega_millions: megaMillions,
   }
+})
+
+export async function getPowerballMega(): Promise<PowerballMegaResponse> {
+  return getPowerballMegaCached()
 }

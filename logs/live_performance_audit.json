@@ -1,0 +1,117 @@
+{
+  "generatedAt": "2026-05-20T02:21:18.008Z",
+  "baseUrl": "http://127.0.0.1:3010",
+  "results": [
+    {
+      "path": "/",
+      "url": "http://127.0.0.1:3010/",
+      "status": 200,
+      "ok": true,
+      "totalMs": 983,
+      "responseBytes": 397653,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/states",
+      "url": "http://127.0.0.1:3010/states",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1748,
+      "responseBytes": 165995,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/states/fl",
+      "url": "http://127.0.0.1:3010/states/fl",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1800,
+      "responseBytes": 388135,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/states/ca",
+      "url": "http://127.0.0.1:3010/states/ca",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1765,
+      "responseBytes": 237062,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/games/powerball",
+      "url": "http://127.0.0.1:3010/games/powerball",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1919,
+      "responseBytes": 347769,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/games/mega-millions",
+      "url": "http://127.0.0.1:3010/games/mega-millions",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1947,
+      "responseBytes": 294042,
+      "contentType": "text/html; charset=utf-8"
+    }
+  ],
+  "slowest": [
+    {
+      "path": "/games/mega-millions",
+      "url": "http://127.0.0.1:3010/games/mega-millions",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1947,
+      "responseBytes": 294042,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/games/powerball",
+      "url": "http://127.0.0.1:3010/games/powerball",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1919,
+      "responseBytes": 347769,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/states/fl",
+      "url": "http://127.0.0.1:3010/states/fl",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1800,
+      "responseBytes": 388135,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/states/ca",
+      "url": "http://127.0.0.1:3010/states/ca",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1765,
+      "responseBytes": 237062,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/states",
+      "url": "http://127.0.0.1:3010/states",
+      "status": 200,
+      "ok": true,
+      "totalMs": 1748,
+      "responseBytes": 165995,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/",
+      "url": "http://127.0.0.1:3010/",
+      "status": 200,
+      "ok": true,
+      "totalMs": 983,
+      "responseBytes": 397653,
+      "contentType": "text/html; charset=utf-8"
+    }
+  ],
+  "avgMs": 1694
+}

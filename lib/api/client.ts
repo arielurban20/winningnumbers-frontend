@@ -30,6 +30,8 @@ interface APIResponse<T> {
 
 // Exponential backoff delays in milliseconds
 const RETRY_DELAYS = [1000, 2000, 4000]
+const ENABLE_FETCH_TIMING =
+  process.env.AUDIT_FETCH_TIMING === "1" || process.env.NEXT_PUBLIC_AUDIT_FETCH_TIMING === "1"
 
 async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
@@ -47,6 +49,7 @@ export async function apiClient<T>(
     : `/api${endpoint.startsWith("/") ? "" : "/"}${endpoint}`
 
   const url = `${getBaseUrl()}${normalizedEndpoint}`
+  const startedAt = Date.now()
 
   let lastError: APIError | null = null
 
@@ -79,6 +82,11 @@ export async function apiClient<T>(
       clearTimeout(timeoutId)
 
       if (!response.ok) {
+        if (ENABLE_FETCH_TIMING) {
+          const elapsedMs = Date.now() - startedAt
+          // eslint-disable-next-line no-console
+          console.info(`[api-timing] ${response.status} ${normalizedEndpoint} ${elapsedMs}ms`)
+        }
         lastError = {
           message: `API error: ${response.statusText}`,
           status: response.status,
@@ -107,6 +115,11 @@ export async function apiClient<T>(
       // Safe JSON parsing
       try {
         const data = JSON.parse(text) as T
+        if (ENABLE_FETCH_TIMING) {
+          const elapsedMs = Date.now() - startedAt
+          // eslint-disable-next-line no-console
+          console.info(`[api-timing] 200 ${normalizedEndpoint} ${elapsedMs}ms`)
+        }
         return { data: normalizeResponse(data), error: null }
       } catch {
         return {
@@ -125,6 +138,12 @@ export async function apiClient<T>(
         }
       } else {
         lastError = { message: "Unknown error", status: 500 }
+      }
+
+      if (ENABLE_FETCH_TIMING) {
+        const elapsedMs = Date.now() - startedAt
+        // eslint-disable-next-line no-console
+        console.info(`[api-timing] error ${normalizedEndpoint} ${elapsedMs}ms`)
       }
 
       // Retry on network errors

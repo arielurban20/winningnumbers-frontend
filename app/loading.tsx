@@ -21,58 +21,34 @@ export default function Loading() {
 
       {/* Main Content */}
       <main className="flex-1">
-        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
           {/* Hero Section Skeleton */}
-          <div className="space-y-4 mb-12">
-            <Skeleton className="h-10 w-48 md:h-12 md:w-64" />
-            <Skeleton className="h-6 w-full max-w-xl" />
-            <Skeleton className="h-6 w-full max-w-lg" />
-            <div className="flex gap-3 mt-6">
-              <Skeleton className="h-10 w-32" />
-              <Skeleton className="h-10 w-32" />
+          <div className="space-y-3 mb-8">
+            <Skeleton className="h-8 w-44 md:h-10 md:w-56" />
+            <Skeleton className="h-4 w-full max-w-xl" />
+            <Skeleton className="h-4 w-full max-w-lg" />
+            <div className="flex gap-2.5 mt-4">
+              <Skeleton className="h-9 w-28" />
+              <Skeleton className="h-9 w-28" />
             </div>
           </div>
 
-          {/* National Games Section */}
-          <div className="mb-12">
-            <Skeleton className="h-8 w-40 mb-6" />
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {[...Array(4)].map((_, i) => (
-                <Skeleton key={i} className="h-32 rounded-xl" />
-              ))}
-            </div>
-          </div>
-
-          {/* Features Section */}
-          <div className="mb-12">
-            <div className="grid md:grid-cols-3 gap-6">
+          {/* Primary cards */}
+          <div className="mb-8">
+            <Skeleton className="h-6 w-40 mb-4" />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="space-y-3">
-                  <Skeleton className="h-12 w-12 rounded-lg" />
-                  <Skeleton className="h-6 w-32" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                </div>
+                <Skeleton key={i} className="h-28 rounded-xl" />
               ))}
             </div>
           </div>
 
-          {/* Browse by Game Section */}
-          <div className="mb-12">
-            <Skeleton className="h-8 w-48 mb-6" />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[...Array(8)].map((_, i) => (
-                <Skeleton key={i} className="h-24 rounded-xl" />
-              ))}
-            </div>
-          </div>
-
-          {/* States Section */}
+          {/* Compact list placeholders */}
           <div>
-            <Skeleton className="h-8 w-56 mb-6" />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {[...Array(8)].map((_, i) => (
-                <Skeleton key={i} className="h-12 rounded-xl" />
+            <Skeleton className="h-6 w-52 mb-4" />
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-4">
+              {[...Array(6)].map((_, i) => (
+                <Skeleton key={i} className="h-11 rounded-xl" />
               ))}
             </div>
           </div>

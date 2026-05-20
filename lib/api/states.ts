@@ -1,5 +1,6 @@
 import { apiGetCached } from "./client"
 import type { State, Game } from "@/types/api"
+import { cache } from "react"
 
 // API returns { count: number, items: State[] }
 interface StatesResponse {
@@ -29,11 +30,11 @@ const STATES_DEFAULT_REVALIDATE_SECONDS = 300
 const STATES_TODAY_REVALIDATE_SECONDS = 60
 
 // Keep state-level "today/current" indicators fresher than static state inventory.
-export async function getStates(options: GetStatesOptions = {}): Promise<State[]> {
-  const endpoint = options.includeTodayResults
+const getStatesCached = cache(async (includeTodayResults: boolean): Promise<State[]> => {
+  const endpoint = includeTodayResults
     ? "/api/states?include_today_results=true"
     : "/api/states"
-  const revalidateSeconds = options.includeTodayResults
+  const revalidateSeconds = includeTodayResults
     ? STATES_TODAY_REVALIDATE_SECONDS
     : STATES_DEFAULT_REVALIDATE_SECONDS
 
@@ -45,6 +46,10 @@ export async function getStates(options: GetStatesOptions = {}): Promise<State[]
   }
 
   return normalizeStatesResponse(data)
+})
+
+export async function getStates(options: GetStatesOptions = {}): Promise<State[]> {
+  return getStatesCached(Boolean(options.includeTodayResults))
 }
 
 // API returns { state, count, items: Game[] }
@@ -56,7 +61,7 @@ interface GamesResponse {
 }
 
 // Cache games list for 5 minutes (games list doesn't change often)
-export async function getStateGames(stateSlug: string): Promise<Game[]> {
+const getStateGamesCached = cache(async (stateSlug: string): Promise<Game[]> => {
   const { data, error } = await apiGetCached<Game[] | GamesResponse>(`/api/states/${stateSlug}/games`, 300)
 
   if (error || !data) {
@@ -74,9 +79,17 @@ export async function getStateGames(stateSlug: string): Promise<Game[]> {
 
   console.error("[v0] Unexpected games response structure:", typeof data)
   return []
+})
+
+export async function getStateGames(stateSlug: string): Promise<Game[]> {
+  return getStateGamesCached(stateSlug)
 }
 
-export async function getStateBySlug(stateSlug: string): Promise<State | null> {
+const getStateBySlugCached = cache(async (stateSlug: string): Promise<State | null> => {
   const states = await getStates()
   return states.find((state) => state.slug === stateSlug) || null
+})
+
+export async function getStateBySlug(stateSlug: string): Promise<State | null> {
+  return getStateBySlugCached(stateSlug)
 }

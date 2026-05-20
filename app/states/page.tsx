@@ -1,10 +1,8 @@
-import { Suspense } from "react"
 import Link from "next/link"
 import { getStates } from "@/lib/api/states"
 import { StateSearchGrid } from "@/components/states/StateSearchGrid"
 import { JsonLd } from "@/components/seo"
 import { SEOTextBlock, Breadcrumbs, Container } from "@/components/layout"
-import { CardSkeleton } from "@/components/feedback"
 import { generateStatesMetadata, getCanonicalUrl } from "@/lib/seo/metadata"
 import { generateItemListSchema, generateBreadcrumbSchema } from "@/lib/seo/jsonLd"
 import { Globe } from "lucide-react"
@@ -14,11 +12,6 @@ export const metadata = generateStatesMetadata()
 export const dynamic = "force-dynamic"
 export const revalidate = 0
 export const fetchCache = "force-no-store"
-
-async function StatesGrid() {
-  const states = await getStates({ includeTodayResults: true })
-  return <StateSearchGrid states={states} />
-}
 
 export default async function StatesPage() {
   const states = await getStates({ includeTodayResults: true })
@@ -80,20 +73,7 @@ export default async function StatesPage() {
 
       <Container className="py-8 sm:py-12">
         {/* States Grid with Search */}
-        <Suspense
-          fallback={
-            <div className="space-y-4 sm:space-y-6">
-              <div className="h-10 w-full max-w-md animate-pulse rounded-lg bg-muted" />
-              <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-                {[...Array(12)].map((_, i) => (
-                  <CardSkeleton key={i} />
-                ))}
-              </div>
-            </div>
-          }
-        >
-          <StatesGrid />
-        </Suspense>
+        <StateSearchGrid states={states} />
 
         {/* National Games CTA */}
         <section className="mt-12 sm:mt-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-5 sm:p-8">

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import { Suspense } from "react"
 import { getStates, getStateGames } from "@/lib/api/states"
 import { getDrawResult, getPast365 } from "@/lib/api/draws"
 import { getMostFrequent, getLeastFrequent } from "@/lib/api/stats"
@@ -15,7 +16,7 @@ import { getCanonicalUrl } from "@/lib/seo/metadata"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { EmptyState } from "@/components/feedback"
+import { EmptyState, TableSkeleton } from "@/components/feedback"
 import { ArrowRight, ChevronRight, BarChart3, History, Layers } from "lucide-react"
 import type { Metadata } from "next"
 
@@ -25,6 +26,121 @@ interface SessionPageProps {
     gameFamilySlug: string
     sessionSlug: string
   }>
+}
+
+interface SessionLatestResultSectionProps {
+  stateSlug: string
+  sessionSlug: string
+  sessionName: string
+  sessionDisplaySlug?: string
+  gameFamilySlug: string
+  latestCardMaxWidth: string
+}
+
+async function SessionLatestResultSection({
+  stateSlug,
+  sessionSlug,
+  sessionName,
+  sessionDisplaySlug,
+  gameFamilySlug,
+  latestCardMaxWidth,
+}: SessionLatestResultSectionProps) {
+  const latestDraw = await getDrawResult(sessionSlug, stateSlug)
+
+  return (
+    <Card className={`mx-auto w-full ${latestCardMaxWidth} overflow-hidden border-border/50`}>
+      <CardHeader className="hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-3 py-2.5 sm:px-4 sm:py-3 lg:block">
+        <CardTitle className="text-base sm:text-lg">Latest {sessionName} Result</CardTitle>
+      </CardHeader>
+      <CardContent className="p-2.5 sm:p-3 md:p-3.5 lg:p-4">
+        {latestDraw ? (
+          <SessionResultBlock
+            sessionName={sessionName}
+            sessionDisplaySlug={sessionDisplaySlug}
+            stateSlug={stateSlug}
+            familySlug={gameFamilySlug}
+            draw={latestDraw}
+            gameSlug={sessionSlug}
+            showSessionName={true}
+            clickable={false}
+            variant="individualCompact"
+          />
+        ) : (
+          <EmptyState
+            type="no-data"
+            title="No Recent Results"
+            description={`No recent ${sessionName} results available.`}
+          />
+        )}
+      </CardContent>
+    </Card>
+  )
+}
+
+interface SessionRecentResultsSectionProps {
+  stateSlug: string
+  sessionSlug: string
+  historicalUrl: string
+}
+
+async function SessionRecentResultsSection({
+  stateSlug,
+  sessionSlug,
+  historicalUrl,
+}: SessionRecentResultsSectionProps) {
+  const recentDraws = (await getPast365(sessionSlug, stateSlug)).slice(0, 10)
+
+  if (recentDraws.length === 0) {
+    return null
+  }
+
+  return (
+    <section className="mb-12">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold">Recent Results</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Last 10 draws</p>
+        </div>
+        <Button asChild variant="outline" size="sm">
+          <Link href={historicalUrl}>
+            View Full Historical Data
+            <ArrowRight className="ml-1 h-4 w-4" />
+          </Link>
+        </Button>
+      </div>
+      <PastDrawsTable draws={recentDraws} showSession={false} gameSlug={sessionSlug} />
+    </section>
+  )
+}
+
+interface SessionStatsSectionProps {
+  sessionSlug: string
+  sessionName: string
+}
+
+async function SessionStatsSection({ sessionSlug, sessionName }: SessionStatsSectionProps) {
+  const [hotNumbers, coldNumbers] = await Promise.all([
+    getMostFrequent(sessionSlug, 365, 10),
+    getLeastFrequent(sessionSlug, 365, 10),
+  ])
+
+  if (hotNumbers.length === 0 && coldNumbers.length === 0) {
+    return null
+  }
+
+  return (
+    <section className="mb-12">
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold">Number Statistics</h2>
+        <p className="mt-1 text-sm text-muted-foreground">Based on the last 365 days</p>
+      </div>
+      <NumberStatsCards
+        hotNumbers={hotNumbers}
+        coldNumbers={coldNumbers}
+        gameName={sessionName}
+      />
+    </section>
+  )
 }
 
 export const dynamic = "force-dynamic"
@@ -98,27 +214,7 @@ export default async function SessionPage({ params }: SessionPageProps) {
   const session = findSessionInFamily(family, sessionSlug)
   if (!session) notFound()
   
-  // Fetch session-specific data using the API game slug (sessionSlug is the real API slug)
-  const [latestDraw, pastDraws, hotNumbers, coldNumbers] = await Promise.all([
-    getDrawResult(session.sessionSlug, stateSlug),
-    getPast365(session.sessionSlug, stateSlug),
-    getMostFrequent(session.sessionSlug, 365, 10),
-    getLeastFrequent(session.sessionSlug, 365, 10),
-  ])
-  const recentDraws = pastDraws.slice(0, 10)
-  const extraSecondaryCount =
-    latestDraw?.extra_items?.filter((item) => item?.type === "secondary_drawing").length || 0
-  const hasLatestSecondaryDrawings =
-    (latestDraw?.secondary_drawings?.length || 0) > 0 ||
-    Boolean(latestDraw?.secondary_drawing) ||
-    extraSecondaryCount > 0
-  const latestMainCount = latestDraw?.main_numbers?.length || 0
-  const isCompactNumberGame =
-    latestMainCount > 0 &&
-    latestMainCount <= 5 &&
-    !hasLatestSecondaryDrawings &&
-    (latestDraw?.bonus_items?.length || 0) <= 1
-  const latestCardMaxWidth = isCompactNumberGame ? "max-w-2xl" : "max-w-3xl"
+  const latestCardMaxWidth = "max-w-3xl"
   
   const sessionName = session.game.name
   const stateName = getStateName(state)
@@ -209,67 +305,29 @@ export default async function SessionPage({ params }: SessionPageProps) {
         
         {/* Latest Result */}
         <section className="mb-12">
-          <Card className={`mx-auto w-full ${latestCardMaxWidth} overflow-hidden border-border/50`}>
-            <CardHeader className="hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-3 py-2.5 sm:px-4 sm:py-3 lg:block">
-              <CardTitle className="text-base sm:text-lg">Latest {session.sessionName} Result</CardTitle>
-            </CardHeader>
-            <CardContent className="p-2.5 sm:p-3 md:p-3.5 lg:p-4">
-              {latestDraw ? (
-                <SessionResultBlock
-                  sessionName={session.sessionName}
-                  sessionDisplaySlug={session.sessionDisplaySlug}
-                  stateSlug={stateSlug}
-                  familySlug={gameFamilySlug}
-                  draw={latestDraw}
-                  gameSlug={session.sessionSlug}
-                  showSessionName={true}
-                  clickable={false}
-                  variant="individualCompact"
-                />
-              ) : (
-                <EmptyState
-                  type="no-data"
-                  title="No Recent Results"
-                  description={`No recent ${session.sessionName} results available.`}
-                />
-              )}
-            </CardContent>
-          </Card>
+          <Suspense fallback={<TableSkeleton rows={2} />}>
+            <SessionLatestResultSection
+              stateSlug={stateSlug}
+              sessionSlug={session.sessionSlug}
+              sessionName={session.sessionName}
+              sessionDisplaySlug={session.sessionDisplaySlug}
+              gameFamilySlug={gameFamilySlug}
+              latestCardMaxWidth={latestCardMaxWidth}
+            />
+          </Suspense>
         </section>
         
-        {/* Recent Results (Last 10 Draws) */}
-        {recentDraws.length > 0 && (
-          <section className="mb-12">
-            <div className="mb-6 flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-bold">Recent Results</h2>
-                <p className="mt-1 text-sm text-muted-foreground">Last 10 draws</p>
-              </div>
-              <Button asChild variant="outline" size="sm">
-                <Link href={historicalUrl}>
-                  View Full Historical Data
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-            <PastDrawsTable draws={recentDraws} showSession={false} gameSlug={session.sessionSlug} />
-          </section>
-        )}
+        <Suspense fallback={<TableSkeleton rows={10} />}>
+          <SessionRecentResultsSection
+            stateSlug={stateSlug}
+            sessionSlug={session.sessionSlug}
+            historicalUrl={historicalUrl}
+          />
+        </Suspense>
 
-        {/* Hot/Cold Numbers */}
-        {(hotNumbers.length > 0 || coldNumbers.length > 0) && (
-          <section className="mb-12">
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold">Number Statistics</h2>
-              <p className="mt-1 text-sm text-muted-foreground">Based on the last 365 days</p>
-            </div>
-            <NumberStatsCards
-              hotNumbers={hotNumbers}
-              coldNumbers={coldNumbers}
-              gameName={sessionName}
-            />
-          </section>
-        )}
+        <Suspense fallback={null}>
+          <SessionStatsSection sessionSlug={session.sessionSlug} sessionName={sessionName} />
+        </Suspense>
 
         {/* Related Sessions */}
         {relatedSessions.length > 0 && (
